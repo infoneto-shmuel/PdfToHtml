@@ -398,32 +398,5 @@ namespace PdfRepresantation
             var content = ConvertPdf(pdf);
             File.WriteAllText(path, content);
         }
-
-        public void SaveAsHtmlInDir(PdfDetails pdf, string dirTarget, string prefix = "")
-        {
-            var dir = new DirectoryInfo(dirTarget);
-            if (!dir.Exists)
-                dir.Create();
-            var sb = new StringBuilder();
-            sb.Append(@"<html>
-    <head><title>pdf</title></head>
-    <body>");
-            foreach (var page in pdf.Pages)
-            {
-                sb.Append($@"
-        <div><a href=""").Append(prefix).Append("page").Append(page.PageNumber).Append(".html\">page ")
-                    .Append(page.PageNumber).Append("</a></div>");
-            }
-
-            sb.Append(@"
-    </body>
-</html>");
-            File.WriteAllText(Path.Combine(dirTarget, prefix + "index.html"), sb.ToString());
-            foreach (var page in pdf.Pages)
-            {
-                var content = ConvertPage(page);
-                File.WriteAllText(Path.Combine(dirTarget, $"{prefix}page{page.PageNumber}.html"), content);
-            }
-        }
     }
 }
