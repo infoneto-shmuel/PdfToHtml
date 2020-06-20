@@ -33,14 +33,9 @@ namespace PdfRepresantation
             {
                 if (blocks.Count == 0)
                     return;
-                var lineTexts = MergeTextInLine(blocks, pageRTL,out var spacesAdded);
+                var lineTexts = MergeTextInLine(blocks, pageRTL);
                 if (lineTexts.Any(t => !string.IsNullOrWhiteSpace(t.Value)))
                 {
-                    if(spacesAdded>0)
-                        if (pageRTL)
-                            left -= spacesAdded;
-                        else
-                            right += spacesAdded;
                     linesInRow.Add(new PdfTextLineDetails
                     {
                         Bottom = group.Key,
@@ -149,14 +144,13 @@ namespace PdfRepresantation
 //
 //            return result.ToArray();
 //        }
-        private IList<PdfTextResult> MergeTextInLine(IList<PdfTextBlock> blocks, bool pageRTL, out float spaceAdded)
+        private IList<PdfTextResult> MergeTextInLine(IList<PdfTextBlock> blocks, bool pageRTL)
         {
             var result = new LinkedList<PdfTextResult> { };
             LinkedListNode<PdfTextResult> firstNode = null;
             PdfTextBlock last = null;
             PdfTextResult text = null;
             PdfLinkResult link = null;
-            spaceAdded = 0;
             for (var index = 0; index < blocks.Count; index++)
             {
                 var current = blocks[index];
@@ -180,7 +174,7 @@ namespace PdfRepresantation
                 {
 //                    var stateRtl =
 //                        RightToLeftManager.Instance.PageElemtRtl(pageRTL, currentRightToLeft); // && !digitLtr);
-                    spaceAdded+=   SeperateRtlLtr(opositeDirection, pageRTL, current, last, text);
+                    SeperateRtlLtr(opositeDirection, pageRTL, current, last, text);
                     text = new PdfTextResult
                     {
                         FontSize = current.FontSize,
@@ -238,7 +232,7 @@ namespace PdfRepresantation
 //                default: throw new ArgumentOutOfRangeException();
 //            }
 //        }
-        private float SeperateRtlLtr(bool opositeDirection, bool pageRtl,
+        private void SeperateRtlLtr(bool opositeDirection, bool pageRtl,
             PdfTextBlock current, PdfTextBlock lastBlock, PdfTextResult lastText)
         {
             if (opositeDirection)
@@ -248,7 +242,6 @@ namespace PdfRepresantation
                     !RightToLeftManager.Instance.IsNeutral(lastBlock.Value[lastBlock.Value.Length-1]))
                 {
                     lastText.Value =  lastText.Value+" ";
-                    return lastBlock.CharSpacing;
                 }
             }
             else
@@ -258,11 +251,9 @@ namespace PdfRepresantation
                     !RightToLeftManager.Instance.IsNeutral(current.Value[0]))
                 {
                     current.Value = " " + current.Value;
-                    return current.CharSpacing;
                 }
             }
 
-            return 0;
         }
 
         private static void AddNewText(bool opositeDirection, LinkedList<PdfTextResult> result, PdfTextResult text,

@@ -11,6 +11,18 @@ namespace PdfRepresantation
 {
     public class PdfHtmlWriter
     {
+        private readonly HtmlWriterConfig config;
+
+        public PdfHtmlWriter(HtmlWriterConfig config = null)
+        {
+            if (config == null)
+                config = new HtmlWriterConfig();
+
+            this.config = config;
+            if (config.DirImages != null && Directory.Exists(config.DirImages))
+                Directory.CreateDirectory(config.DirImages);
+        }
+
         public string ConvertPage(PdfPageDetails page)
         {
             var sb = new StringBuilder();
@@ -90,7 +102,7 @@ namespace PdfRepresantation
 
             sb.Append(@"
     </article>");
-               AddShapes(page, sb);            
+            AddShapes(page, sb);
         }
 
         protected virtual void AddHeader(PdfPageDetails page, StringBuilder sb)
@@ -188,13 +200,35 @@ namespace PdfRepresantation
                 sb.Append("background-color:black;");
         }
 
+        private int indexImage = 1;
+
         protected virtual void AddImage(PdfPageDetails page, PdfImageDetails image, StringBuilder sb)
         {
             sb.Append(@"
         <img class=""image"" height=""").Append(image.Height)
                 .Append("\" width=\"")
-                .Append(image.Width).Append("\" src=\"data:image/png;base64, ")
-                .Append(Convert.ToBase64String(image.Buffer)).Append("\" style=\"")
+                .Append(image.Width).Append("\" src=\"");
+            if (config.EmbeddedImages || config.DirImages == null)
+            {
+                sb.Append("data:image/png;base64, ")
+                    .Append(Convert.ToBase64String(image.Buffer));
+            }
+            else
+            {
+                string path;
+                lock (this)
+                {
+                    FileInfo file;
+                    do file = new FileInfo(Path.Combine(config.DirImages, "image" + indexImage+++".png"));
+                    while (file.Exists);
+                    path = file.FullName;
+                    File.WriteAllBytes(path, image.Buffer);
+                }
+                sb.Append(path);
+
+            }
+
+            sb.Append("\" style=\"")
                 .Append(page.RightToLeft ? "right" : "left")
                 .Append(":").Append((int) ((page.RightToLeft ? image.Right : image.Left)))
                 .Append("px; top:").Append((int) (image.Top)).Append("px\">");
@@ -203,7 +237,7 @@ namespace PdfRepresantation
 
         protected virtual void AddShapes(PdfPageDetails page, StringBuilder sb)
         {
-            if (page.Shapes.Count == 0)
+            if (!config.DrawShapes || page.Shapes.Count == 0)
                 return;
 
             sb.Append(@"
@@ -315,7 +349,7 @@ namespace PdfRepresantation
     <style>
         .line{
             position:absolute;
-            width:fit-content !important;
+            min-width:fit-content;
         }
         .baseline{vertical-align:baseline;}
         .image{position:absolute}
