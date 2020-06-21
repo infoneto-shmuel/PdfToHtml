@@ -14,6 +14,7 @@ using iText.Kernel.Pdf.Xobject;
 using Org.BouncyCastle.Crypto.Modes;
 using Image = iText.Layout.Element.Image;
 using IOException = iText.IO.IOException;
+using Rectangle = System.Drawing.Rectangle;
 
 namespace PdfRepresantation
 {
@@ -77,7 +78,7 @@ namespace PdfRepresantation
                     .GetMethod("GdipBitmapSetPixel", BindingFlags.NonPublic | BindingFlags.Static);
                 setPixel = (Func<HandleRef, int, int, int, int>) Delegate.CreateDelegate(
                     typeof(Func<HandleRef, int, int, int, int>), null, methodSetPixel);
-             }
+            }
             catch (Exception)
             {
             }
@@ -89,7 +90,6 @@ namespace PdfRepresantation
 
         private bool MergeMask(ImageRenderInfo data, PdfName name, ref byte[] bytes)
         {
-            //return true;
             var image = data.GetImage();
             var maskStream = image.GetPdfObject().GetAsStream(name);
             if (maskStream == null)
@@ -100,48 +100,51 @@ namespace PdfRepresantation
             var maskImage = new PdfImageXObject(maskStream);
             var bytesMask = maskImage.GetImageBytes();
             var bitmapMask = Bitmap.FromStream(new MemoryStream(bytesMask)) as Bitmap;
-            HandleRef handleRef;
-            try
+   
+            var bitmapResult = ApplyMask(bitmapImage, bitmapMask);
+       
+            using (var memoryStream = new MemoryStream())
             {
-                var nativeImage = nativeField.GetValue(bitmapImage);
-                handleRef = new HandleRef((object) bitmapImage, (IntPtr) nativeImage);
-            }
-            catch (Exception)
-            {
-            }
-
-            for (int x = 0; x < image.GetWidth(); x++)
-            for (int y = 0; y < image.GetHeight(); y++)
-            {
-                
-                var pixelMask = bitmapMask.GetPixel(x, y);
-                if (pixelMask.R == 0)
-                {
-                    if (setPixel == null)
-                        bitmapImage.SetPixel(x, y, Color.Transparent);
-                    else 
-                        setPixel(handleRef, x, y, transparent);
-                }
-                else if (pixelMask.R != 255)
-                {
-                    var old = bitmapImage.GetPixel(x, y);
-                    old = Color.FromArgb(255 - pixelMask.R, old.R, old.G, old.B);
-                    if (setPixel == null)
-                    {
-                         bitmapImage.SetPixel(x, y, old);
-                    }
-                    else
-                    {
-                        setPixel(handleRef, x, y, old.ToArgb());
-                        
-                    }
-                }
+                bitmapResult.Save(memoryStream, bitmapImage.RawFormat);
+                bytes = memoryStream.GetBuffer();
             }
 
-            var memoryStream = new MemoryStream();
-            bitmapImage.Save(memoryStream, bitmapImage.RawFormat);
-            bytes = memoryStream.GetBuffer();
             return true;
+        }
+
+        private static Bitmap ApplyMask(Bitmap input, Bitmap mask)
+        {
+            Bitmap output = new Bitmap(input.Width, input.Height, PixelFormat.Format32bppArgb);
+            output.MakeTransparent();
+            var rect = new Rectangle(0, 0, input.Width, input.Height);
+
+            var bitsMask = mask.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            var bitsInput = input.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            var bitsOutput = output.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+            unsafe
+            {
+                for (int y = 0; y < input.Height; y++)
+                {
+                    byte* ptrMask = (byte*) bitsMask.Scan0 + y * bitsMask.Stride;
+                    byte* ptrInput = (byte*) bitsInput.Scan0 + y * bitsInput.Stride;
+                    byte* ptrOutput = (byte*) bitsOutput.Scan0 + y * bitsOutput.Stride;
+                    for (int x = 0; x < input.Width; x++)
+                    {
+                        var index = 4 * x;
+                        ptrOutput[index] = ptrInput[index]; // blue
+                        ptrOutput[index + 1] = ptrInput[index + 1]; // green
+                        ptrOutput[index + 2] = ptrInput[index + 2]; // red
+
+                        ptrOutput[index + 3] = ptrMask[index]; //alpha
+                    }
+                }
+            }
+
+            mask.UnlockBits(bitsMask);
+            input.UnlockBits(bitsInput);
+            output.UnlockBits(bitsOutput);
+
+            return output;
         }
     }
 }
