@@ -153,13 +153,31 @@ namespace PdfRepresantation
         protected virtual void AddText(PdfTextResult text,
             Dictionary<PdfFontDetails, int> fontRef, StringBuilder sb)
         {
-            sb.Append($@"<span class=""baseline font").Append(fontRef[text.Font] + 1)
-                .Append(" font-size-").Append((Math.Round(text.FontSize * 2) / 2).ToString(formatNumInClassName))
-                .Append("\" style=\"");
+            var b = text.StrokeColore?.GetBrightness();
+            if (b > 0.9)
+            {
+                sb.Append($@"<span class=""dark-back");
+                AddFontClass(text, fontRef, sb);
+                sb.Append(@""">");
+                AddText(text.Value, sb);
+                sb.Append(@"</span>");
+            }
+
+            sb.Append($@"<span class=""baseline");
+            AddFontClass(text, fontRef, sb);
+            sb.Append("\" style=\"");
             AddColor(text, sb);
             sb.Append(@""">");
             AddText(text.Value, sb);
             sb.Append(@"</span>");
+        }
+
+        private void AddFontClass(PdfTextResult text,
+            Dictionary<PdfFontDetails, int> fontRef, StringBuilder sb)
+        {
+            sb.Append($@" font").Append(fontRef[text.Font] + 1);
+            sb.Append(" font-size-")
+                .Append((Math.Round(text.FontSize * 2) / 2).ToString(formatNumInClassName));
         }
 
         private static void AddText(string text, StringBuilder sb)
@@ -195,9 +213,6 @@ namespace PdfRepresantation
             sb.Append("color:");
             AppendColor(text.StrokeColore.Value, sb);
             sb.Append(";");
-            var b = text.StrokeColore.Value.GetBrightness();
-            if (b > 0.9)
-                sb.Append("background-color:black;");
         }
 
         private int indexImage = 1;
@@ -219,13 +234,13 @@ namespace PdfRepresantation
                 lock (this)
                 {
                     FileInfo file;
-                    do file = new FileInfo(Path.Combine(config.DirImages, "image" + indexImage+++".png"));
+                    do file = new FileInfo(Path.Combine(config.DirImages, "image" + indexImage++ + ".png"));
                     while (file.Exists);
                     path = file.FullName;
                     File.WriteAllBytes(path, image.Buffer);
                 }
-                sb.Append(path);
 
+                sb.Append(path);
             }
 
             sb.Append("\" style=\"")
@@ -352,7 +367,13 @@ namespace PdfRepresantation
             min-width:fit-content;
         }
         .baseline{vertical-align:baseline;}
-        .image{position:absolute}
+        .image{position:absolute}        
+        .dark-back{
+            background-color:#dedede;
+            position:absolute;
+            z-index:-1;
+            color:transparent;
+        }
         .canvas{
             margin: 0 auto 0 auto;
             display: block;

@@ -49,8 +49,6 @@ namespace PdfRepresantation
             }
             foreach (var subpath in data.GetPath().GetSubpaths())
             {
-                if(!subpath.IsClosed())
-                   continue;
                 var segments = subpath.GetSegments();
                 if(segments.Count==0)
                     continue;
