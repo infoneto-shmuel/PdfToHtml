@@ -39,7 +39,7 @@ namespace PdfRepresantation
                 CharSpacing = textRenderInfo.GetSingleSpaceWidth(),
                 Font = GetFont(textRenderInfo),
             };
-            RightToLeftManager.Instance.AssignRtl(item);
+            RightToLeftManager.Instance.AssignRtl(item,textRenderInfo.GetUnscaledWidth()<0);
             linkManager.AssignLink(item);
             texts.Add(item);
         }

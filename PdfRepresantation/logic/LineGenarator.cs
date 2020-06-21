@@ -304,7 +304,7 @@ namespace PdfRepresantation
             AssignStartEnd(texts, pageRTL);
             return texts
                 .OrderBy(t => t.Start)
-                .GroupBy(t => t.Bottom)
+                .GroupBy(t =>(float)Math.Round(t.Bottom,2))
                 .OrderBy(g => g.Key)
                 .SelectMany(g => CreateLines(g, pageRTL))
                 .ToList();

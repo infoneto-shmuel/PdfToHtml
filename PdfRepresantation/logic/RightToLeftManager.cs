@@ -6,7 +6,8 @@ namespace PdfRepresantation
 {
     public class RightToLeftManager
     {
-        public static readonly RightToLeftManager Instance=new RightToLeftManager();
+        public static readonly RightToLeftManager Instance = new RightToLeftManager();
+
         Regex regexRtl = new Regex(@"[\u0600-\u06FF\u0590-\u05FF]");
 //        Regex regexRtlNeutral = new Regex(@"^[\s\[\]\(\)\:;\{\}\\\/\.\|\,=”""'\-\–\!\?\*\•]+$");
 //        Regex regexDigit = new Regex(@"^[\d]+$");
@@ -25,7 +26,7 @@ namespace PdfRepresantation
             return text.All(IsNeutral);
 //            return regexRtlNeutral.IsMatch(text as string??new string(text.ToArray()));
         }
-        
+
         public bool IsNeutral(char c)
         {
             return !char.IsLetterOrDigit(c);
@@ -69,6 +70,7 @@ namespace PdfRepresantation
                         break;
                     }
             }
+
             bool foundOppositeEnd = false;
 
             for (int i = index + 1; i < blocks.Count; i++)
@@ -83,7 +85,7 @@ namespace PdfRepresantation
                     }
             }
 
-            return foundOppositeStart&&foundOppositeEnd ? !pageRightToLeft : pageRightToLeft;
+            return foundOppositeStart && foundOppositeEnd ? !pageRightToLeft : pageRightToLeft;
 //            if (!pageRightToLeft)
 //            {
 //                for (int i = index - 1; i >= 0; i--)
@@ -112,7 +114,7 @@ namespace PdfRepresantation
                 return current.IsRightToLeft.Value;
             var currentRightToLeft = FindRtlOfNeutral(pageRightToLeft, blocks, index);
             current.IsRightToLeft = currentRightToLeft;
-            if (currentRightToLeft)// && !current.IsDigit)
+            if (currentRightToLeft) // && !current.IsDigit)
             {
                 var chars = new char[current.Value.Length];
                 for (var i = 0; i < current.Value.Length; i++)
@@ -120,12 +122,24 @@ namespace PdfRepresantation
                     var c = current.Value[i];
                     switch (c)
                     {
-                        case '[':c = ']';break;
-                        case ']':c = '[';break;
-                        case '(':c = ')';break;
-                        case ')':c = '(';break;
-                        case '{':c = '}';break;
-                        case '}':c = '{';break;
+                        case '[':
+                            c = ']';
+                            break;
+                        case ']':
+                            c = '[';
+                            break;
+                        case '(':
+                            c = ')';
+                            break;
+                        case ')':
+                            c = '(';
+                            break;
+                        case '{':
+                            c = '}';
+                            break;
+                        case '}':
+                            c = '{';
+                            break;
                     }
 
                     chars[chars.Length - 1 - i] = c;
@@ -137,18 +151,22 @@ namespace PdfRepresantation
             return currentRightToLeft;
         }
 
-        public void AssignRtl(PdfTextBlock item)
+        public void AssignRtl(PdfTextBlock item, bool reversed)
         {
             var text = item.Value;
             if (IsRTL(text))
             {
                 item.IsRightToLeft = true;
-                ReverseText(item);
+                if (!reversed)
+                    ReverseText(item);
             }
             else if (!IsNeutral(text))
             {
                 item.IsRightToLeft = false;
+                if (reversed)
+                    ReverseText(item);
             }
+
 //            else if (IsDigit(text))
 //            {
 //                item.IsDigit = true;
@@ -177,8 +195,6 @@ namespace PdfRepresantation
 //                    return PdfRepresantation.PageElemtRtl.Pleft_Eleft;
 //            }
 //        }
-
-
     }
 
 //    enum PageElemtRtl
