@@ -306,9 +306,16 @@ namespace PdfRepresantation
             {
                 if (i != 0)
                     sb.Append(",");
-                var line = shape.Lines[i];
-                sb.Append("[").Append(line.Start.X).Append(",").Append(line.Start.Y)
-                    .Append(",").Append(line.End.X).Append(",").Append(line.End.Y).Append("]");
+                sb.Append("[");
+                var points =  shape.Lines[i].AllPoints.ToArray();
+                for (var j = 0; j < points.Length; j++)
+                {
+                    if (j != 0)
+                        sb.Append(",");
+                    var p = points[j];
+                    sb.Append(p.X).Append(",").Append(p.Y);
+                }
+                sb.Append("]");
             }
 
             sb.Append("],").Append((int) shape.ShapeOperation).Append(",");
@@ -335,13 +342,19 @@ namespace PdfRepresantation
              ctx.fillStyle=fillColor||'white';               
              ctx.strokeStyle=strokeColor||'black';
              ctx.beginPath();
-             var lastLine=null;
+            var position={x:'-',y:'-'};
              var drawLine=function (line) {
-                 if (!lastLine||lastLine[2]!=line[0]||lastLine[3]!=line[1])
+                 if (position.x!=line[0]||position.y!=line[1])
                      ctx.moveTo(line[0], line[1]);
-                 ctx.lineTo(line[2], line[3]);
-                 lastLine=line;
-             };
+                 switch (line.length)
+                 {
+                     case 4:ctx.lineTo(line[2], line[3]);break;
+                     case 6:ctx.quadraticCurveTo(line[2], line[3],line[4], line[5]);break;
+                     case 8:ctx.bezierCurveTo(line[2], line[3],line[4], line[5],line[6], line[7]);break;
+                 }
+                 position.x=line[line.length-2];
+                 position.y=line[line.length-1];
+             }; 
              for (var i = 0; i < lines.length; i++) 
                  drawLine(lines[i]);
              switch (operation) {

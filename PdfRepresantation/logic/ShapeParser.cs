@@ -34,26 +34,30 @@ namespace PdfRepresantation
             var height = ctm.Get(Matrix.I22);
             var x=ctm.Get(Matrix.I31 );
             var y= ctm.Get(Matrix.I32 );
-            ShapeLine ConvertLine(Line line)
+            ShapeLine ConvertLine(IShape line)
             {
                 var points = line.GetBasePoints()
                     .Select(p => new ShapePoint {X = width*p.x+x,
                         Y =pageHeight- height*(p.y)-y})
                     .ToArray();
-                return new ShapeLine
+                var result = new ShapeLine
                 {
                     Start = points[0],
-                    End = points[1]
+                    End = points[points.Length-1]
                 };
+                if (points.Length > 2)
+                {
+                    result.CurveControlPoint1 = points[1];
+                    if(points.Length>3)
+                    result.CurveControlPoint2 = points[2];
+                }
+                return result;
 
             }
             foreach (var subpath in data.GetPath().GetSubpaths())
             {
                 var segments = subpath.GetSegments();
                 if(segments.Count==0)
-                    continue;
-                var lines=segments.OfType<Line>().ToArray();
-                if(lines.Length==0)
                     continue;
                 
                 shapes.Add(new ShapeDetails
@@ -62,23 +66,11 @@ namespace PdfRepresantation
                     StrokeColor = strokeColor,
                     FillColor = fillColor,
                     LineWidth = lineWidth,                   
-                    Lines = lines.Select(ConvertLine).ToArray(),
+                    Lines = segments.Select(ConvertLine).ToArray(),
                 });
             }
             
         }
 
-        private ShapeLine ConvertLine(Line line, float lineWidth)
-        {
-            var points = line.GetBasePoints()
-                .Select(p => new ShapePoint {X = p.x+2, Y =pageHeight- (p.y)+lineWidth+2})
-                .ToArray();
-            return new ShapeLine
-            {
-                Start = points[0],
-                End = points[1]
-            };
-
-        }
     }
 }

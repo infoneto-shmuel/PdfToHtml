@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 
 namespace PdfRepresantation.Test
 {
@@ -26,15 +29,19 @@ namespace PdfRepresantation.Test
         [TestMethod]
         public void ConvertToHtml()
         {
+            var paths =new List<string>();
             var htmlWriter = new PdfHtmlWriter();
             foreach (var file in new DirectoryInfo(sourceDir).EnumerateFiles())
             {
                 var name = Path.GetFileNameWithoutExtension(file.Name);
-                //if(name!="pdf-001")
-                //    continue;
                 var details = PdfDetailsFactory.Create(file.FullName);
-                htmlWriter.SaveAsHtml(details, Path.Combine(targetDir, name + ".html"));
+                var target = Path.Combine(targetDir, name + ".html");
+                paths.Add(target);
+                htmlWriter.SaveAsHtml(details, target);
             }
+            var json = JsonConvert.SerializeObject(paths, Formatting.Indented);
+            File.WriteAllText("urls.js", $"urls={json};");
+
         }
 
   

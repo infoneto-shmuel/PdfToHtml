@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using iText.IO;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf.Canvas.Parser.Data;
 
@@ -18,20 +20,31 @@ namespace PdfRepresantation
 
         public virtual void ParseImage(ImageRenderInfo data)
         {
-            var bytes = data.GetImage().GetImageBytes();
+            byte[] bytes;
+            try
+            {
+                bytes = data.GetImage().GetImageBytes();
+            }
+            catch (IOException e)
+            {
+                //wrong format of image
+                Console.WriteLine(e);
+                return;
+            }
+
             // var start = data.GetStartPoint();
             var ctm = data.GetImageCtm();
             var width = ctm.Get(Matrix.I11);
             var height = ctm.Get(Matrix.I22);
-            var x=ctm.Get(Matrix.I31 );
-            var y=pageHeight- ctm.Get(Matrix.I32 );
+            var x = ctm.Get(Matrix.I31);
+            var y = pageHeight - ctm.Get(Matrix.I32);
             images.Add(new PdfImageDetails
             {
                 Buffer = bytes,
                 Bottom = y,
-                Top = y-height,
+                Top = y - height,
                 Left = x,
-                Right = pageWidth-x-width,
+                Right = pageWidth - x - width,
                 Width = width,
                 Height = height,
             });
