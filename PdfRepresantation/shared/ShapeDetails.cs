@@ -14,5 +14,6 @@ namespace PdfRepresantation
         public Color? FillColor{ get; set; }
         public IList<ShapeLine> Lines=new List<ShapeLine>();
         public float LineWidth { get; set; }
+        public bool EvenOddRule { get; set; }
     }
 }

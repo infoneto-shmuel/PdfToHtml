@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using iText.Kernel.Geom;
+using iText.Kernel.Pdf.Canvas;
 using iText.Kernel.Pdf.Canvas.Parser.Data;
 using Point = iText.Kernel.Geom.Point;
 
@@ -22,29 +24,32 @@ namespace PdfRepresantation
             var shapeOperation = (ShapeOperation) data.GetOperation();
             if (shapeOperation == ShapeOperation.None)
                 return;
+            bool evenOddRule = data.GetRule() == PdfCanvasConstants.FillingRule.EVEN_ODD;
             var fillColor = ColorManager.Instance.GetColor(data.GetFillColor());
             if (shapeOperation != ShapeOperation.Stroke && (fillColor == null || fillColor == Color.Black))
                 return;
-            
+
             var strokeColor = ColorManager.Instance.GetColor(data.GetStrokeColor());
             var lineWidth = data.GetLineWidth();
             var lineCap = data.GetLineCapStyle();
             var ctm = data.GetCtm();
-            foreach (var subpath in data.GetPath().GetSubpaths())
+            var lines = ConvertLines(data.GetPath(), ctm).ToArray();
+            shapes.Add(new ShapeDetails
             {
-                var segments = subpath.GetSegments();
-                if (segments.Count == 0)
-                    continue;
+                ShapeOperation = shapeOperation,
+                StrokeColor = strokeColor,
+                FillColor = fillColor,
+                LineWidth = lineWidth,
+                EvenOddRule = evenOddRule,
+                Lines = lines
+            });
+        }
 
-                shapes.Add(new ShapeDetails
-                {
-                    ShapeOperation = shapeOperation,
-                    StrokeColor = strokeColor,
-                    FillColor = fillColor,
-                    LineWidth = lineWidth,
-                    Lines = segments.Select(shape => ConvertLine(shape, ctm)).ToArray(),
-                });
-            }
+        protected IEnumerable<ShapeLine> ConvertLines(Path path, Matrix ctm)
+        {
+            return from subpath in path.GetSubpaths()
+                from line in subpath.GetSegments() 
+                select ConvertLine(line, ctm);
         }
 
         protected ShapeLine ConvertLine(IShape line, Matrix ctm)

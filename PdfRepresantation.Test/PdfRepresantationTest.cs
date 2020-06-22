@@ -30,10 +30,12 @@ namespace PdfRepresantation.Test
         public void ConvertToHtml()
         {
             var paths =new List<string>();
-            var htmlWriter = new PdfHtmlWriter();
+            var htmlWriter = new PdfHtmlWriter(new HtmlWriterConfig{UseCanvas = true});
             foreach (var file in new DirectoryInfo(sourceDir).EnumerateFiles())
             {
                 var name = Path.GetFileNameWithoutExtension(file.Name);
+//                if(name!="pdf-031")
+//                    continue;
                 var details = PdfDetailsFactory.Create(file.FullName);
                 var target = Path.Combine(targetDir, name + ".html");
                 paths.Add(target);

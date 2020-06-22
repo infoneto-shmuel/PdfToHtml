@@ -56,7 +56,7 @@ namespace PdfRepresantation
             sb.Append(",");
             AppendColor(shape.FillColor, sb);
             sb.Append(",").Append(shape.LineWidth)
-                .Append(",").Append("null").Append(");");
+                .Append(",'").Append(shape.EvenOddRule?"evenodd":"nonzero").Append("',").Append("null").Append(");");
         }
 
         public override void AddScript(StringBuilder sb)
@@ -64,7 +64,7 @@ namespace PdfRepresantation
             sb.Append(@"
     <script>
         var currentCanvas;
-        function draw(lines,operation,strokeColor, fillColor, lineWidth,lineCap) {
+        function draw(lines,operation,strokeColor, fillColor, lineWidth,fillRule,lineCap) {
              if (!currentCanvas.getContext)
                  return;
              var ctx = currentCanvas.getContext('2d');
@@ -92,9 +92,9 @@ namespace PdfRepresantation
                  drawLine(lines[i]);
              switch (operation) {
                  case 1:ctx.stroke();break;
-                 case 2:ctx.fill();break;
+                 case 2:ctx.fill(fillRule);break;
                  case 3:ctx.stroke();
-                     ctx.fill();break;
+                     ctx.fill(fillRule);break;
              }
         }
     </script>");

@@ -66,8 +66,11 @@ namespace PdfRepresantation
                 lastEnd = line.End;
             }
 
-            sb.Append("\" stroke-width=\"").Append(shape.LineWidth).Append("\" fill=\"");
+            sb.Append("\" stroke-width=\"").Append(shape.LineWidth)
+                .Append("\" fill=\"");
             AppendColor(shape.ShapeOperation==ShapeOperation.Stroke?null:shape.FillColor, sb);
+           if(shape.EvenOddRule)
+                sb.Append("\" fill-rule=\"evenodd");
             sb.Append("\" stroke=\"");
             AppendColor(shape.ShapeOperation==ShapeOperation.Fill?null:shape.StrokeColor, sb);
             sb.Append("\"/>");
