@@ -11,7 +11,8 @@ namespace PdfRepresantation
 {
     public class PdfHtmlWriter
     {
-        private readonly HtmlWriterConfig config;
+        protected readonly HtmlWriterConfig config;
+        private readonly PdfShapeHtmlWriter shapeWriter;
 
         public PdfHtmlWriter(HtmlWriterConfig config = null)
         {
@@ -21,6 +22,25 @@ namespace PdfRepresantation
             this.config = config;
             if (config.DirImages != null && Directory.Exists(config.DirImages))
                 Directory.CreateDirectory(config.DirImages);
+            if (config.DrawShapes)
+                shapeWriter = CreateShapeWriter();
+        }
+
+        public static void AppendColor(Color color, StringBuilder sb)
+        {
+            sb.Append("#").Append(color.R.ToString("X2"))
+                .Append(color.G.ToString("X2"))
+                .Append(color.B.ToString("X2"));
+            if (color.A != 255)
+                sb.Append(color.A.ToString("X2"));
+        }
+
+        protected virtual PdfShapeHtmlWriter CreateShapeWriter()
+        {
+            if (config.UseCanvas)
+                return new PdfShapeCanvasHtmlWriter();
+            else
+                return new PdfShapeSvgHtmlWriter();
         }
 
         public string ConvertPage(PdfPageDetails page)
@@ -66,7 +86,7 @@ namespace PdfRepresantation
     <meta http-equiv=""Content-Type"" content=""text/html; charset=UTF-8"">
     <title>").Append(title).Append(@"</title>");
             AddStyle(fontRef, allLines, sb);
-            AddScript(sb);
+            shapeWriter.AddScript(sb);
             sb.Append($@"
 </head>
 <body");
@@ -254,118 +274,9 @@ namespace PdfRepresantation
         {
             if (!config.DrawShapes || page.Shapes.Count == 0)
                 return;
-
-            sb.Append(@"
-    <canvas class=""canvas"" id=""canvas-").Append(page.PageNumber)
-                .Append("\" style=\"width: ")
-                .Append(Math.Round(page.Width))
-                .Append("px;height:").Append(Math.Round(page.Height))
-                .Append("px;margin-top:-").Append(Math.Round(page.Height) + 2)
-                .Append("px;\" width=\" ")
-                .Append(Math.Round(page.Width))
-                .Append("\" height=\"").Append(Math.Round(page.Height)).Append("\"></canvas>");
-
-            sb.Append(@"
-    <script>
-        currentCanvas= document.getElementById('canvas-").Append(page.PageNumber).Append(@"');");
-            foreach (var shape in page.Shapes)
-            {
-                AddShape(shape, sb);
-            }
-
-            sb.Append(@"
-    </script>");
+            shapeWriter.AddShapes(page, sb);
         }
 
-        void AppendColor(Color? color, StringBuilder sb)
-        {
-            if (color.HasValue)
-            {
-                sb.Append("'");
-                AppendColor(color.Value, sb);
-                sb.Append("'");
-            }
-            else
-                sb.Append("null");
-        }
-
-        void AppendColor(Color color, StringBuilder sb)
-        {
-            sb.Append("#").Append(color.R.ToString("X2"))
-                .Append(color.G.ToString("X2"))
-                .Append(color.B.ToString("X2"));
-            if (color.A != 255)
-                sb.Append(color.A.ToString("X2"));
-        }
-
-        protected virtual void AddShape(ShapeDetails shape, StringBuilder sb)
-        {
-            sb.Append(@"
-        draw([");
-            for (var i = 0; i < shape.Lines.Count; i++)
-            {
-                if (i != 0)
-                    sb.Append(",");
-                sb.Append("[");
-                var points =  shape.Lines[i].AllPoints.ToArray();
-                for (var j = 0; j < points.Length; j++)
-                {
-                    if (j != 0)
-                        sb.Append(",");
-                    var p = points[j];
-                    sb.Append(p.X).Append(",").Append(p.Y);
-                }
-                sb.Append("]");
-            }
-
-            sb.Append("],").Append((int) shape.ShapeOperation).Append(",");
-            AppendColor(shape.StrokeColor, sb);
-            sb.Append(",");
-            AppendColor(shape.FillColor, sb);
-            sb.Append(",").Append(shape.LineWidth)
-                .Append(",").Append("null").Append(");");
-        }
-
-        protected virtual void AddScript(StringBuilder sb)
-        {
-            sb.Append(@"
-    <script>
-        var currentCanvas;
-        function draw(lines,operation,strokeColor, fillColor, lineWidth,lineCap) {
-             if (!currentCanvas.getContext)
-                 return;
-             var ctx = currentCanvas.getContext('2d');
-             if (lineWidth) 
-                 ctx.lineWidth = lineWidth;
-             if (!lineCap) 
-                 ctx.lineCap= lineCap;
-             ctx.fillStyle=fillColor||'white';               
-             ctx.strokeStyle=strokeColor||'black';
-             ctx.beginPath();
-            var position={x:'-',y:'-'};
-             var drawLine=function (line) {
-                 if (position.x!=line[0]||position.y!=line[1])
-                     ctx.moveTo(line[0], line[1]);
-                 switch (line.length)
-                 {
-                     case 4:ctx.lineTo(line[2], line[3]);break;
-                     case 6:ctx.quadraticCurveTo(line[2], line[3],line[4], line[5]);break;
-                     case 8:ctx.bezierCurveTo(line[2], line[3],line[4], line[5],line[6], line[7]);break;
-                 }
-                 position.x=line[line.length-2];
-                 position.y=line[line.length-1];
-             }; 
-             for (var i = 0; i < lines.length; i++) 
-                 drawLine(lines[i]);
-             switch (operation) {
-                 case 1:ctx.stroke();break;
-                 case 2:ctx.fill();break;
-                 case 3:ctx.stroke();
-                     ctx.fill();break;
-             }
-        }
-    </script>");
-        }
 
         NumberFormatInfo formatNumInClassName = new NumberFormatInfo {NumberDecimalSeparator = "-"};
 

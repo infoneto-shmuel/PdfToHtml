@@ -15,14 +15,14 @@ function setHeight(id) {
 function initFrame(id) {
     
     setHeight(id);
-    setTimeout(function () {
-    var frame=getFrameDoc(id);
-    var bodyWidth=document.body.offsetWidth;
-    var frameWidthStr=frame.getElementsByClassName('article')[0].style.width;
-    frameWidthStr = +frameWidthStr.substr(0, frameWidthStr.length - 2)+16;
-    //frame.body.style.margin = 0;
-    frame.body.style.zoom =(bodyWidth/+frameWidthStr)*100+ "%" ;
-    },20);
+    // setTimeout(function () {
+    // var frame=getFrameDoc(id);
+    // var bodyWidth=document.body.offsetWidth;
+    // var frameWidthStr=frame.getElementsByClassName('article')[0].style.width;
+    // frameWidthStr = +frameWidthStr.substr(0, frameWidthStr.length - 2)+16;
+    // //frame.body.style.margin = 0;
+    // frame.body.style.zoom =(bodyWidth/+frameWidthStr)*100+ "%" ;
+    // },20);
 }
 
 function getFrameDoc(id) {

@@ -14,7 +14,7 @@ namespace PdfRepresantation
         protected readonly ImageParser imageParser;
         protected readonly ShapeParser shapeParser;
         protected readonly TextParser textParser;
-        private readonly LineGenarator lineGenarator;
+        private readonly LinesGenerator lineGenerator;
         protected readonly PdfPage page;
         protected readonly int pageNumber;
         private readonly float pageHeight;
@@ -28,7 +28,7 @@ namespace PdfRepresantation
             pageHeight = pageSize.GetHeight();
             pageWidth = pageSize.GetWidth();
             var linkManager = new LinkManager(pageHeight, page);
-            lineGenarator = new LineGenarator(pageWidth);
+            lineGenerator = new LinesGenerator(pageWidth);
             imageParser = new ImageParser(pageHeight, pageWidth);
             this.shapeParser = new ShapeParser(pageHeight, pageNumber);
             textParser = new TextParser(pageHeight, pageWidth, linkManager);
@@ -64,7 +64,7 @@ namespace PdfRepresantation
         public virtual PdfPageDetails CreatePageDetails()
         {
             var pageRightToLeft = RightToLeftManager.Instance.FindRightToLeft(textParser.texts);
-            var lines = lineGenarator.CreateLines(textParser.texts, pageRightToLeft);
+            var lines = lineGenerator.CreateLines(textParser.texts, pageRightToLeft);
 
             return new PdfPageDetails
             {

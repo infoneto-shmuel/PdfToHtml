@@ -63,7 +63,7 @@ namespace PdfRepresantation
             }
             else
             {
-                fontSize *= -heightFont;
+                fontSize *=heightFont>0?heightFont: -heightFont;
              }
 
             return fontSize;

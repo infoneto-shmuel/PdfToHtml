@@ -2,6 +2,7 @@
 using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf.Canvas.Parser.Data;
+using iText.Kernel.Pdf.Canvas.Parser.Listener;
 
 namespace PdfRepresantation
 {
@@ -25,6 +26,11 @@ namespace PdfRepresantation
         {
             var text = textRenderInfo.GetText();
             LineSegment baseline = textRenderInfo.GetBaseline();
+            if (textRenderInfo.GetRise() != 0.0)
+            {
+                Matrix m = new Matrix(0.0f, -textRenderInfo.GetRise());
+                baseline = baseline.TransformBy(m);
+            }
             var start = baseline.GetStartPoint();
             LineSegment ascentLine = textRenderInfo.GetAscentLine();
             PdfTextBlock item = new PdfTextBlock

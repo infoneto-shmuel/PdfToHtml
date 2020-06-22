@@ -40,7 +40,6 @@ namespace PdfRepresantation
             catch (IOException e)
             {
                 //wrong format of image
-                Console.WriteLine(e);
                 return;
             }
 
@@ -65,28 +64,6 @@ namespace PdfRepresantation
                 Height = height,
             });
         }
-
-        static ImageParser()
-        {
-            try
-            {
-                nativeField = typeof(Bitmap)
-                    .GetField("nativeImage", BindingFlags.NonPublic | BindingFlags.Instance);
-                var nestedType = typeof(Bitmap).Assembly.GetType("System.Drawing.SafeNativeMethods")
-                    .GetNestedType("Gdip", BindingFlags.NonPublic | BindingFlags.Static);
-                MethodInfo methodSetPixel = nestedType
-                    .GetMethod("GdipBitmapSetPixel", BindingFlags.NonPublic | BindingFlags.Static);
-                setPixel = (Func<HandleRef, int, int, int, int>) Delegate.CreateDelegate(
-                    typeof(Func<HandleRef, int, int, int, int>), null, methodSetPixel);
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        private static Func<HandleRef, int, int, int, int> setPixel;
-        private static FieldInfo nativeField;
-        static int transparent = Color.Transparent.ToArgb();
 
         private bool MergeMask(ImageRenderInfo data, PdfName name, ref byte[] bytes)
         {

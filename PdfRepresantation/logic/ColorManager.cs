@@ -9,8 +9,6 @@ namespace PdfRepresantation
         internal System.Drawing.Color? GetColor(Color colorPfd)
         {
             var value = colorPfd.GetColorValue();
-            if (value.Length == 0 || value.All(v => v == 0))
-                return null;
             switch (value.Length)
             {
                 case 0:
