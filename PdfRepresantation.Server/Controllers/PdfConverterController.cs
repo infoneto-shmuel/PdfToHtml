@@ -25,7 +25,11 @@ namespace PdfRepresantation.Server.Controllers
             return result;
         }
 
-        
+        [HttpGet("Test")]
+        public ActionResult<string> Test()
+        {           
+            return "success";
+        }
 
         [HttpPost("ConvertToText")]
         public ActionResult<string> ConvertToText([FromBody] FileRequest pdf)

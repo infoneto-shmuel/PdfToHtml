@@ -40,8 +40,7 @@ namespace PdfRepresantation.Server
                 app.UseHsts();
             }            
 
-            //app.UseHttpsRedirection();
-            app.UseMvc();
+             app.UseMvc();
         }
     }
 }
