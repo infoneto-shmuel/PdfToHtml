@@ -8,7 +8,6 @@ using iText.IO.Font;
 using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using iText.Kernel.Geom;
-using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser.Data;
 
 namespace PdfRepresantation
@@ -18,6 +17,12 @@ namespace PdfRepresantation
         readonly Regex fontFamilyRegex =
             new Regex(@"^.+\+|(PS|PSMT|MT|MS)$|((PS|PSMT|MT|MS)?[,-])?(Bold|Italic|MT|PS)+$",
                 RegexOptions.ExplicitCapture);
+
+        public static readonly FontManager Instance = new FontManager();
+
+        private FontManager()
+        {
+        }
 
         public PdfFontDetails CreateFont(PdfFont pdfFont)
         {
@@ -44,29 +49,49 @@ namespace PdfRepresantation
                 yield return c;
             }
         }
+
         public float GetFontSize(TextRenderInfo textRenderInfo, LineSegment baseline, LineSegment ascentLine)
         {
             var fontSize = textRenderInfo.GetFontSize();
             var height = ascentLine.GetStartPoint().Get(1) - baseline.GetStartPoint().Get(1);
             if (fontSize > 0.99 && fontSize < 1.01)
             {
+                LogWrongFontSize("no font size. take height of line:" + height);
+               
                 return height * 1.05F;
             }
+
             var ctm = textRenderInfo.GetGraphicsState().GetCtm();
             var heightFont = ctm.Get(Matrix.I22);
-            if (heightFont >0.99&&heightFont <1.01)
+            if (heightFont > 0.99 && heightFont < 1.01)
             {
                 if (fontSize > height * 1.3)
                 {
-                     return height * 1.3F;
-                }               
+                    LogWrongFontSize("big fontSize:" + fontSize + ". take height of line:" + height);
+                    return height * 1.3F;
+                }
             }
             else
             {
-                fontSize *=heightFont>0?heightFont: -heightFont;
-             }
+                if (heightFont > 0)
+                {
+                    fontSize *= heightFont;
+                    LogWrongFontSize("height font positive: " + heightFont);
+                }
+                else
+                    fontSize *= -heightFont;
+            }
 
             return fontSize;
+        }
+
+        private string lastLog;
+        private void LogWrongFontSize(string m)
+        {
+            if (!Log.DebugSupported||lastLog == m)
+                return;
+            lastLog = m;
+            Log.Debug(m);
         }
     }
 }

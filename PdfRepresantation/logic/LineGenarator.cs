@@ -7,14 +7,19 @@ namespace PdfRepresantation
 {
     class LineGenarator
     {
-        private readonly float pageWidth;
+        private readonly PageContext pageContext;
         private readonly IGrouping<float, PdfTextBlock> group;
-        private readonly bool pageRTL;
         private List<PdfTextLineDetails> lines;
 
         IList<PdfTextBlock> blocks;
         float left, right, top;
         PdfTextBlock last;
+
+        internal LineGenarator(PageContext pageContext, IGrouping<float, PdfTextBlock> group)
+        {
+            this.pageContext = pageContext;
+            this.group = group;
+        }
 
         public IEnumerable<PdfTextLineDetails> Lines
         {
@@ -27,12 +32,6 @@ namespace PdfRepresantation
             }
         }
 
-        public LineGenarator(float pageWidth, bool pageRtl, IGrouping<float, PdfTextBlock> @group)
-        {
-            this.pageWidth = pageWidth;
-            pageRTL = pageRtl;
-            this.@group = @group;
-        }
 
         void AddLine()
         {
@@ -41,11 +40,13 @@ namespace PdfRepresantation
             var lineTexts = MergeTextInLine();
             if (lineTexts.All(t => string.IsNullOrWhiteSpace(t.Value)))
                 return;
+            if (Log.DebugSupported)
+                Log.Debug("line:" + string.Join("", lineTexts.Select(t => t.Value)));
             lines.Add(new PdfTextLineDetails
             {
                 Bottom = @group.Key,
                 Left = left,
-                Right = pageWidth - right,
+                Right = pageContext.PageWidth - right,
                 Texts = lineTexts,
                 Top = top,
                 Width = right - left,
@@ -102,20 +103,36 @@ namespace PdfRepresantation
 
         private void AddSpace(PdfTextBlock current)
         {
-            blocks.Add(new PdfTextBlock
+            if (last.Value == " ")
             {
-                Bottom = current.Bottom,
-                CharSpacing = current.CharSpacing,
-                Font = current.Font,
-                FontSize = current.FontSize,
-                StrokeColore = current.StrokeColore,
-                IsRightToLeft = current.IsRightToLeft,
-                Left = pageRTL ? current.Right : last.Right,
-                Width = current.Start - last.End,
-                Top = current.Top,
-                Link = current.Link,
-                Value = " "
-            });
+                last.Width = current.Start - last.Start;
+                if (pageContext.PageRTL)
+                    last.Left = current.Right;
+            }
+            else if (current.Value == " ")
+            {
+                current.Width = current.End - last.End;
+                if (!pageContext.PageRTL)
+                    current.Left = last.Right;
+            }
+            else
+            {
+                Log.Debug($"adding space between '{last.Value}'-'{current.Value}'");
+                blocks.Add(new PdfTextBlock
+                {
+                    Bottom = current.Bottom,
+                    CharSpacing = current.CharSpacing,
+                    Font = current.Font,
+                    FontSize = current.FontSize,
+                    StrokeColore = current.StrokeColore,
+                    IsRightToLeft = current.IsRightToLeft,
+                    Left = pageContext.PageRTL ? current.Right : last.Right,
+                    Width = current.Start - last.End,
+                    Top = current.Top,
+                    Link = current.Link,
+                    Value = " "
+                });
+            }
         }
 
 
@@ -123,22 +140,22 @@ namespace PdfRepresantation
         {
             var result = new LinkedList<PdfTextResult> { };
             LinkedListNode<PdfTextResult> firstNode = null;
-            PdfTextBlock last = null;
+            PdfTextBlock lastBlock = null;
             PdfTextResult text = null;
             PdfLinkResult link = null;
             for (var index = 0; index < blocks.Count; index++)
             {
                 var current = blocks[index];
                 bool currentRTL =
-                    RightToLeftManager.Instance.AssignNeutral(pageRTL, current, blocks, index);
-                bool opositeDirection = pageRTL != currentRTL;
+                    RightToLeftManager.Instance.AssignNeutral(pageContext.PageRTL, current, blocks, index);
+                bool opositeDirection = pageContext.PageRTL != currentRTL;
 //                bool digitLtr = current.IsDigit && last?.IsDigit==true;
-                if (last != null &&
-                    Equals(last.StrokeColore, current.StrokeColore) &&
-                    last.FontSize == current.FontSize &&
-                    last.Font == current.Font &&
-                    last.Link == current.Link &&
-                    last.IsRightToLeft == current.IsRightToLeft)
+                if (lastBlock != null &&
+                    Equals(lastBlock.StrokeColore, current.StrokeColore) &&
+                    lastBlock.FontSize == current.FontSize &&
+                    lastBlock.Font == current.Font &&
+                    lastBlock.Link == current.Link &&
+                    lastBlock.IsRightToLeft == current.IsRightToLeft)
                 {
                     if (opositeDirection) //&&!digitLtr)
                         text.Value = current.Value + text.Value;
@@ -149,7 +166,7 @@ namespace PdfRepresantation
                 {
 //                    var stateRtl =
 //                        RightToLeftManager.Instance.PageElemtRtl(pageRTL, currentRightToLeft); // && !digitLtr);
-                    SeperateRtlLtr(opositeDirection, pageRTL, current, last, text);
+                    SeperateRtlLtr(opositeDirection, pageContext.PageRTL, current, lastBlock, text);
                     text = new PdfTextResult
                     {
                         FontSize = current.FontSize,
@@ -157,27 +174,17 @@ namespace PdfRepresantation
                         StrokeColore = current.StrokeColore,
                         Value = current.Value,
                     };
-                    AssignLink(current, text, ref link);
+                    pageContext.LinkManager.AssignLink(current, text, ref link);
 
                     AddNewText(opositeDirection, result, text, ref firstNode);
                 }
 
-                last = current;
+                lastBlock = current;
             }
 
             return result.ToArray();
         }
 
-        private void AssignLink(PdfTextBlock current, PdfTextResult text, ref PdfLinkResult link)
-        {
-            if (current.Link != null)
-            {
-                if (!string.Equals(link?.Link, current.Link))
-                    link = new PdfLinkResult {Link = current.Link};
-                link.Children.Add(text);
-                text.LinkParent = link;
-            }
-        }
         private void SeperateRtlLtr(bool opositeDirection, bool pageRtl,
             PdfTextBlock current, PdfTextBlock lastBlock, PdfTextResult lastText)
         {
@@ -188,6 +195,7 @@ namespace PdfRepresantation
                     !RightToLeftManager.Instance.IsNeutral(lastBlock.Value[lastBlock.Value.Length - 1]))
                 {
                     lastText.Value = lastText.Value + " ";
+                    Log.Debug("seperated:" + lastBlock.Value + "-" + current.Value);
                 }
             }
             else
@@ -197,6 +205,7 @@ namespace PdfRepresantation
                     !RightToLeftManager.Instance.IsNeutral(current.Value[0]))
                 {
                     current.Value = " " + current.Value;
+                    Log.Debug("seperated:" + lastText.Value + "-" + current.Value);
                 }
             }
         }

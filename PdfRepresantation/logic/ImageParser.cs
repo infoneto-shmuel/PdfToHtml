@@ -21,13 +21,11 @@ namespace PdfRepresantation
     public class ImageParser
     {
         public readonly IList<PdfImageDetails> images = new List<PdfImageDetails>();
-        private readonly float pageHeight;
-        private readonly float pageWidth;
+        private readonly PageContext pageContext;
 
-        public ImageParser(float pageHeight, float pageWidth)
+        internal ImageParser(PageContext pageContext)
         {
-            this.pageHeight = pageHeight;
-            this.pageWidth = pageWidth;
+            this.pageContext = pageContext;
         }
 
         public virtual void ParseImage(ImageRenderInfo data)
@@ -39,6 +37,7 @@ namespace PdfRepresantation
             }
             catch (IOException e)
             {
+                Log.Info("Wrong format of image:"+ e.Message);
                 //wrong format of image
                 return;
             }
@@ -46,20 +45,19 @@ namespace PdfRepresantation
             if (!MergeMask(data, PdfName.SMask, ref bytes))
                 MergeMask(data, PdfName.Mask, ref bytes);
 
-
             // var start = data.GetStartPoint();
             var ctm = data.GetImageCtm();
             var width = ctm.Get(Matrix.I11);
             var height = ctm.Get(Matrix.I22);
             var x = ctm.Get(Matrix.I31);
-            var y = pageHeight - ctm.Get(Matrix.I32);
+            var y = pageContext.PageHeight - ctm.Get(Matrix.I32);
             images.Add(new PdfImageDetails
             {
                 Buffer = bytes,
                 Bottom = y,
                 Top = y - height,
                 Left = x,
-                Right = pageWidth - x - width,
+                Right = pageContext.PageWidth - x - width,
                 Width = width,
                 Height = height,
             });

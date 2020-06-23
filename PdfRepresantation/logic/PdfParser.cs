@@ -17,6 +17,7 @@ namespace PdfRepresantation
             };
             for (int pageNumber = 1; pageNumber <= numberOfPages; pageNumber++)
             {
+                Log.Info("parsing page number "+pageNumber);
                 var page = source.GetPage(pageNumber);
                 var pageParser = CreatePageParser(page, pageNumber);
                 new PdfCanvasProcessor(pageParser,

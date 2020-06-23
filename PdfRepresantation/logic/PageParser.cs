@@ -14,25 +14,27 @@ namespace PdfRepresantation
         protected readonly ImageParser imageParser;
         protected readonly ShapeParser shapeParser;
         protected readonly TextParser textParser;
-        private readonly LinesGenerator lineGenerator;
-        protected readonly PdfPage page;
-        protected readonly int pageNumber;
-        private readonly float pageHeight;
-        private readonly float pageWidth;
+        private readonly LinesGenerator linesGenerator;
+
+        private readonly PageContext pageContext;
 
         public PageParser(PdfPage page, int pageNumber)
         {
-            this.page = page;
-            this.pageNumber = pageNumber;
             var pageSize = page.GetPageSize();
-            pageHeight = pageSize.GetHeight();
-            pageWidth = pageSize.GetWidth();
-            var linkManager = new LinkManager(pageHeight, page);
-            lineGenerator = new LinesGenerator(pageWidth);
-            imageParser = new ImageParser(pageHeight, pageWidth);
-            this.shapeParser = new ShapeParser(pageHeight, pageNumber);
-            textParser = new TextParser(pageHeight, pageWidth, linkManager);
-            linkManager.FindLinks();
+            pageContext=new PageContext
+            {
+                Page = page,
+                PageNumber = pageNumber,
+                PageHeight =pageSize.GetHeight(),
+                PageWidth = pageSize.GetWidth()
+            };
+            pageContext.LinkManager = new LinkManager(pageContext);
+            linesGenerator =  new LinesGenerator(pageContext);
+            imageParser = new ImageParser(pageContext);
+            shapeParser = new ShapeParser(pageContext);
+            textParser = new TextParser(pageContext);
+            
+            pageContext.LinkManager.FindLinks();
         }
 
         public void EventOccurred(IEventData data, EventType type)
@@ -63,19 +65,19 @@ namespace PdfRepresantation
 
         public virtual PdfPageDetails CreatePageDetails()
         {
-            var pageRightToLeft = RightToLeftManager.Instance.FindRightToLeft(textParser.texts);
-            var lines = lineGenerator.CreateLines(textParser.texts, pageRightToLeft);
+            pageContext.PageRTL = RightToLeftManager.Instance.FindRightToLeft(textParser.texts);
+            var lines = linesGenerator.CreateLines(textParser.texts);
 
             return new PdfPageDetails
             {
                 Lines = lines,
-                RightToLeft = pageRightToLeft,
+                RightToLeft = pageContext.PageRTL,
                 Images = imageParser.images,
-                PageNumber = pageNumber,
+                PageNumber = pageContext.PageNumber,
                 Shapes = shapeParser.shapes,
                 Fonts = textParser.fonts.Values.ToList(),
-                Height = pageHeight,
-                Width = pageWidth
+                Height = pageContext.PageHeight,
+                Width = pageContext.PageWidth
             };
         }
     }

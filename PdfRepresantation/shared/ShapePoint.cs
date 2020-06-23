@@ -11,7 +11,7 @@ namespace PdfRepresantation
            other!=null&& Math.Abs(X - other.X) < 0.01 && Math.Abs(Y - other.Y) < 0.01;
         public override bool Equals(object obj) => Equals(obj as ShapePoint);
 
-        public override string ToString() =>$"{X},{Y}";
+        public override string ToString() =>$"{X:F2},{Y:F2}";
     }
     public class ShapeLine
     {

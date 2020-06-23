@@ -6,36 +6,45 @@ namespace PdfRepresantation
 {
     class LinesGenerator
     {
-        private readonly float pageWidth;
+        private readonly PageContext pageContext;
 
-        public LinesGenerator(float pageWidth)
+        public LinesGenerator(PageContext pageContext)
         {
-            this.pageWidth = pageWidth;
+            this.pageContext = pageContext;
         }
 
 
-        public IList<PdfTextLineDetails> CreateLines(IList<PdfTextBlock> texts, bool pageRTL)
+        public IList<PdfTextLineDetails> CreateLines(IList<PdfTextBlock> texts)
         {
-            AssignStartEnd(texts, pageRTL);
+            AssignStartEnd(texts);
             return texts
                 .OrderBy(t => t.Start)
-                .GroupBy(t => (float) Math.Round(t.Bottom, 2))
+                .GroupBy(t => (float) Math.Round(t.Bottom, 1))
                 .OrderBy(g => g.Key)
-                .SelectMany(g => new LineGenarator(pageWidth, pageRTL, g).Lines)
+                .SelectMany(g => new LineGenarator(pageContext, g).Lines)
                 .ToList();
         }
 
-        private void AssignStartEnd(IList<PdfTextBlock> texts, bool pageRTL)
+        private void AssignStartEnd(IList<PdfTextBlock> texts)
         {
             foreach (var t in texts)
             {
-                if (pageRTL)
+                if (pageContext.PageRTL)
                 {
-                    t.Start = pageWidth - t.Right;
-                    t.End = pageWidth - t.Left;
+
+                    if (t.Value == " " && t.Width < t.CharSpacing)
+                    {
+                        t.Left = t.Right - t.CharSpacing;
+                        t.Width = t.CharSpacing;
+                    }
+                    t.Start = pageContext.PageWidth - t.Right;
+                    t.End =  pageContext.PageWidth - t.Left;
                 }
                 else
                 {
+                 
+                    if (t.Value == " " && t.Width < t.CharSpacing)
+                        t.Width = t.CharSpacing;
                     t.Start = t.Left;
                     t.End = t.Right;
                 }

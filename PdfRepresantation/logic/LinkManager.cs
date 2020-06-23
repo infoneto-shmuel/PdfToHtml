@@ -18,14 +18,27 @@ namespace PdfRepresantation
             public string uri;
             public float top, bottom, left, right;
         }
-        private readonly float pageHeight;
-        protected readonly PdfPage page;
+        protected readonly PageContext pageContext;
         private readonly List<Link> links=new List<Link>();
 
-        public LinkManager(float pageHeight, PdfPage page)
+        public LinkManager(PageContext pageContext)
         {
-            this.pageHeight = pageHeight;
-            this.page = page;
+             this.pageContext = pageContext;
+        }
+
+        public void AssignLink(PdfTextBlock current, PdfTextResult text, ref PdfLinkResult link)
+        {
+            if (current.Link != null)
+            {
+                if (!string.Equals(link?.Link, current.Link))
+                {
+                    if(link!=null&&Log.DebugSupported)
+                        Log.Debug("link:"+link);
+                    link = new PdfLinkResult {Link = current.Link};
+                }
+                link.Children.Add(text);
+                text.LinkParent = link;
+            }
         }
 
         public void AssignLink(PdfTextBlock text)
@@ -45,7 +58,7 @@ namespace PdfRepresantation
 
        public void FindLinks()
         {
-            foreach (var link in page.GetAnnotations().OfType<PdfLinkAnnotation>())
+            foreach (var link in pageContext.Page.GetAnnotations().OfType<PdfLinkAnnotation>())
             {
                 var uri = link.GetAction()?.GetAsString(PdfName.URI);
                 if (uri == null)
@@ -55,9 +68,9 @@ namespace PdfRepresantation
                 {
                     uri = uri.ToString(),
                     left = Parse(linkCoordinateArray, 0)-1,
-                    top =pageHeight- Parse(linkCoordinateArray, 1)-1,
+                    top =pageContext.PageHeight- Parse(linkCoordinateArray, 1)-1,
                     right = Parse(linkCoordinateArray, 2)+1,
-                    bottom =pageHeight- Parse(linkCoordinateArray, 3)+1,
+                    bottom =pageContext.PageHeight- Parse(linkCoordinateArray, 3)+1,
                 });
             }
 

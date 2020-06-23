@@ -29,6 +29,19 @@ namespace PdfRepresantation
         public Task<string> ConvertToHtmlAsync(byte[] pdf) => ReadAsync(pdf, true);
         public Task<string> ConvertToTextAsync(byte[] pdf) => ReadAsync(pdf, false);
 
+        class ServerException : Exception
+        {
+            private readonly string Text;
+            public override string StackTrace { get; }
+            public ServerException(string message, string stack, string text) : base(message)
+            {
+                Text = text;
+                StackTrace = stack;
+            }
+
+            public override string ToString() => Text;
+        }
+
         async Task<string> ReadAsync(byte[] pdf, bool html)
         {
             var data = Convert.ToBase64String(pdf);
@@ -40,8 +53,22 @@ namespace PdfRepresantation
             using (var client = new HttpClient())
             {
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync(url, stringContent);
-                stringResult = await response.Content.ReadAsStringAsync();
+                try
+                {
+                    var response = await client.PostAsync(url, stringContent);
+                    stringResult = await response.Content.ReadAsStringAsync();
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        var parts = stringResult.Split('\u0001');
+                        if(parts.Length!=3)
+                            throw new Exception(stringResult);
+                        throw new ServerException(parts[0],parts[1],parts[2]);
+                    }
+                }
+                catch (AggregateException e)
+                {
+                    throw e.InnerException ?? e;
+                }
             }
 
             return stringResult;

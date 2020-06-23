@@ -177,31 +177,5 @@ namespace PdfRepresantation
         {
             item.Value = new string(item.Value.Reverse().ToArray());
         }
-
-//        internal PageElemtRtl PageElemtRtl(bool pageRightToLeft, bool elementRightToLeft)
-//        {
-//            if (pageRightToLeft)
-//            {
-//                if (elementRightToLeft)
-//                    return PdfRepresantation.PageElemtRtl.Pright_Eright;
-//                else
-//                    return PdfRepresantation.PageElemtRtl.Pright_Eleft;
-//            }
-//            else
-//            {
-//                if (elementRightToLeft)
-//                    return PdfRepresantation.PageElemtRtl.Pleft_Eright;
-//                else
-//                    return PdfRepresantation.PageElemtRtl.Pleft_Eleft;
-//            }
-//        }
     }
-
-//    enum PageElemtRtl
-//    {
-//        Pright_Eright,
-//        Pleft_Eleft,
-//        Pright_Eleft,
-//        Pleft_Eright,
-//    }
 }

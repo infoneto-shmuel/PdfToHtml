@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 
 namespace PdfRepresantation.Test
 {
+    
     //test the conversion
     //for those tests to run you need to put pdf files in the "File" direcory
     //and the result will be written in the "results" directory
@@ -19,22 +20,22 @@ namespace PdfRepresantation.Test
     {
         private string sourceDir = "Files";
         private string targetDir = "Results";
-
-        static PdfRepresantationTest()
+        [AssemblyInitialize]
+        public static void Init(TestContext context)
         {
             if (Directory.GetCurrentDirectory().Contains("netcoreapp"))
                 Directory.SetCurrentDirectory(Path.Combine("..", "..", ".."));
+            Log.logger = new ConsoleLogger{DebugSupported = true,InfoSupported = true,ErrorSupported = true};
         }
-
         [TestMethod]
         public void ConvertToHtml()
         {
             var paths =new List<string>();
-            var htmlWriter = new PdfHtmlWriter(new HtmlWriterConfig{UseCanvas = true});
+            var htmlWriter = new PdfHtmlWriter(new HtmlWriterConfig{UseCanvas = false});
             foreach (var file in new DirectoryInfo(sourceDir).EnumerateFiles())
             {
                 var name = Path.GetFileNameWithoutExtension(file.Name);
-//                if(name!="pdf-031")
+//                if(name!="building")
 //                    continue;
                 var details = PdfDetailsFactory.Create(file.FullName);
                 var target = Path.Combine(targetDir, name + ".html");

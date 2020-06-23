@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using iText.Kernel.Pdf;
 
 namespace PdfRepresantation
@@ -12,16 +13,27 @@ namespace PdfRepresantation
 
         public static PdfDetails Create(string path)
         {
-            return Create(new PdfReader(path));            
+            try
+            {
+                return Create(new PdfReader(path));
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error in parsing file '{path}'\r\n\r\n{e}");
+                throw;
+            }
         }
+
         public static PdfDetails Create(Stream stream)
         {
             return Create(new PdfReader(stream));
         }
+
         public static PdfDetails Create(byte[] buffer)
         {
             return Create(new MemoryStream(buffer));
-        } 
+        }
+
         private static PdfDetails Create(PdfReader reader)
         {
             using (reader)

@@ -12,11 +12,11 @@ namespace PdfRepresantation
     public class ShapeParser
     {
         public readonly IList<ShapeDetails> shapes = new List<ShapeDetails>();
-        private readonly float pageHeight;
+        private readonly PageContext pageContext;
 
-        public ShapeParser(float pageHeight, int pageNumber)
+        internal ShapeParser(PageContext pageContext)
         {
-            this.pageHeight = pageHeight;
+            this.pageContext = pageContext;
         }
 
         public virtual void ParsePath(PathRenderInfo data)
@@ -34,7 +34,11 @@ namespace PdfRepresantation
             var lineCap = data.GetLineCapStyle();
             var ctm = data.GetCtm();
             var lines = ConvertLines(data.GetPath(), ctm).ToArray();
-            shapes.Add(new ShapeDetails
+            if(lines.Length==0)
+                return;
+            
+
+            var shapeDetails = new ShapeDetails
             {
                 ShapeOperation = shapeOperation,
                 StrokeColor = strokeColor,
@@ -42,7 +46,12 @@ namespace PdfRepresantation
                 LineWidth = lineWidth,
                 EvenOddRule = evenOddRule,
                 Lines = lines
-            });
+            };
+            if (Log.DebugSupported)
+            {
+                Log.Debug($"shape: {shapeDetails}");
+            }
+            shapes.Add(shapeDetails);
         }
 
         protected IEnumerable<ShapeLine> ConvertLines(Path path, Matrix ctm)
@@ -79,7 +88,7 @@ namespace PdfRepresantation
             return new ShapePoint
             {
                 X = vector.Get(Vector.I1),
-                Y = pageHeight - vector.Get(Vector.I2)
+                Y = pageContext.PageHeight - vector.Get(Vector.I2)
             };
         }
     }

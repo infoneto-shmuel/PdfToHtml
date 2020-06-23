@@ -1,30 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web;
 
 namespace PdfRepresantation
 {
     public class PdfHtmlWriter
     {
-        protected readonly HtmlWriterConfig config;
         private readonly PdfShapeHtmlWriter shapeWriter;
+        private readonly PdfTextHtmlWriter textWriter;
+        private readonly PdfImageHtmlWriter imageWriter;
 
         public PdfHtmlWriter(HtmlWriterConfig config = null)
         {
             if (config == null)
                 config = new HtmlWriterConfig();
 
-            this.config = config;
-            if (config.DirImages != null && Directory.Exists(config.DirImages))
-                Directory.CreateDirectory(config.DirImages);
             if (config.DrawShapes)
-                shapeWriter = CreateShapeWriter();
+                shapeWriter = CreateShapeWriter(config);
+            textWriter = CreateTextWriter();
+            imageWriter = CreateImageWriter(config);
         }
+
+        protected virtual PdfTextHtmlWriter CreateTextWriter()
+            => new PdfTextHtmlWriter();
+
+        protected virtual PdfImageHtmlWriter CreateImageWriter(HtmlWriterConfig config)
+            => new PdfImageHtmlWriter(config.EmbeddedImages, config.DirImages);
+
+        protected virtual PdfShapeHtmlWriter CreateShapeWriter(HtmlWriterConfig config)
+        {
+            if (config.UseCanvas)
+                return new PdfShapeCanvasHtmlWriter();
+            else
+                return new PdfShapeSvgHtmlWriter();
+        }
+
 
         public static void AppendColor(Color color, StringBuilder sb)
         {
@@ -35,20 +48,13 @@ namespace PdfRepresantation
                 sb.Append(color.A.ToString("X2"));
         }
 
-        protected virtual PdfShapeHtmlWriter CreateShapeWriter()
-        {
-            if (config.UseCanvas)
-                return new PdfShapeCanvasHtmlWriter();
-            else
-                return new PdfShapeSvgHtmlWriter();
-        }
 
         public string ConvertPage(PdfPageDetails page)
         {
             var sb = new StringBuilder();
             var fontRef = CreateFontRef(page.Fonts);
             var allLines = page.Lines;
-            StartHtml(sb, "pdf page " + page.PageNumber, page.RightToLeft, fontRef, allLines);
+            StartHtml(sb, Title(page), page.RightToLeft, fontRef, allLines);
             AddPage(page, fontRef, sb);
             EndHtml(sb);
             return sb.ToString();
@@ -59,7 +65,7 @@ namespace PdfRepresantation
             var sb = new StringBuilder();
             var fontRef = CreateFontRef(pdf.Fonts);
             var allLines = pdf.Pages.SelectMany(p => p.Lines);
-            StartHtml(sb, "pdf converted to html", null, fontRef, allLines);
+            StartHtml(sb, Title(pdf), null, fontRef, allLines);
             foreach (var page in pdf.Pages)
             {
                 AddPage(page, fontRef, sb);
@@ -67,6 +73,16 @@ namespace PdfRepresantation
 
             EndHtml(sb);
             return sb.ToString();
+        }
+
+        protected virtual string Title(PdfDetails pdf)
+        {
+            return "pdf converted to html";
+        }
+
+        protected virtual string Title(PdfPageDetails page)
+        {
+            return "pdf page " + page.PageNumber;
         }
 
         private static Dictionary<PdfFontDetails, int> CreateFontRef(IEnumerable<PdfFontDetails> fonts)
@@ -77,7 +93,7 @@ namespace PdfRepresantation
             return fontRef;
         }
 
-        public void StartHtml(StringBuilder sb, string title, bool? rightToLeft,
+        protected virtual void StartHtml(StringBuilder sb, string title, bool? rightToLeft,
             Dictionary<PdfFontDetails, int> fontRef,
             IEnumerable<PdfTextLineDetails> allLines)
         {
@@ -95,14 +111,14 @@ namespace PdfRepresantation
             sb.Append(">");
         }
 
-        public void EndHtml(StringBuilder sb)
+        protected virtual  void EndHtml(StringBuilder sb)
         {
             sb.Append(@"
 </body>
 </html>");
         }
 
-        public void AddPage(PdfPageDetails page, Dictionary<PdfFontDetails, int> fontRef, StringBuilder sb)
+        protected virtual void AddPage(PdfPageDetails page, Dictionary<PdfFontDetails, int> fontRef, StringBuilder sb)
         {
             AddHeader(page, sb);
             sb.Append(@"
@@ -112,12 +128,12 @@ namespace PdfRepresantation
                 .Append("px;\">");
             foreach (var pdfImage in page.Images)
             {
-                AddImage(page, pdfImage, sb);
+                imageWriter.AddImage(page, pdfImage, sb);
             }
 
             foreach (var line in page.Lines)
             {
-                AddLine(page, fontRef, line, sb);
+                textWriter.AddLine(page, fontRef, line, sb);
             }
 
             sb.Append(@"
@@ -132,176 +148,33 @@ namespace PdfRepresantation
                 .Append("px;\">Page ").Append(page.PageNumber).Append("</h2>");
         }
 
-        protected virtual void AddLine(PdfPageDetails page, Dictionary<PdfFontDetails, int> fontRef,
-            PdfTextLineDetails line, StringBuilder sb)
+
+        private void AddShapes(PdfPageDetails page, StringBuilder sb)
         {
-            sb.Append($@"
-        <div class=""line"" style=""")
-                .Append("right:").Append((int) line.Right)
-                .Append("px;left:").Append((int) line.Left)
-                .Append("px;top:").Append((int) (line.Top))
-                .Append("px;width:").Append((int) (line.Width))
-                .Append("px;bottom:").Append((int) (page.Height - line.Bottom))
-                .Append("px\" >");
-            PdfLinkResult link = null;
-            foreach (var text in line.Texts)
-            {
-                if (text.LinkParent != null)
-                {
-                    if (text.LinkParent != link)
-                        AddLink(link = text.LinkParent, fontRef, sb);
-                    continue;
-                }
-
-                AddText(text, fontRef, sb);
-            }
-
-            sb.Append(@"</div>");
-        }
-
-        protected virtual void AddLink(PdfLinkResult link, Dictionary<PdfFontDetails, int> fontRef, StringBuilder sb)
-        {
-            sb.Append($@"<a href=""").Append(link.Link).Append("\">");
-            foreach (var text in link.Children)
-            {
-                AddText(text, fontRef, sb);
-            }
-
-            sb.Append(@"</a>");
-        }
-
-        protected virtual void AddText(PdfTextResult text,
-            Dictionary<PdfFontDetails, int> fontRef, StringBuilder sb)
-        {
-            var b = text.StrokeColore?.GetBrightness();
-            if (b > 0.9)
-            {
-                sb.Append($@"<span class=""dark-back");
-                AddFontClass(text, fontRef, sb);
-                sb.Append(@""">");
-                AddText(text.Value, sb);
-                sb.Append(@"</span>");
-            }
-
-            sb.Append($@"<span class=""baseline");
-            AddFontClass(text, fontRef, sb);
-            sb.Append("\" style=\"");
-            AddColor(text, sb);
-            sb.Append(@""">");
-            AddText(text.Value, sb);
-            sb.Append(@"</span>");
-        }
-
-        private void AddFontClass(PdfTextResult text,
-            Dictionary<PdfFontDetails, int> fontRef, StringBuilder sb)
-        {
-            sb.Append($@" font").Append(fontRef[text.Font] + 1);
-            sb.Append(" font-size-")
-                .Append((Math.Round(text.FontSize * 2) / 2).ToString(formatNumInClassName));
-        }
-
-        private static void AddText(string text, StringBuilder sb)
-        {
-            var textEncoded = HttpUtility.HtmlEncode(text);
-            bool lastSpace = false;
-            foreach (var c in textEncoded)
-            {
-                if (c == ' ')
-                {
-                    if (lastSpace)
-                        sb.Append("&nbsp;");
-                    else
-                        sb.Append(c);
-                    lastSpace = true;
-                    continue;
-                }
-
-                lastSpace = false;
-                if (char.IsLetterOrDigit(c))
-                    sb.Append(c);
-                else if (c <= 127)
-                    sb.Append(c);
-                else
-                    sb.Append("&#").Append((int) c).Append(";");
-            }
-        }
-
-        protected virtual void AddColor(PdfTextResult text, StringBuilder sb)
-        {
-            if (!text.StrokeColore.HasValue)
+            if (page.Shapes.Count == 0)
                 return;
-            sb.Append("color:");
-            AppendColor(text.StrokeColore.Value, sb);
-            sb.Append(";");
-        }
-
-        private int indexImage = 1;
-
-        protected virtual void AddImage(PdfPageDetails page, PdfImageDetails image, StringBuilder sb)
-        {
-            sb.Append(@"
-        <img class=""image"" height=""").Append(image.Height)
-                .Append("\" width=\"")
-                .Append(image.Width).Append("\" src=\"");
-            if (config.EmbeddedImages || config.DirImages == null)
-            {
-                sb.Append("data:image/png;base64, ")
-                    .Append(Convert.ToBase64String(image.Buffer));
-            }
-            else
-            {
-                string path;
-                lock (this)
-                {
-                    FileInfo file;
-                    do file = new FileInfo(Path.Combine(config.DirImages, "image" + indexImage++ + ".png"));
-                    while (file.Exists);
-                    path = file.FullName;
-                    File.WriteAllBytes(path, image.Buffer);
-                }
-
-                sb.Append(path);
-            }
-
-            sb.Append("\" style=\"")
-                .Append(page.RightToLeft ? "right" : "left")
-                .Append(":").Append((int) ((page.RightToLeft ? image.Right : image.Left)))
-                .Append("px; top:").Append((int) (image.Top)).Append("px\">");
-            ;
-        }
-
-        protected virtual void AddShapes(PdfPageDetails page, StringBuilder sb)
-        {
-            if (!config.DrawShapes || page.Shapes.Count == 0)
-                return;
-            shapeWriter.AddShapes(page, sb);
+            shapeWriter?.AddShapes(page, sb);
         }
 
 
-        NumberFormatInfo formatNumInClassName = new NumberFormatInfo {NumberDecimalSeparator = "-"};
-
-        protected virtual void AddStyle(Dictionary<PdfFontDetails, int> fontRef,
+        private void AddStyle(Dictionary<PdfFontDetails, int> fontRef,
             IEnumerable<PdfTextLineDetails> allLines,
             StringBuilder sb)
         {
             sb.Append(@"
-    <style>
-        .line{
-            position:absolute;
-            min-width:fit-content;
+    <style>");
+            textWriter.AddTextStyle(sb);
+            imageWriter.AddStyle(sb);
+            shapeWriter.AddStyle(sb);
+            AddGlobalStyle(sb);
+            textWriter.AddFontStyle(fontRef, allLines, sb);
+            sb.Append(@"
+    </style>");
         }
-        .baseline{vertical-align:baseline;}
-        .image{position:absolute}        
-        .dark-back{
-            background-color:#dedede;
-            position:absolute;
-            z-index:-1;
-            color:transparent;
-        }
-        .canvas{
-            margin: 0 auto 0 auto;
-            display: block;
-        }
+
+        private static void AddGlobalStyle(StringBuilder sb)
+        {
+            sb.Append(@"
         .header{
             color: #795548;
             font-family: Arial;
@@ -314,29 +187,8 @@ namespace PdfRepresantation
             margin: 0 auto 0 auto;
             border-width: 2px;
         }");
-            foreach (var size in allLines.SelectMany(l => l.Texts).Select(t => Math.Round(t.FontSize * 2)).Distinct())
-            {
-                sb.Append(@"
-        .font-size-").Append((size / 2).ToString(formatNumInClassName))
-                    .Append("{font-size:").Append(size / 2).Append("px;}");
-            }
-
-            foreach (var pair in fontRef)
-            {
-                sb.Append(@"
-        .font").Append(pair.Value + 1).Append("{font-family:\"").Append(pair.Key.FontFamily)
-                    .Append("\",\"").Append(pair.Key.BasicFontFamily).Append("\"; ");
-                if (pair.Key.Bold)
-                    sb.Append(" font-weight: bold;");
-                if (pair.Key.Italic)
-                    sb.Append(" font-style: italic;");
-                sb.Append('}');
-            }
-
-
-            sb.Append(@"
-    </style>");
         }
+
 
         public void SaveAsHtml(PdfDetails pdf, string path)
         {
