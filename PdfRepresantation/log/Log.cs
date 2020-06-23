@@ -9,20 +9,17 @@
 
         public static void Debug(string s)
         {
-            if (logger?.DebugSupported == true)
-                logger.Debug(s);
+            if (DebugSupported) logger.Debug(s);
         }
 
         public static void Info(string s)
         {
-            if (logger?.InfoSupported == true)
-                logger.Info(s);
+            if (InfoSupported) logger.Info(s);
         }
 
         public static void Error(string s)
         {
-            if (logger?.ErrorSupported == true)
-                logger.Error(s);
+            if (ErrorSupported) logger.Error(s);
         }
     }
 }
