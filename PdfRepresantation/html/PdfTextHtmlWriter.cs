@@ -24,6 +24,9 @@ namespace PdfRepresantation
 
             foreach (var pair in fontRef)
             {
+
+                sb.Append(@"
+        .bold{font-weight: bold;}");
                 sb.Append(@"
         .font").Append(pair.Value + 1).Append("{font-family:\"").Append(pair.Key.FontFamily)
                     .Append("\",\"").Append(pair.Key.BasicFontFamily).Append("\"; ");
@@ -100,6 +103,8 @@ namespace PdfRepresantation
             Dictionary<PdfFontDetails, int> fontRef, StringBuilder sb)
         {
             sb.Append($@" font").Append(fontRef[text.Font] + 1);
+            if(text.Font.Bold)
+                sb.Append($@" bold");
             sb.Append(" font-size-")
                 .Append((Math.Round(text.FontSize * 2) / 2).ToString(formatNumInClassName));
         }

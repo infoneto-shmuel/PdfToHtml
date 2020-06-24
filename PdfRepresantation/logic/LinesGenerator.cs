@@ -19,7 +19,7 @@ namespace PdfRepresantation
             AssignStartEnd(texts);
             return texts
                 .OrderBy(t => t.Start)
-                .GroupBy(t => (float) Math.Round(t.Bottom, 1))
+                .GroupBy(t => (int) Math.Round(t.Bottom*2))
                 .OrderBy(g => g.Key)
                 .SelectMany(g => new LineGenarator(pageContext, g).Lines)
                 .ToList();

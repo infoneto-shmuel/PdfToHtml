@@ -8,14 +8,14 @@ namespace PdfRepresantation
     class LineGenarator
     {
         private readonly PageContext pageContext;
-        private readonly IGrouping<float, PdfTextBlock> group;
+        private readonly IGrouping<int, PdfTextBlock> group;
         private List<PdfTextLineDetails> lines;
 
         IList<PdfTextBlock> blocks;
         float left, right, top;
         PdfTextBlock last;
 
-        internal LineGenarator(PageContext pageContext, IGrouping<float, PdfTextBlock> group)
+        internal LineGenarator(PageContext pageContext, IGrouping<int, PdfTextBlock> group)
         {
             this.pageContext = pageContext;
             this.group = group;
@@ -44,7 +44,7 @@ namespace PdfRepresantation
                 Log.Debug("line:" + string.Join("", lineTexts.Select(t => t.Value)));
             lines.Add(new PdfTextLineDetails
             {
-                Bottom = @group.Key,
+                Bottom = @group.Key/2F,
                 Left = left,
                 Right = pageContext.PageWidth - right,
                 Texts = lineTexts,
