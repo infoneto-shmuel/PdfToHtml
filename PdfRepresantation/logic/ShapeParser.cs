@@ -25,11 +25,11 @@ namespace PdfRepresantation
             if (shapeOperation == ShapeOperation.None)
                 return;
             bool evenOddRule = data.GetRule() == PdfCanvasConstants.FillingRule.EVEN_ODD;
-            var fillColor = ColorManager.Instance.GetColor(data.GetFillColor());
+            var fillColor = ColorManager.Instance.GetColor(data.GetFillColor(),data.GetGraphicsState().GetFillOpacity());
             if (shapeOperation != ShapeOperation.Stroke && (fillColor == null || fillColor == Color.Black))
                 return;
 
-            var strokeColor = ColorManager.Instance.GetColor(data.GetStrokeColor());
+            var strokeColor = ColorManager.Instance.GetColor(data.GetStrokeColor(),data.GetGraphicsState().GetStrokeOpacity());
             var lineWidth = data.GetLineWidth();
             var lineCap = data.GetLineCapStyle();
             var ctm = data.GetCtm();

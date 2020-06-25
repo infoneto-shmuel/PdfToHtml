@@ -36,7 +36,7 @@ namespace PdfRepresantation
                 Left = start.Get(Vector.I1),
                 Width = baseline.GetEndPoint().Get(Vector.I1) - start.Get(Vector.I1),
                 FontSize = FontManager.Instance.GetFontSize(textRenderInfo, baseline, ascentLine),
-                StrokeColore = ColorManager.Instance.GetColor(textRenderInfo.GetStrokeColor()),
+                StrokeColore = ColorManager.Instance.GetColor(textRenderInfo),
                 CharSpacing = textRenderInfo.GetSingleSpaceWidth(),
                 Font = GetFont(textRenderInfo),
             };
