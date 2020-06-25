@@ -38,6 +38,27 @@ namespace PdfRepresantation
             }
         }
 
+        public virtual void AddScriptInit(StringBuilder sb)
+        {
+            sb.Append(@"
+            var articles=document.getElementsByClassName('article');
+            for (var i = 0; i < articles.length; i++) {
+                var article=articles[i];
+                var articleRect = article.getBoundingClientRect();
+                 function addDarken(span) {
+                    var rect = span.getBoundingClientRect();
+                    var b = document.createElement('b');
+                    b.setAttribute('style', 'width:'+(rect.width|0)+'px;height:'+
+                        (rect.height|0)+'px;top:'+((rect.top - articleRect.top-2)| 0)+'px;left:'
+                        +((rect.left - articleRect.left-2)| 0)+'px' );
+                    article.appendChild(b);
+                }
+                var spans=article.getElementsByClassName('darken');
+                for (var j = 0; j < spans.length; j++) {
+                    addDarken(spans[j]);
+                }
+            }");
+        }
 
         public virtual void AddLine(PdfPageDetails page, Dictionary<PdfFontDetails, int> fontRef,
             PdfTextLineDetails line, StringBuilder sb)
@@ -69,18 +90,15 @@ namespace PdfRepresantation
         protected virtual void AddText(PdfTextResult text,
             Dictionary<PdfFontDetails, int> fontRef, StringBuilder sb)
         {
-            var b = text.StrokeColore?.GetBrightness();
-            if (b > 0.9)
-            {
-                sb.Append($@"<span class=""dark-back");
-                AddFontClass(text, fontRef, sb);
-                sb.Append(@""">");
-                AddText(text.Value, sb);
-                sb.Append(@"</span>");
-            }
+            
 
             sb.Append($@"<span class=""baseline");
             AddFontClass(text, fontRef, sb);
+            var b = text.StrokeColore?.GetBrightness();
+            if (b > 0.9)
+            {
+                sb.Append($@" darken");            
+            }
             sb.Append("\" style=\"");
             AddColor(text, sb);
             sb.Append(@""">");
@@ -150,14 +168,15 @@ namespace PdfRepresantation
         .line{
             position:absolute;
             min-width:fit-content;
+            white-space: nowrap;
         }
         .baseline{vertical-align:baseline;}
-        .dark-back{
-            background-color:#dedede;
-            position:absolute;
-            z-index:-1;
-            color:transparent;
-        }");
+         b{
+            background-color: lightgray;
+            display: block;
+            position: absolute;
+            z-index: -1;
+         }");
         }
     }
 }

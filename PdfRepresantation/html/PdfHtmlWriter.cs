@@ -103,9 +103,16 @@ namespace PdfRepresantation
     <title>").Append(title).Append(@"</title>");
             AddStyle(fontRef, allLines, sb);
             shapeWriter.AddScript(sb);
+            sb.Append(@"    
+    <script>
+        function init() {");
+            textWriter.AddScriptInit(sb);
+                sb.Append(@"
+        }
+    </script>");
             sb.Append($@"
 </head>
-<body");
+<body onload=""init()""");
             if (rightToLeft.HasValue)
                 sb.Append(@" dir=""").Append(rightToLeft.Value ? "rtl" : "ltr").Append("\"");
             sb.Append(">");
