@@ -21,7 +21,7 @@ namespace PdfRepresantation
             {
                 case CalGray calGray:
                 case DeviceGray deviceGray:
-                    return FromGray(alpha, value[0]);
+                    return FromGray(value[0],alpha);
                 case CalRgb calRgb:
                 case DeviceRgb deviceRgb:
                     return FromRGB(value[0], value[1], value[2], alpha);
@@ -32,7 +32,7 @@ namespace PdfRepresantation
                     var source = ((PdfArray) colorSpace.GetPdfObject()).GetAsStream(1);
                     var alt = source.GetAsName(PdfName.Alternate);
                     if (Equals(alt, PdfName.CalGray) || Equals(alt, PdfName.DeviceGray))
-                        return FromGray(alpha, value[0]);
+                        return FromGray(value[0],alpha);
                     if (Equals(alt, PdfName.CalRGB) || Equals(alt, PdfName.DeviceRGB))
                         return FromRGB(value[0], value[1], value[2], alpha);
                     if (Equals(alt, PdfName.DeviceCMYK))
@@ -75,7 +75,7 @@ namespace PdfRepresantation
                 (int) (blue * 255));
         }
 
-        private static Color? FromGray(float alpha, float gray)
+        private static Color? FromGray(float gray,float alpha)
         {
             var g = (int) (gray * 255);
             return Color.FromArgb((int) (alpha * 255), g, g, g);
