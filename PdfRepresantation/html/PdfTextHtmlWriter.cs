@@ -21,12 +21,12 @@ namespace PdfRepresantation
         .font-size-").Append((size / 2).ToString(formatNumInClassName))
                     .Append("{font-size:").Append(size / 2).Append("px;}");
             }
+                sb.Append(@"
+        .bold{font-weight: bold;}");
 
             foreach (var pair in fontRef)
             {
 
-                sb.Append(@"
-        .bold{font-weight: bold;}");
                 sb.Append(@"
         .font").Append(pair.Value + 1).Append("{font-family:\"").Append(pair.Key.FontFamily)
                     .Append("\",\"").Append(pair.Key.BasicFontFamily).Append("\"; ");
