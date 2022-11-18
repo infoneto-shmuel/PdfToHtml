@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using iText.IO.Font;
 using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf.Canvas.Parser.Data;
+using PdfRepresantation.Model.Pdf;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Logic
 {
     public class FontManager
     {
@@ -24,9 +21,9 @@ namespace PdfRepresantation
         {
         }
 
-        public PdfFontDetails CreateFont(PdfFont pdfFont)
+        public FontDetails CreateFont(PdfFont pdfFont)
         {
-            var font = new PdfFontDetails();
+            var font = new FontDetails();
             var fontName
                 = pdfFont.GetFontProgram().GetFontNames().GetFontName();
             font.FontFamily = fontName;
@@ -88,10 +85,10 @@ namespace PdfRepresantation
         private string lastLog;
         private void LogWrongFontSize(string m)
         {
-            if (!Log.DebugSupported||lastLog == m)
+            if (!Log.Log.DebugSupported||lastLog == m)
                 return;
             lastLog = m;
-            Log.Debug(m);
+            Log.Log.Debug(m);
         }
     }
 }

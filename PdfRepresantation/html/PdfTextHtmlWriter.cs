@@ -4,15 +4,17 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
+using PdfRepresantation.Internals.Helpers;
+using PdfRepresantation.Model.Pdf;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Html
 {
     public class PdfTextHtmlWriter
     {
         NumberFormatInfo formatNumInClassName = new NumberFormatInfo {NumberDecimalSeparator = "-"};
 
-        public virtual void AddFontStyle(Dictionary<PdfFontDetails, int> fontRef,
-            IEnumerable<PdfTextLineDetails> allLines,
+        public virtual void AddFontStyle(Dictionary<FontDetails, int> fontRef,
+            IEnumerable<TextLineDetails> allLines,
             StringBuilder sb)
         {
             foreach (var size in allLines.SelectMany(l => l.Texts).Select(t => Math.Round(t.FontSize * 2)).Distinct())
@@ -60,8 +62,8 @@ namespace PdfRepresantation
             }");
         }
 
-        public virtual void AddLine(PdfPageDetails page, Dictionary<PdfFontDetails, int> fontRef,
-            PdfTextLineDetails line, StringBuilder sb)
+        public virtual void AddLine(PageDetails page, Dictionary<FontDetails, int> fontRef,
+            TextLineDetails line, StringBuilder sb)
         {
             sb.Append($@"
         <div class=""line"" style=""")
@@ -71,7 +73,7 @@ namespace PdfRepresantation
                 .Append("px;width:").Append((int) (line.Width))
                 .Append("px;bottom:").Append((int) (page.Height - line.Bottom))
                 .Append("px\" >");
-            PdfLinkResult link = null;
+            LinkResult link = null;
             foreach (var text in line.Texts)
             {
                 if (text.LinkParent != null)
@@ -87,8 +89,8 @@ namespace PdfRepresantation
             sb.Append(@"</div>");
         }
 
-        protected virtual void AddText(PdfTextResult text,
-            Dictionary<PdfFontDetails, int> fontRef, StringBuilder sb)
+        protected virtual void AddText(TextResult text,
+            Dictionary<FontDetails, int> fontRef, StringBuilder sb)
         {
             
 
@@ -106,7 +108,7 @@ namespace PdfRepresantation
             sb.Append(@"</span>");
         }
 
-        protected virtual void AddLink(PdfLinkResult link, Dictionary<PdfFontDetails, int> fontRef, StringBuilder sb)
+        protected virtual void AddLink(LinkResult link, Dictionary<FontDetails, int> fontRef, StringBuilder sb)
         {
             sb.Append($@"<a href=""").Append(link.Link).Append("\">");
             foreach (var text in link.Children)
@@ -117,8 +119,8 @@ namespace PdfRepresantation
             sb.Append(@"</a>");
         }
 
-        protected void AddFontClass(PdfTextResult text,
-            Dictionary<PdfFontDetails, int> fontRef, StringBuilder sb)
+        protected void AddFontClass(TextResult text,
+            Dictionary<FontDetails, int> fontRef, StringBuilder sb)
         {
             sb.Append($@" font").Append(fontRef[text.Font] + 1);
             if(text.Font.Bold)
@@ -153,12 +155,12 @@ namespace PdfRepresantation
             }
         }
 
-        protected virtual void AddColor(PdfTextResult text, StringBuilder sb)
+        protected virtual void AddColor(TextResult text, StringBuilder sb)
         {
             if (!text.StrokeColore.HasValue)
                 return;
             sb.Append("color:");
-            PdfHtmlWriter.AppendColor(text.StrokeColore.Value, sb);
+            ColorHelper.AppendColor(text.StrokeColore.Value, sb);
             sb.Append(";");
         }
 

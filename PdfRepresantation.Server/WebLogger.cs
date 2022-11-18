@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using ILogger = PdfRepresantation.Interfaces.Log.ILogger;
 
 namespace PdfRepresantation.Server
 {

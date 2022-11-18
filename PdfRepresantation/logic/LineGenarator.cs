@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using iText.Kernel.Pdf.Canvas.Parser.Listener;
+using PdfRepresantation.Model.Pdf;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Logic
 {
     class LineGenarator
     {
         private readonly PageContext pageContext;
         private readonly IGrouping<int, PdfTextBlock> group;
-        private List<PdfTextLineDetails> lines;
+        private List<TextLineDetails> lines;
 
-        IList<PdfTextBlock> blocks;
+        List<PdfTextBlock> blocks;
         float left, right, top;
         PdfTextBlock last;
 
@@ -21,7 +20,7 @@ namespace PdfRepresantation
             this.group = group;
         }
 
-        public IEnumerable<PdfTextLineDetails> Lines
+        public IEnumerable<TextLineDetails> Lines
         {
             get
             {
@@ -40,9 +39,9 @@ namespace PdfRepresantation
             var lineTexts = MergeTextInLine();
             if (lineTexts.All(t => string.IsNullOrWhiteSpace(t.Value)))
                 return;
-            if (Log.DebugSupported)
-                Log.Debug("line:" + string.Join("", lineTexts.Select(t => t.Value)));
-            lines.Add(new PdfTextLineDetails
+            if (Log.Log.DebugSupported)
+                Log.Log.Debug("line:" + string.Join("", lineTexts.Select(t => t.Value)));
+            lines.Add(new TextLineDetails
             {
                 Bottom = @group.Key/2F,
                 Left = left,
@@ -65,7 +64,7 @@ namespace PdfRepresantation
 
         private void CalculateLines()
         {
-            lines = new List<PdfTextLineDetails>();
+            lines = new List<TextLineDetails>();
             InitProperties();
             foreach (var current in group)
             {
@@ -117,7 +116,7 @@ namespace PdfRepresantation
             }
             else
             {
-                Log.Debug($"adding space between '{last.Value}'-'{current.Value}'");
+                Log.Log.Debug($"adding space between '{last.Value}'-'{current.Value}'");
                 blocks.Add(new PdfTextBlock
                 {
                     Bottom = current.Bottom,
@@ -136,13 +135,13 @@ namespace PdfRepresantation
         }
 
 
-        private IList<PdfTextResult> MergeTextInLine()
+        private List<TextResult> MergeTextInLine()
         {
-            var result = new LinkedList<PdfTextResult> { };
-            LinkedListNode<PdfTextResult> firstNode = null;
+            var result = new LinkedList<TextResult> { };
+            LinkedListNode<TextResult> firstNode = null;
             PdfTextBlock lastBlock = null;
-            PdfTextResult text = null;
-            PdfLinkResult link = null;
+            TextResult text = null;
+            LinkResult link = null;
             for (var index = 0; index < blocks.Count; index++)
             {
                 var current = blocks[index];
@@ -167,7 +166,7 @@ namespace PdfRepresantation
 //                    var stateRtl =
 //                        RightToLeftManager.Instance.PageElemtRtl(pageRTL, currentRightToLeft); // && !digitLtr);
                     SeperateRtlLtr(opositeDirection, pageContext.PageRTL, current, lastBlock, text);
-                    text = new PdfTextResult
+                    text = new TextResult
                     {
                         FontSize = current.FontSize,
                         Font = current.Font,
@@ -182,11 +181,11 @@ namespace PdfRepresantation
                 lastBlock = current;
             }
 
-            return result.ToArray();
+            return result.ToList();
         }
 
         private void SeperateRtlLtr(bool opositeDirection, bool pageRtl,
-            PdfTextBlock current, PdfTextBlock lastBlock, PdfTextResult lastText)
+            PdfTextBlock current, PdfTextBlock lastBlock, TextResult lastText)
         {
             if (opositeDirection)
             {
@@ -195,7 +194,7 @@ namespace PdfRepresantation
                     !RightToLeftManager.Instance.IsNeutral(lastBlock.Value[lastBlock.Value.Length - 1]))
                 {
                     lastText.Value = lastText.Value + " ";
-                    Log.Debug("seperated:" + lastBlock.Value + "-" + current.Value);
+                    Log.Log.Debug("seperated:" + lastBlock.Value + "-" + current.Value);
                 }
             }
             else
@@ -205,13 +204,13 @@ namespace PdfRepresantation
                     !RightToLeftManager.Instance.IsNeutral(current.Value[0]))
                 {
                     current.Value = " " + current.Value;
-                    Log.Debug("seperated:" + lastText.Value + "-" + current.Value);
+                    Log.Log.Debug("seperated:" + lastText.Value + "-" + current.Value);
                 }
             }
         }
 
-        private static void AddNewText(bool opositeDirection, LinkedList<PdfTextResult> result, PdfTextResult text,
-            ref LinkedListNode<PdfTextResult> firstNode)
+        private static void AddNewText(bool opositeDirection, LinkedList<TextResult> result, TextResult text,
+            ref LinkedListNode<TextResult> firstNode)
         {
             if (opositeDirection)
             {

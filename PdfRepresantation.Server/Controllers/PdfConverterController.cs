@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PdfRepresantation.Html;
+using PdfRepresantation.Logic;
 
 namespace PdfRepresantation.Server.Controllers
 {
@@ -22,7 +24,7 @@ namespace PdfRepresantation.Server.Controllers
             {
                 var buffer = Convert.FromBase64String(pdf.ContentBase64);
                 var details = PdfDetailsFactory.Create(buffer);
-                var result = htmlWriter.ConvertPdf(details);
+                var result = htmlWriter.ConvertPdf(details, true);
                 return result;
             }
             catch (Exception e)

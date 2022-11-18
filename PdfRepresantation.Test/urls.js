@@ -1,3 +1,4 @@
 urls=[
-  "Results\\gnu license.html",
+  "Results\\document.json",
+  "Results\\gnu license.json"
 ];

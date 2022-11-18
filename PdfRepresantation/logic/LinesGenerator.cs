@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PdfRepresantation.Model.Pdf;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Logic
 {
     class LinesGenerator
     {
@@ -14,7 +15,7 @@ namespace PdfRepresantation
         }
 
 
-        public IList<PdfTextLineDetails> CreateLines(IList<PdfTextBlock> texts)
+        public List<TextLineDetails> CreateLines(List<PdfTextBlock> texts)
         {
             AssignStartEnd(texts);
             return texts
@@ -25,7 +26,7 @@ namespace PdfRepresantation
                 .ToList();
         }
 
-        private void AssignStartEnd(IList<PdfTextBlock> texts)
+        private void AssignStartEnd(List<PdfTextBlock> texts)
         {
             foreach (var t in texts)
             {

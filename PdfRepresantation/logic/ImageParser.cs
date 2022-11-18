@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using iText.IO.Image;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser.Data;
-using iText.Kernel.Pdf.Canvas.Wmf;
 using iText.Kernel.Pdf.Xobject;
-using Org.BouncyCastle.Crypto.Modes;
-using Image = iText.Layout.Element.Image;
+using PdfRepresantation.Model.Pdf;
 using IOException = iText.IO.IOException;
 using Rectangle = System.Drawing.Rectangle;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Logic
 {
     public class ImageParser
     {
-        public readonly IList<PdfImageDetails> images = new List<PdfImageDetails>();
+        public readonly List<ImageDetails> images = new List<ImageDetails>();
         private readonly PageContext pageContext;
 
         internal ImageParser(PageContext pageContext)
@@ -37,7 +31,7 @@ namespace PdfRepresantation
             }
             catch (IOException e)
             {
-                Log.Info("Wrong format of image:"+ e.Message);
+                Log.Log.Info("Wrong format of image:"+ e.Message);
                 //wrong format of image
                 return;
             }
@@ -51,7 +45,7 @@ namespace PdfRepresantation
             var height = ctm.Get(Matrix.I22);
             var x = ctm.Get(Matrix.I31);
             var y = pageContext.PageHeight - ctm.Get(Matrix.I32);
-            images.Add(new PdfImageDetails
+            images.Add(new ImageDetails
             {
                 Buffer = bytes,
                 Bottom = y,

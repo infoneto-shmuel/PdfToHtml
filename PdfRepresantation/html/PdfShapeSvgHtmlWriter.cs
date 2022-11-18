@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using System.Text;
+using PdfRepresantation.Internals.Helpers;
+using PdfRepresantation.Model.Enums;
+using PdfRepresantation.Model.Pdf;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Html
 {
     public class PdfShapeSvgHtmlWriter : PdfShapeHtmlWriter
     {
-        public override void AddShapes(PdfPageDetails page, StringBuilder sb)
+        public override void AddShapes(PageDetails page, StringBuilder sb)
         {
             sb.Append(@"
     <svg class=""canvas"" height=""").Append(Math.Round(page.Height))
@@ -80,7 +83,7 @@ namespace PdfRepresantation
         {
             if (color.HasValue)
             {
-                PdfHtmlWriter.AppendColor(color.Value, sb);
+                ColorHelper.AppendColor(color.Value, sb);
             }
             else
             {

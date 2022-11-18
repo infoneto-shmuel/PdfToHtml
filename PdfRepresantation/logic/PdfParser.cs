@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
+using PdfRepresantation.Model.Pdf;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Logic
 {
     public class PdfParser
     {
@@ -13,11 +13,11 @@ namespace PdfRepresantation
             var numberOfPages = source.GetNumberOfPages();
             PdfDetails details = new PdfDetails
             {
-                Pages = new PdfPageDetails[numberOfPages],
+                Pages = new PageDetails[numberOfPages].ToList(),
             };
             for (int pageNumber = 1; pageNumber <= numberOfPages; pageNumber++)
             {
-                Log.Info("parsing page number "+pageNumber);
+                Log.Log.Info("parsing page number "+pageNumber);
                 var page = source.GetPage(pageNumber);
                 var pageParser = CreatePageParser(page, pageNumber);
                 new PdfCanvasProcessor(pageParser,

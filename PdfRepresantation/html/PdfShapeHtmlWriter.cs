@@ -1,11 +1,11 @@
-﻿using System.Drawing;
-using System.Text;
+﻿using System.Text;
+using PdfRepresantation.Model.Pdf;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Html
 {
     public abstract class PdfShapeHtmlWriter
     {
-        public abstract void AddShapes(PdfPageDetails page, StringBuilder sb);
+        public abstract void AddShapes(PageDetails page, StringBuilder sb);
 
         public abstract void AddScript(StringBuilder sb);
 

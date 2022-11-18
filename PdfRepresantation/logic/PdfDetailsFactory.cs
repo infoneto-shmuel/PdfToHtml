@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
 using iText.Kernel.Pdf;
+using PdfRepresantation.Model.Pdf;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Logic
 {
     public class PdfDetailsFactory
     {
@@ -19,7 +20,7 @@ namespace PdfRepresantation
             }
             catch (Exception e)
             {
-                Log.Error($"Error in parsing file '{path}'\r\n\r\n{e}");
+                Log.Log.Error($"Error in parsing file '{path}'\r\n\r\n{e}");
                 throw;
             }
         }

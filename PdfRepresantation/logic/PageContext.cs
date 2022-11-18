@@ -1,6 +1,6 @@
 ﻿using iText.Kernel.Pdf;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Logic
 {
     class PageContext
     {

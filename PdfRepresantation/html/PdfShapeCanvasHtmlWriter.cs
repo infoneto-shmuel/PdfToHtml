@@ -2,12 +2,14 @@
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using PdfRepresantation.Internals.Helpers;
+using PdfRepresantation.Model.Pdf;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Html
 {
     public    class PdfShapeCanvasHtmlWriter:PdfShapeHtmlWriter
     {
-        public override void AddShapes(PdfPageDetails page, StringBuilder sb)
+        public override void AddShapes(PageDetails page, StringBuilder sb)
         {
                 
             sb.Append(@"
@@ -104,7 +106,7 @@ namespace PdfRepresantation
             if (color.HasValue)
             {
                 sb.Append("'");
-                PdfHtmlWriter.AppendColor(color.Value, sb);
+                ColorHelper.AppendColor(color.Value, sb);
                 sb.Append("'");
             }
             else

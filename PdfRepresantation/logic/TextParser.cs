@@ -2,14 +2,14 @@
 using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf.Canvas.Parser.Data;
-using iText.Kernel.Pdf.Canvas.Parser.Listener;
+using PdfRepresantation.Model.Pdf;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Logic
 {
     public class TextParser 
     {
-        public readonly IList<PdfTextBlock> texts = new List<PdfTextBlock>();
-        public readonly Dictionary<PdfFont, PdfFontDetails> fonts = new Dictionary<PdfFont, PdfFontDetails>();
+        public readonly List<PdfTextBlock> texts = new List<PdfTextBlock>();
+        public readonly Dictionary<PdfFont, FontDetails> fonts = new Dictionary<PdfFont, FontDetails>();
         private readonly PageContext pageContext;
 
         internal TextParser(PageContext pageContext)
@@ -44,7 +44,7 @@ namespace PdfRepresantation
             pageContext.LinkManager.AssignLink(item);
             texts.Add(item);
         }
-        private PdfFontDetails GetFont(TextRenderInfo textRenderInfo)
+        private FontDetails GetFont(TextRenderInfo textRenderInfo)
         {
             var pdfFont = textRenderInfo.GetFont();
             if (!fonts.TryGetValue(pdfFont, out var font))

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using iText.Kernel.Pdf.Canvas.Parser.Data;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
+using PdfRepresantation.Model.Pdf;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Logic
 {
     public class PageParser : IEventListener
     {
@@ -63,12 +63,12 @@ namespace PdfRepresantation
             return new[] {EventType.RENDER_TEXT, EventType.RENDER_IMAGE, EventType.RENDER_PATH};
         }
 
-        public virtual PdfPageDetails CreatePageDetails()
+        public virtual PageDetails CreatePageDetails()
         {
             pageContext.PageRTL = RightToLeftManager.Instance.FindRightToLeft(textParser.texts);
             var lines = linesGenerator.CreateLines(textParser.texts);
 
-            return new PdfPageDetails
+            return new PageDetails
             {
                 Lines = lines,
                 RightToLeft = pageContext.PageRTL,

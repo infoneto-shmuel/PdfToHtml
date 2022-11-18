@@ -1,4 +1,5 @@
 ﻿using log4net;
+using PdfRepresantation.Interfaces.Log;
 
 namespace PdfRepresantation.Server
 {

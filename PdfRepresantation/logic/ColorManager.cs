@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Linq;
 using iText.Kernel.Colors;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser.Data;
-using iText.Kernel.Pdf.Filters;
-using iText.Kernel.Pdf.Xobject;
 using Color = System.Drawing.Color;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Logic
 {
     public class ColorManager
     {

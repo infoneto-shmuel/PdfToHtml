@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf.Canvas;
 using iText.Kernel.Pdf.Canvas.Parser.Data;
+using PdfRepresantation.Model.Enums;
+using PdfRepresantation.Model.Pdf;
 using Point = iText.Kernel.Geom.Point;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Logic
 {
     public class ShapeParser
     {
-        public readonly IList<ShapeDetails> shapes = new List<ShapeDetails>();
+        public readonly List<ShapeDetails> shapes = new List<ShapeDetails>();
         private readonly PageContext pageContext;
 
         internal ShapeParser(PageContext pageContext)
@@ -45,11 +46,11 @@ namespace PdfRepresantation
                 FillColor = fillColor,
                 LineWidth = lineWidth,
                 EvenOddRule = evenOddRule,
-                Lines = lines
+                Lines = lines.ToList()
             };
-            if (Log.DebugSupported)
+            if (Log.Log.DebugSupported)
             {
-                Log.Debug($"shape: {shapeDetails}");
+                Log.Log.Debug($"shape: {shapeDetails}");
             }
             shapes.Add(shapeDetails);
         }

@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Colorspace;
 using iText.Kernel.Pdf.Function;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Logic
 {
     class PatternColorManager
     {

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using PdfRepresantation.Model.Pdf;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Html
 {
     public class PdfImageHtmlWriter
     {
@@ -19,7 +20,7 @@ namespace PdfRepresantation
 
         }
 
-        public virtual void AddImage(PdfPageDetails page, PdfImageDetails image, StringBuilder sb)
+        public virtual void AddImage(PageDetails page, ImageDetails image, StringBuilder sb)
         {
             sb.Append(@"
         <img class=""image"" height=""").Append(image.Height)
@@ -44,9 +45,6 @@ namespace PdfRepresantation
 
                 sb.Append(path);
             }
-
-//            if (image.Alt != null)
-//                sb.Append("\" alt=\"").Append(image.Alt);
 
             sb.Append("\" style=\"")
                 .Append(page.RightToLeft ? "right" : "left")

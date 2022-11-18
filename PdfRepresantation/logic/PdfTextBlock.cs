@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
+using PdfRepresantation.Model.Pdf;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Logic
 {
     public class PdfTextBlock
     {
@@ -14,7 +15,7 @@ namespace PdfRepresantation
         public float Top { get; set; }
         public string Value { get; set; }
         public float FontSize { get; set; }
-        public PdfFontDetails Font { get; set; }
+        public FontDetails Font { get; set; }
         public Color? StrokeColore { get; set; }
         public float CharSpacing { get; set; }
         public string Link { get; set; }

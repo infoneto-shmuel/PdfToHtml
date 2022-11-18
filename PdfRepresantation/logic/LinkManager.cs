@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Annot;
-using iText.Kernel.Pdf.Canvas.Parser;
-using iText.Kernel.Pdf.Canvas.Parser.Data;
-using iText.Kernel.Pdf.Canvas.Parser.Listener;
+using PdfRepresantation.Model.Pdf;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Logic
 {
     class LinkManager
     {
@@ -26,15 +21,15 @@ namespace PdfRepresantation
              this.pageContext = pageContext;
         }
 
-        public void AssignLink(PdfTextBlock current, PdfTextResult text, ref PdfLinkResult link)
+        public void AssignLink(PdfTextBlock current, TextResult text, ref LinkResult link)
         {
             if (current.Link != null)
             {
                 if (!string.Equals(link?.Link, current.Link))
                 {
-                    if(link!=null&&Log.DebugSupported)
-                        Log.Debug("link:"+link);
-                    link = new PdfLinkResult {Link = current.Link};
+                    if(link!=null&&Log.Log.DebugSupported)
+                        Log.Log.Debug("link:"+link);
+                    link = new LinkResult {Link = current.Link};
                 }
                 link.Children.Add(text);
                 text.LinkParent = link;

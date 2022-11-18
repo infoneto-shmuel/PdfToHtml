@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace PdfRepresantation
+namespace PdfRepresantation.Logic
 {
     public class RightToLeftManager
     {
@@ -32,7 +32,7 @@ namespace PdfRepresantation
             return !char.IsLetterOrDigit(c);
         }
 
-        internal bool FindRightToLeft(IList<PdfTextBlock> texts)
+        internal bool FindRightToLeft(List<PdfTextBlock> texts)
         {
             int rtls = 0, ltrs = 0;
             foreach (var b in texts)
@@ -51,7 +51,7 @@ namespace PdfRepresantation
             return rtls > ltrs;
         }
 
-        internal bool FindRtlOfNeutral(bool pageRightToLeft, IList<PdfTextBlock> blocks, int index)
+        internal bool FindRtlOfNeutral(bool pageRightToLeft, List<PdfTextBlock> blocks, int index)
         {
 //            for (int i = index - 1; i >= 0; i--)
 //            {
@@ -108,7 +108,7 @@ namespace PdfRepresantation
 //            }
         }
 
-        public bool AssignNeutral(bool pageRightToLeft, PdfTextBlock current, IList<PdfTextBlock> blocks, int index)
+        public bool AssignNeutral(bool pageRightToLeft, PdfTextBlock current, List<PdfTextBlock> blocks, int index)
         {
             if (current.IsRightToLeft != null)
                 return current.IsRightToLeft.Value;
