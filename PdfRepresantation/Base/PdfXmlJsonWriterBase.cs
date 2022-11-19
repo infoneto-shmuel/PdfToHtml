@@ -2,12 +2,15 @@
 using PdfRepresantation.Model;
 using PdfRepresantation.Model.Pdf;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using PdfRepresantation.Interfaces;
 using PdfRepresantation.Model.Config;
+using PdfRepresantation.Serialization;
 
 namespace PdfRepresantation.Base
 {
-    public abstract class PdfXmlJsonWriterBase : PdfWriterBase
+    public abstract class PdfXmlJsonWriterBase : PdfWriterBase, IPdfWriterEx
     {
         public XmlJsonWriterConfig Config { get; }
 
@@ -28,7 +31,7 @@ namespace PdfRepresantation.Base
             return pdfModel;
         }
 
-        protected PageModel GetPageValue(PageDetails pageDetails)
+        protected internal PageModel GetPageValue(PageDetails pageDetails)
         {
             var pageModel = new PageModel();
             pageModel.Fonts = pageDetails.Fonts;
@@ -102,6 +105,51 @@ namespace PdfRepresantation.Base
         private bool IsNewRow(TextLineDetails line, float lastTop)
         {
             return Math.Abs(line.Top - lastTop) > Config.HeightTolerance;
+        }
+
+        public string ConvertPdf(PdfDetails pdf, bool shouldSerializeAll)
+        {
+            var serializeAll = PdfModel.ShouldSerializeAll;
+            try
+            {
+                PdfModel.ShouldSerializeAll=shouldSerializeAll;
+                return ConvertPdf(pdf);
+            }
+            finally
+            {
+                PdfModel.ShouldSerializeAll=serializeAll;
+            }
+        }
+
+        public string ConvertPage(PageDetails page, bool shouldSerializeAll)
+        {
+            var serializeAll = PdfModel.ShouldSerializeAll;
+            try
+            {
+                PdfModel.ShouldSerializeAll = shouldSerializeAll;
+                return ConvertPage(page);
+            }
+            finally
+            {
+                PdfModel.ShouldSerializeAll = serializeAll;
+            }
+        }
+
+        public void SaveAs(PdfDetails pdf, string path, bool shouldSerializeAll = false)
+        {
+            var content = ConvertPdf(pdf, shouldSerializeAll);
+            File.WriteAllText(path, content);
+        }
+
+        public TableModel[] ToTables(PdfDetails pdf)
+        {
+            var tableModels = new List<TableModel>();
+            foreach (var page in pdf.Pages)
+            {
+                tableModels.AddRange(GetPageValue(page).Tables);
+            }
+
+            return tableModels.ToArray();
         }
     }
 }

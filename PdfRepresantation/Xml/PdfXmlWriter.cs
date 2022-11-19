@@ -1,4 +1,5 @@
-﻿using PdfRepresantation.Base;
+﻿using System.IO;
+using PdfRepresantation.Base;
 using PdfRepresantation.Model.Config;
 using PdfRepresantation.Model.Pdf;
 using PdfRepresantation.Serialization;
@@ -20,5 +21,12 @@ namespace PdfRepresantation.Xml
         {
             return GetValue(pdf).SerializeAsXml();
         }
+
+        public void SaveAsXmlTables(PdfDetails pdf, string path, bool shouldSerializeAll = false)
+        {
+            var content = ToTables(pdf).SerializeAsXml();
+            File.WriteAllText(path, content);
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace PdfRepresantation.Model.Pdf
@@ -7,7 +8,18 @@ namespace PdfRepresantation.Model.Pdf
     {
         public List<TextResult> Texts { get; set; } = new List<TextResult>();
 
-        public string InnerText => string.Join("", Texts);
+        public bool ShouldSerializeTexts()
+        {
+            return PdfModel.ShouldSerializeAll;
+        }
+
+        [XmlText]
+        public string InnerText
+        {
+            get { return string.Join(" ", Texts.Select(t => t.Value)).Trim(); }
+            set { }
+        }
+
         public override string ToString() => InnerText + "\r\n";
     }
 }

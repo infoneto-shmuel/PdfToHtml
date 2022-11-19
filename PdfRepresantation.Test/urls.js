@@ -1,4 +1,4 @@
 urls=[
-  "Results\\document.json",
-  "Results\\gnu license.json"
+  "Results\\document.xml",
+  "Results\\gnu license.xml"
 ];

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PdfRepresantation.Base;
 
 namespace PdfRepresantation.Model.Pdf
 {

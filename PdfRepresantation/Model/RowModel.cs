@@ -17,11 +17,30 @@ namespace PdfRepresantation.Model
             return TextLineDetails.Count.ToString();
         }
 
-        [XmlElement("Cells")]
+        [XmlElement("Cell")]
         public TextLineDetails[] Cells
         {
             get { return TextLineDetails.ToArray(); }
             set { TextLineDetails = value?.ToList() ?? new List<TextLineDetails>(); }
         }
+
+        [XmlText]
+        public string InnerText {
+            get
+            {
+                return string.Join(" ", TextLineDetails.Select(d => d.InnerText)).Trim();
+            }
+            set
+            {
+
+            }
+        }
+
+        public bool ShouldSerializeInnerText()
+        {
+            return PdfModel.ShouldSerializeAll;
+        }
+
+
     }
 }

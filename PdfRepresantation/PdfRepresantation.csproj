@@ -8,6 +8,7 @@
     <IncludeSymbols>True</IncludeSymbols>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\PdfRepresantation.snk</AssemblyOriginatorKeyFile>
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="itext7" Version="7.1.11" />

@@ -11,6 +11,14 @@ namespace PdfRepresantation.Model
         [XmlIgnore]
         internal List<RowModel> RowModels { get; set; } = new List<RowModel>();
 
+        [XmlAttribute]
+        public string Id { get; set; }
+
+        public bool ShouldSerializeId()
+        {
+            return !string.IsNullOrEmpty(Id);
+        }
+
         [XmlElement("Rows")]
         public RowModel[] Rows
         {
