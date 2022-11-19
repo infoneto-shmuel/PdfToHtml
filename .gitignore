@@ -8,3 +8,4 @@ obj
 /PdfRepresantation.Test/Results/*.*
 /PdfRepresantation.Test/urls.json
 Build.Debug.bat
+Packages
