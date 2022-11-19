@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using PdfRepresantation.Extensions;
 using PdfRepresantation.Log;
+using PdfRepresantation.Test.Extensions;
 
 namespace PdfRepresantation.Test
 {
@@ -15,67 +16,65 @@ namespace PdfRepresantation.Test
     public class PdfRepresantationTest
     {
         private readonly PdfRepresantationClient client = new PdfRepresantationClient();
-        private readonly string sourceDir = "Files";
-        private readonly string targetDir = "Results";
 
         [TestMethod]
         public void ConvertToHtml()
         {
             var paths = new List<string>();
-            foreach (var file in new DirectoryInfo(sourceDir).EnumerateFiles())
+            foreach (var file in new DirectoryInfo(TestsConstants.SourceDir).EnumerateFiles())
             {
-                paths = file.ConvertToHtml(targetDir, ref paths);
+                paths = file.ConvertToHtml(TestsConstants.TargetDir, ref paths);
             }
 
-            CreateSaveUrlsJson(paths);
+            paths.CreateSaveUrlsJson();
         }
 
         [TestMethod]
         public void ConvertToJson()
         {
             var paths = new List<string>();
-            foreach (var file in new DirectoryInfo(sourceDir).EnumerateFiles())
+            foreach (var file in new DirectoryInfo(TestsConstants.SourceDir).EnumerateFiles())
             {
-                paths = file.ConvertToJson(targetDir, ref paths);
+                paths = file.ConvertToJson(TestsConstants.TargetDir, ref paths);
             }
 
-            CreateSaveUrlsJson(paths);
+            paths.CreateSaveUrlsJson();
         }
 
         [TestMethod]
         public void ConvertToJsonTables()
         {
             var paths = new List<string>();
-            foreach (var file in new DirectoryInfo(sourceDir).EnumerateFiles())
+            foreach (var file in new DirectoryInfo(TestsConstants.SourceDir).EnumerateFiles())
             {
-                paths = file.ConvertToJsonTables(targetDir, ref paths);
+                paths = file.ConvertToJsonTables(TestsConstants.TargetDir, ref paths);
             }
 
-            CreateSaveUrlsJson(paths);
+            paths.CreateSaveUrlsJson();
         }
 
         [TestMethod]
         public void ConvertToXml()
         {
             var paths = new List<string>();
-            foreach (var file in new DirectoryInfo(sourceDir).EnumerateFiles())
+            foreach (var file in new DirectoryInfo(TestsConstants.SourceDir).EnumerateFiles())
             {
-                paths = file.ConvertToXml(targetDir, ref paths);
+                paths = file.ConvertToXml(TestsConstants.TargetDir, ref paths);
             }
 
-            CreateSaveUrlsJson(paths);
+            paths.CreateSaveUrlsJson();
         }
 
         [TestMethod]
         public void ConvertToXmlTables()
         {
             var paths = new List<string>();
-            foreach (var file in new DirectoryInfo(sourceDir).EnumerateFiles())
+            foreach (var file in new DirectoryInfo(TestsConstants.SourceDir).EnumerateFiles())
             {
-                paths = file.ConvertToXmlTables(targetDir, ref paths);
+                paths = file.ConvertToXmlTables(TestsConstants.TargetDir, ref paths);
             }
 
-            CreateSaveUrlsJson(paths);
+            paths.CreateSaveUrlsJson();
         }
 
         [AssemblyInitialize]
@@ -93,12 +92,12 @@ namespace PdfRepresantation.Test
         [TestMethod]
         public async Task ServerTestHtml()
         {
-            foreach (var file in new DirectoryInfo(sourceDir).EnumerateFiles())
+            foreach (var file in new DirectoryInfo(TestsConstants.SourceDir).EnumerateFiles())
             {
                 var name = Path.GetFileNameWithoutExtension(file.Name);
                 var buffer = File.ReadAllBytes(file.FullName);
                 var htmlResult = await client.ConvertToHtmlAsync(buffer);
-                File.WriteAllText(Path.Combine(targetDir, name + ".html"), htmlResult);
+                File.WriteAllText(Path.Combine(TestsConstants.TargetDir, name + ".html"), htmlResult);
             }
         }
 
@@ -106,19 +105,13 @@ namespace PdfRepresantation.Test
         [TestMethod]
         public async Task ServerTestText()
         {
-            foreach (var file in new DirectoryInfo(sourceDir).EnumerateFiles())
+            foreach (var file in new DirectoryInfo(TestsConstants.SourceDir).EnumerateFiles())
             {
                 var name = Path.GetFileNameWithoutExtension(file.Name);
                 var buffer = await File.ReadAllBytesAsync(file.FullName);
                 var textResult = await client.ConvertToTextAsync(buffer);
-                await File.WriteAllTextAsync(Path.Combine(targetDir, name + ".txt"), textResult);
+                await File.WriteAllTextAsync(Path.Combine(TestsConstants.TargetDir, name + ".txt"), textResult);
             }
-        }
-
-        private static void CreateSaveUrlsJson(List<string> paths)
-        {
-            var json = JsonConvert.SerializeObject(paths, Formatting.Indented);
-            File.WriteAllText("urls.js", $"urls={json};");
         }
     }
 }

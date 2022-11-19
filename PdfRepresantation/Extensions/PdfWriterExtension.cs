@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using System.Xml;
+using System.Xml.Linq;
 using PdfRepresantation.Html;
 using PdfRepresantation.Json;
 using PdfRepresantation.Logic;
@@ -22,6 +25,49 @@ namespace PdfRepresantation.Extensions
             var details = GetPdfDetails(file, ".html", targetDirectory, ref paths, out var target);
             var writer = new PdfHtmlWriter(new HtmlWriterConfig { UseCanvas = false });
             writer.SaveAs(details, target, false);
+            return paths;
+        }
+
+        public static List<string> ConvertToHtmlTables(this FileInfo file, string targetDirectory)
+        {
+            List<string> paths = null;
+            return ConvertToHtmlTables(file, targetDirectory, ref paths);
+        }
+
+        public static List<string> ConvertToHtmlTables(this FileInfo file, string targetDirectory,
+            ref List<string> paths)
+        {
+            var details = file.GetPdfDetails(".html", targetDirectory, ref paths, out var target);
+            var writer = new PdfXmlWriter();
+            var tableModels = writer.ToTables(details);
+
+            var doc = new XDocument();
+            doc.AddFirst(new XDocumentType("html", null, null, null));
+            var body = new XElement("body");
+            foreach (var tableModel in tableModels)
+            {
+                var table = new XElement("table", new XAttribute("style", "width:100%"));
+                body.Add(table);
+                foreach (var tableRow in tableModel.Rows)
+                {
+                    var row = new XElement("tr");
+                    table.Add(row);
+                    foreach (var tableRowCell in tableRow.Cells)
+                    {
+                        var cell = new XElement("td", tableRowCell.InnerText);
+                        row.Add(cell);
+                    }
+                }
+            }
+
+            doc.Add(new XElement("html", body));
+
+            using var xmlWriter = new XmlTextWriter(target, Encoding.UTF8);
+            xmlWriter.Formatting = Formatting.Indented;
+            doc.WriteTo(xmlWriter);
+            xmlWriter.Flush();
+            xmlWriter.Close();
+
             return paths;
         }
 
