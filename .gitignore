@@ -5,3 +5,5 @@
 /.vs
 bin
 obj
+/PdfRepresantation.Test/Results/*.*
+/PdfRepresantation.Test/urls.json

@@ -13,4 +13,7 @@
     <ProjectReference Include="..\PdfRepresantation.Client\PdfRepresantation.Client.csproj" />
     <ProjectReference Include="..\PdfRepresantation\PdfRepresantation.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Results\" />
+  </ItemGroup>
 </Project>
