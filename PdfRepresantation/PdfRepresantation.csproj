@@ -9,6 +9,8 @@
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>$(SolutionDir)PdfRepresantation.snk</AssemblyOriginatorKeyFile>
     <LangVersion>8</LangVersion>
+    <Authors>Piero Viano</Authors>
+    <PackageId>PdfRepresantation.PieroViano</PackageId>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="itext7" Version="7.1.11" />
@@ -29,5 +31,9 @@
     <Reference Include="System.Web">
     </Reference>
   </ItemGroup>
-  
+
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Exec Command="copy /y $(ProjectDir)bin\$(Configuration)\*.nupkg $(SolutionDir)Packages" />
+  </Target>
+
 </Project>
