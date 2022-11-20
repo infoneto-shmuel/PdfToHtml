@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore.Design.Internal;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.Extensions.Logging.Console;
-using Microsoft.Extensions.Logging.Debug;
-using Microsoft.Extensions.Logging.TraceSource;
 
 namespace PdfRepresantation.Server
 {
