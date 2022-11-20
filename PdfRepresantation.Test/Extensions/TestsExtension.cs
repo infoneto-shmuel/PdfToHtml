@@ -11,7 +11,7 @@ namespace PdfRepresantation.Test.Extensions
         public static void CreateSaveUrlsJson(this List<string> paths)
         {
             var json = JsonConvert.SerializeObject(paths, Formatting.Indented);
-            File.WriteAllText("urls.js", $"urls={json};");
+            File.WriteAllText("urls.json", $"urls={json};");
         }
     }
 }
