@@ -7,7 +7,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\PdfRepresantation.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(SolutionDir)PdfRepresantation.snk</AssemblyOriginatorKeyFile>
     <LangVersion>8</LangVersion>
   </PropertyGroup>
   <ItemGroup>
