@@ -22,11 +22,15 @@ namespace PdfRepresantation.Xml
             return GetValue(pdf).SerializeAsXml();
         }
 
-        public void SaveAsXmlTables(PdfDetails pdf, string path, bool shouldSerializeAll = false)
+        public void SaveAsXmlTables(PdfDetails pdf, string path)
         {
-            var content = ToTables(pdf).SerializeAsXml();
+            var content = SaveAsXml(pdf);
             File.WriteAllText(path, content);
         }
 
+        public string SaveAsXml(PdfDetails pdf)
+        {
+            return ToTables(pdf).SerializeAsXml();
+        }
     }
 }

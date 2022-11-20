@@ -22,10 +22,15 @@ namespace PdfRepresantation.Json
             return GetValue(pdf).SerializeAsJson();
         }
 
-        public void SaveAsJsonTables(PdfDetails pdf, string path, bool shouldSerializeAll = false)
+        public void SaveAsJsonTables(PdfDetails pdf, string path)
         {
             var content = ToTables(pdf).SerializeAsJson();
             File.WriteAllText(path, content);
+        }
+
+        public string SaveAsJson(PdfDetails pdf)
+        {
+            return ToTables(pdf).SerializeAsJson();
         }
 
     }

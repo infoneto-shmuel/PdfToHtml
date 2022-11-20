@@ -137,8 +137,13 @@ namespace PdfRepresantation.Base
 
         public void SaveAs(PdfDetails pdf, string path, bool shouldSerializeAll = false)
         {
-            var content = ConvertPdf(pdf, shouldSerializeAll);
+            var content = GetContent(pdf, shouldSerializeAll);
             File.WriteAllText(path, content);
+        }
+
+        public string GetContent(PdfDetails pdf, bool shouldSerializeAll = false)
+        {
+            return ConvertPdf(pdf, shouldSerializeAll);
         }
 
         public TableModel[] ToTables(PdfDetails pdf)

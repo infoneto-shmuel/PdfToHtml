@@ -75,6 +75,21 @@ namespace PdfRepresantation.Extensions
             return paths;
         }
 
+        public static List<string> ConvertToDataTables(this FileInfo file)
+        {
+            List<string> paths = null;
+            return ConvertToDataTables(file, ref paths);
+        }
+
+        public static List<string> ConvertToDataTables(this FileInfo file,
+            ref List<string> paths)
+        {
+            var details = file.GetPdfDetails(Xml, null, ref paths, out _);
+            var writer = new PdfXmlWriter();
+            paths.Add(writer.SaveAsXml(details));
+            return paths;
+        }
+
         public static List<string> ConvertToJson(this FileInfo file, string targetDirectory)
         {
             List<string> paths = null;
@@ -133,15 +148,58 @@ namespace PdfRepresantation.Extensions
             return paths;
         }
 
+        public static List<string> ConvertToXmlContents(this FileInfo file, string targetDirectory)
+        {
+            List<string> paths = null;
+            return ConvertToXmlContents(file, targetDirectory, ref paths);
+        }
+
+        public static List<string> ConvertToXmlContents(this FileInfo file, string targetDirectory,
+            ref List<string> paths)
+        {
+            var details = file.GetPdfDetails(Xml, targetDirectory, ref paths, out _);
+            var writer = new PdfXmlWriter();
+
+            paths.Add(writer.SaveAsXml(details));
+            return paths;
+        }
+
+        public static List<string> ConvertToJsonContents(this FileInfo file, string targetDirectory)
+        {
+            List<string> paths = null;
+            return ConvertToJsonContents(file, targetDirectory, ref paths);
+        }
+
+        public static List<string> ConvertToJsonContents(this FileInfo file, string targetDirectory,
+            ref List<string> paths)
+        {
+            var details = file.GetPdfDetails(Xml, targetDirectory, ref paths, out _);
+            var writer = new PdfJsonWriter();
+
+            paths.Add(writer.SaveAsJson(details));
+            return paths;
+        }
+
         public static PdfDetails GetPdfDetails(this FileInfo file, string extension,
             string targetDirectory, ref List<string> paths, out string target)
         {
-            Directory.CreateDirectory(targetDirectory);
+            if (!string.IsNullOrEmpty(targetDirectory))
+            {
+                Directory.CreateDirectory(targetDirectory);
+            }
             paths ??= new List<string>();
             var name = Path.GetFileNameWithoutExtension(file.Name);
             var details = PdfDetailsFactory.Create(file.FullName);
-            target = Path.Combine(targetDirectory, name + extension);
-            paths.Add(target);
+            if (!string.IsNullOrEmpty(targetDirectory))
+            {
+                target = Path.Combine(targetDirectory, name + extension);
+                paths.Add(target);
+            }
+            else
+            {
+                target = null;
+            }
+
             return details;
         }
     }
