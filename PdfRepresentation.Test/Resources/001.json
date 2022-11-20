@@ -1,0 +1,899 @@
+{
+  "Tables": [
+    {
+      "Rows": [
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "440.0661",
+              "Bottom": "279.5",
+              "Top": "269.8968",
+              "Width": "84.33392",
+              "Height": "289.1032",
+              "Text": "- EC type-approval"
+            },
+            {
+              "Left": "294.34",
+              "Right": "219.7533",
+              "Bottom": "279.5",
+              "Top": "269.8968",
+              "Width": "81.226715",
+              "Height": "289.1032",
+              "Text": "- complete vehicle"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "157.04",
+              "Right": "430.0666",
+              "Bottom": "275",
+              "Top": "268.92517",
+              "Width": "8.213425",
+              "Height": "281.07483",
+              "Text": "(1)"
+            },
+            {
+              "Left": "375.58",
+              "Right": "209.78659",
+              "Bottom": "275",
+              "Top": "268.92517",
+              "Width": "9.95343",
+              "Height": "281.07483",
+              "Text": "(1)"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "213.8",
+              "Right": "373.30658",
+              "Bottom": "288",
+              "Top": "281.58514",
+              "Width": "8.213425",
+              "Height": "294.41486",
+              "Text": "(1)"
+            },
+            {
+              "Left": "381.04",
+              "Right": "204.3266",
+              "Bottom": "288",
+              "Top": "281.58514",
+              "Width": "9.9534",
+              "Height": "294.41486",
+              "Text": "(1)"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "383.26807",
+              "Bottom": "292.5",
+              "Top": "282.55676",
+              "Width": "141.13193",
+              "Height": "302.44324",
+              "Text": "- extension of EC type-approval"
+            },
+            {
+              "Left": "294.34",
+              "Right": "214.30719",
+              "Bottom": "292.5",
+              "Top": "282.55676",
+              "Width": "86.67282",
+              "Height": "302.44324",
+              "Text": "- completed vehicle"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "498.415",
+              "Bottom": "45.5",
+              "Top": "35.816772",
+              "Width": "25.985008",
+              "Height": "55.183228",
+              "Text": "Eddy"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "326.08",
+              "Right": "139.42502",
+              "Bottom": "45.5",
+              "Top": "38.91748",
+              "Width": "129.815",
+              "Height": "52.08252",
+              "Text": "Division Vehicle Regulation & Admission"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "242.8",
+              "Right": "240.035",
+              "Bottom": "118",
+              "Top": "108.236755",
+              "Width": "112.485",
+              "Height": "127.763245",
+              "Text": "THE NETHERLANDS"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "249.4",
+              "Right": "246.63501",
+              "Bottom": "130.5",
+              "Top": "120.83679",
+              "Width": "99.285",
+              "Height": "140.16321",
+              "Text": "(N E D E R L A N D)"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "202.04",
+              "Right": "199.23502",
+              "Bottom": "210.5",
+              "Top": "200.6568",
+              "Width": "194.045",
+              "Height": "220.3432",
+              "Text": "EC TYPE-APPROVAL CERTIFICATE"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "265.3",
+              "Right": "262.535",
+              "Bottom": "223",
+              "Top": "213.25677",
+              "Width": "67.485016",
+              "Height": "232.74323",
+              "Text": "(for a vehicle)"
+            }
+          ]
+        }
+      ],
+      "Id": "1-1"
+    },
+    {
+      "Rows": [
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "396.055",
+              "Bottom": "261",
+              "Top": "251.23676",
+              "Width": "128.345",
+              "Height": "270.76324",
+              "Text": "Communication concerning:"
+            },
+            {
+              "Left": "294.34",
+              "Right": "242.315",
+              "Bottom": "261",
+              "Top": "251.23676",
+              "Width": "58.66501",
+              "Height": "270.76324",
+              "Text": "Of a type of:"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "201.56",
+              "Right": "385.54657",
+              "Bottom": "300.5",
+              "Top": "294.18518",
+              "Width": "8.213425",
+              "Height": "306.81482",
+              "Text": "(1)"
+            },
+            {
+              "Left": "384.1",
+              "Right": "201.2666",
+              "Bottom": "300.5",
+              "Top": "294.18518",
+              "Width": "9.9534",
+              "Height": "306.81482",
+              "Text": "(1)"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "395.5081",
+              "Bottom": "305",
+              "Top": "295.1568",
+              "Width": "128.89192",
+              "Height": "314.8432",
+              "Text": "- refusal of EC type-approval"
+            },
+            {
+              "Left": "294.34",
+              "Right": "211.24374",
+              "Bottom": "305",
+              "Top": "295.1568",
+              "Width": "89.73627",
+              "Height": "314.8432",
+              "Text": "- incomplete vehicle"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "221.18",
+              "Right": "365.9898",
+              "Bottom": "313",
+              "Top": "306.84515",
+              "Width": "8.150223",
+              "Height": "319.15485",
+              "Text": "(1)"
+            },
+            {
+              "Left": "505.74",
+              "Right": "79.62659",
+              "Bottom": "313",
+              "Top": "306.84515",
+              "Width": "9.95343",
+              "Height": "319.15485",
+              "Text": "(1)"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "375.9261",
+              "Bottom": "317.5",
+              "Top": "307.81677",
+              "Width": "148.4739",
+              "Height": "327.18323",
+              "Text": "- withdrawal of EC type-approval"
+            },
+            {
+              "Left": "294.34",
+              "Right": "89.69513",
+              "Bottom": "317.5",
+              "Top": "307.81677",
+              "Width": "211.28488",
+              "Height": "327.18323",
+              "Text": "- vehicle with complete and incomplete variants"
+            }
+          ]
+        }
+      ],
+      "Id": "1-2"
+    },
+    {
+      "Rows": [
+        {
+          "Cells": [
+            {
+              "Left": "512.94",
+              "Right": "74.166626",
+              "Bottom": "326",
+              "Top": "319.5052",
+              "Width": "8.213379",
+              "Height": "332.4948",
+              "Text": "(1)"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "294.34",
+              "Right": "84.200836",
+              "Bottom": "330.5",
+              "Top": "320.4768",
+              "Width": "216.77917",
+              "Height": "340.5232",
+              "Text": "- vehicle with completed and incomplete variants"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "285.155",
+              "Bottom": "349",
+              "Top": "339.1368",
+              "Width": "239.24501",
+              "Height": "358.8632",
+              "Text": "with regard to Directive 2007/46/EC as last amended."
+            }
+          ]
+        }
+      ],
+      "Id": "1-3"
+    },
+    {
+      "Rows": [
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "397.615",
+              "Bottom": "374",
+              "Top": "364.39682",
+              "Width": "126.785",
+              "Height": "383.60318",
+              "Text": "EC type-approval number"
+            },
+            {
+              "Left": "294.34",
+              "Right": "194.315",
+              "Bottom": "374",
+              "Top": "364.39682",
+              "Width": "106.66501",
+              "Height": "383.60318",
+              "Text": ":  e4*2007/46*1293*27"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "428.755",
+              "Bottom": "399.5",
+              "Top": "389.7168",
+              "Width": "95.645004",
+              "Height": "409.2832",
+              "Text": "Reason for extension"
+            },
+            {
+              "Left": "294.34",
+              "Right": "208.05502",
+              "Bottom": "399.5",
+              "Top": "389.7168",
+              "Width": "92.92499",
+              "Height": "409.2832",
+              "Text": ": see documentation"
+            }
+          ]
+        }
+      ],
+      "Id": "1-4"
+    },
+    {
+      "Rows": [
+        {
+          "Cells": [
+            {
+              "Left": "267.88",
+              "Right": "268.17502",
+              "Bottom": "425",
+              "Top": "415.05682",
+              "Width": "59.264984",
+              "Height": "434.94318",
+              "Text": "SECTION I"
+            }
+          ]
+        }
+      ],
+      "Id": "1-5"
+    },
+    {
+      "Rows": [
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "505.135",
+              "Bottom": "450",
+              "Top": "440.3168",
+              "Width": "19.265007",
+              "Height": "459.6832",
+              "Text": "0.1."
+            },
+            {
+              "Left": "113.6",
+              "Right": "321.935",
+              "Bottom": "450",
+              "Top": "440.3168",
+              "Width": "159.785",
+              "Height": "459.6832",
+              "Text": "Make (trade name of manufacturer)"
+            },
+            {
+              "Left": "294.34",
+              "Right": "266.435",
+              "Bottom": "450",
+              "Top": "440.3168",
+              "Width": "34.545013",
+              "Height": "459.6832",
+              "Text": ": Tesla"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "505.135",
+              "Bottom": "475.5",
+              "Top": "465.6368",
+              "Width": "19.265007",
+              "Height": "485.3632",
+              "Text": "0.2."
+            },
+            {
+              "Left": "113.6",
+              "Right": "456.355",
+              "Bottom": "475.5",
+              "Top": "465.6368",
+              "Width": "25.364998",
+              "Height": "485.3632",
+              "Text": "Type"
+            },
+            {
+              "Left": "294.34",
+              "Right": "273.755",
+              "Bottom": "475.5",
+              "Top": "465.6368",
+              "Width": "27.225006",
+              "Height": "485.3632",
+              "Text": ": 003"
+            }
+          ]
+        }
+      ],
+      "Id": "1-6"
+    },
+    {
+      "Rows": [
+        {
+          "Cells": [
+            {
+              "Left": "207.86",
+              "Right": "379.24658",
+              "Bottom": "496",
+              "Top": "489.98517",
+              "Width": "8.213425",
+              "Height": "502.01483",
+              "Text": "(2)"
+            }
+          ]
+        }
+      ],
+      "Id": "1-7"
+    },
+    {
+      "Rows": [
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "496.915",
+              "Bottom": "500.5",
+              "Top": "490.95682",
+              "Width": "27.485008",
+              "Height": "510.04318",
+              "Text": "0.2.1."
+            },
+            {
+              "Left": "113.6",
+              "Right": "389.2464",
+              "Bottom": "500.5",
+              "Top": "490.95682",
+              "Width": "92.473595",
+              "Height": "510.04318",
+              "Text": "Commercial name(s)"
+            },
+            {
+              "Left": "294.34",
+              "Right": "253.29501",
+              "Bottom": "500.5",
+              "Top": "490.95682",
+              "Width": "47.684998",
+              "Height": "510.04318",
+              "Text": ": Model 3"
+            }
+          ]
+        }
+      ],
+      "Id": "1-8"
+    },
+    {
+      "Rows": [
+        {
+          "Cells": [
+            {
+              "Left": "302.32",
+              "Right": "250.83502",
+              "Bottom": "513.5",
+              "Top": "503.55682",
+              "Width": "42.164978",
+              "Height": "523.4432",
+              "Text": "Model Y"
+            }
+          ]
+        }
+      ],
+      "Id": "1-9"
+    },
+    {
+      "Rows": [
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "505.135",
+              "Bottom": "538.5",
+              "Top": "528.87683",
+              "Width": "19.265007",
+              "Height": "548.12317",
+              "Text": "0.3."
+            },
+            {
+              "Left": "113.6",
+              "Right": "330.5694",
+              "Bottom": "538.5",
+              "Top": "528.87683",
+              "Width": "151.1506",
+              "Height": "548.12317",
+              "Text": "Means of identification of type, if"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "113.6",
+              "Right": "381.53503",
+              "Bottom": "551.5",
+              "Top": "541.5368",
+              "Width": "100.18499",
+              "Height": "561.4632",
+              "Text": "marked on the vehicle"
+            },
+            {
+              "Left": "294.34",
+              "Right": "91.33502",
+              "Bottom": "551.5",
+              "Top": "541.5368",
+              "Width": "209.64499",
+              "Height": "561.4632",
+              "Text": ": character 4 of VIN,  “ 3 ”  ( variant E########)"
+            }
+          ]
+        }
+      ],
+      "Id": "1-10"
+    },
+    {
+      "Rows": [
+        {
+          "Cells": [
+            {
+              "Left": "302.32",
+              "Right": "89.475006",
+              "Bottom": "564",
+              "Top": "554.1968",
+              "Width": "203.525",
+              "Height": "573.8032",
+              "Text": "character 4 of VIN,  “ Y ”  ( variant Y########)"
+            }
+          ]
+        }
+      ],
+      "Id": "1-11"
+    },
+    {
+      "Rows": [
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "496.915",
+              "Bottom": "589",
+              "Top": "579.4568",
+              "Width": "27.485008",
+              "Height": "598.5432",
+              "Text": "0.3.1."
+            },
+            {
+              "Left": "113.6",
+              "Right": "369.295",
+              "Bottom": "589",
+              "Top": "579.4568",
+              "Width": "112.424995",
+              "Height": "598.5432",
+              "Text": "Location of that marking"
+            },
+            {
+              "Left": "294.34",
+              "Right": "205.05502",
+              "Bottom": "589",
+              "Top": "579.4568",
+              "Width": "95.92499",
+              "Height": "598.5432",
+              "Text": ":  variant E########"
+            }
+          ]
+        }
+      ],
+      "Id": "1-12"
+    },
+    {
+      "Rows": [
+        {
+          "Cells": [
+            {
+              "Left": "302.32",
+              "Right": "190.63501",
+              "Bottom": "602",
+              "Top": "592.1168",
+              "Width": "102.36499",
+              "Height": "611.8832",
+              "Text": "RHS B pillar Upper or"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "335.62",
+              "Right": "254.98846",
+              "Bottom": "610",
+              "Top": "603.8052",
+              "Width": "4.711548",
+              "Height": "616.1948",
+              "Text": "st"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "302.32",
+              "Right": "110.595",
+              "Bottom": "614.5",
+              "Top": "604.7768",
+              "Width": "182.405",
+              "Height": "624.2232",
+              "Text": "under 1 row RHS seat on cross member"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "302.32",
+              "Right": "205.655",
+              "Bottom": "627",
+              "Top": "617.4368",
+              "Width": "87.345",
+              "Height": "636.5632",
+              "Text": "variant Y########"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "335.62",
+              "Right": "254.98846",
+              "Bottom": "635.5",
+              "Top": "629.1252",
+              "Width": "4.711548",
+              "Height": "641.8748",
+              "Text": "st"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "302.32",
+              "Right": "110.595",
+              "Bottom": "640",
+              "Top": "630.0968",
+              "Width": "182.405",
+              "Height": "649.9032",
+              "Text": "under 1 row RHS seat on cross member"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "302.32",
+              "Right": "123.13501",
+              "Bottom": "652.5",
+              "Top": "642.6968",
+              "Width": "169.86499",
+              "Height": "662.3032",
+              "Text": "under rear right door sill trim on body"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "202.04",
+              "Right": "385.0666",
+              "Bottom": "673.5",
+              "Top": "667.04517",
+              "Width": "8.213425",
+              "Height": "679.95483",
+              "Text": "(3)"
+            }
+          ]
+        }
+      ],
+      "Id": "1-13"
+    },
+    {
+      "Rows": [
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "505.135",
+              "Bottom": "678",
+              "Top": "668.01685",
+              "Width": "19.265007",
+              "Height": "687.98315",
+              "Text": "0.4."
+            },
+            {
+              "Left": "113.6",
+              "Right": "395.04385",
+              "Bottom": "678",
+              "Top": "668.01685",
+              "Width": "86.676155",
+              "Height": "687.98315",
+              "Text": "Category of vehicle"
+            },
+            {
+              "Left": "294.34",
+              "Right": "274.95502",
+              "Bottom": "678",
+              "Top": "668.01685",
+              "Width": "26.024994",
+              "Height": "687.98315",
+              "Text": ": M1"
+            }
+          ]
+        }
+      ],
+      "Id": "1-14"
+    },
+    {
+      "Rows": [
+        {
+          "Cells": [
+            {
+              "Left": "326.08",
+              "Right": "135.24002",
+              "Bottom": "769.5",
+              "Top": "758.688",
+              "Width": "134",
+              "Height": "780.312",
+              "Text": "Type-approval Department"
+            }
+          ]
+        }
+      ],
+      "Id": "1-15"
+    },
+    {
+      "Rows": [
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "481.64502",
+              "Bottom": "769.5",
+              "Top": "762.6975",
+              "Width": "42.755005",
+              "Height": "776.3025",
+              "Text": "P.O. Box 777"
+            },
+            {
+              "Left": "184.34",
+              "Right": "340.08502",
+              "Bottom": "769.5",
+              "Top": "762.6975",
+              "Width": "70.895004",
+              "Height": "776.3025",
+              "Text": "Tel. + 31 79 345 83 02"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "457.345",
+              "Bottom": "779",
+              "Top": "772.2975",
+              "Width": "67.05501",
+              "Height": "785.7025",
+              "Text": "2700 AT  Zoetermeer"
+            },
+            {
+              "Left": "184.34",
+              "Right": "321.36502",
+              "Bottom": "779",
+              "Top": "772.2975",
+              "Width": "89.61499",
+              "Height": "785.7025",
+              "Text": "E-mail typeapproval@rdw.nl"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "472.765",
+              "Bottom": "787.5",
+              "Top": "780.9375",
+              "Width": "51.635002",
+              "Height": "794.0625",
+              "Text": "The Netherlands"
+            },
+            {
+              "Left": "184.34",
+              "Right": "371.605",
+              "Bottom": "787.5",
+              "Top": "780.9375",
+              "Width": "39.375",
+              "Height": "794.0625",
+              "Text": "www.rdw.nl"
+            }
+          ]
+        },
+        {
+          "Cells": [
+            {
+              "Left": "70.92",
+              "Right": "351.725",
+              "Bottom": "805",
+              "Top": "797.7298",
+              "Width": "172.675",
+              "Height": "812.2702",
+              "Text": "WVTA2-annexVI.A-vehicle 2007.46-2015.758 v11.00"
+            },
+            {
+              "Left": "483.9",
+              "Right": "68.744995",
+              "Bottom": "805",
+              "Top": "797.7298",
+              "Width": "42.67502",
+              "Height": "812.2702",
+              "Text": "Page 1 of 19"
+            }
+          ]
+        }
+      ],
+      "Id": "1-16"
+    }
+  ]
+}

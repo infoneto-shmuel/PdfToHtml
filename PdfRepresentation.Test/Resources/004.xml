@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Tables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Table Id="030-00002">
+    <Rows>
+      <Cell Left="71.784" Bottom="88.5" Top="83.45001" Width="12.790802">Item</Cell>
+      <Cell Left="209.69" Bottom="88.5" Top="83.45001" Width="36.87445">Drawing Title</Cell>
+      <Cell Left="358.15" Bottom="88.5" Top="83.45001" Width="34.466705">Drawing No.</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="73.944" Bottom="97.5" Top="92.45001" Width="8.6252365">1.1</Cell>
+      <Cell Left="100.82" Bottom="97.5" Top="92.45001" Width="115.890114">Representative views of vehicle (Model 3)</Cell>
+      <Cell Left="358.15" Bottom="97.5" Top="92.45001" Width="63.666718">HOM3-Exterior-001-01</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="73.944" Bottom="106.5" Top="101.45001" Width="8.6252365">1.1</Cell>
+      <Cell Left="100.82" Bottom="106.5" Top="101.45001" Width="115.77384">Representative views of vehicle (Model Y)</Cell>
+      <Cell Left="358.15" Bottom="106.5" Top="101.45001" Width="63.536774">HOMY-Exterior-001-00</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="73.944" Bottom="115.5" Top="110.45001" Width="8.6252365">2.6</Cell>
+      <Cell Left="100.82" Bottom="115.5" Top="110.45001" Width="59.774742">Mass Table (Model 3)</Cell>
+      <Cell Left="358.15" Bottom="115.5" Top="110.45001" Width="62.114014">HOM3-Masses-001-09</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00003">
+    <Rows>
+      <Cell Left="71.424" Bottom="124.5" Top="119.45001" Width="13.782593">2.6.1</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="71.424" Bottom="133.5" Top="128.45001" Width="13.782593">2.6.2</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="73.944" Bottom="142.5" Top="137.45001" Width="8.6252365">2.8</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="71.424" Bottom="151.5" Top="146.45001" Width="13.782593">2.8.1</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="73.944" Bottom="160.5" Top="155.47998" Width="8.6252365">2.9</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="169.5" Top="164.47998" Width="17.26416">2.11.1</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="178.5" Top="173.47998" Width="17.26416">2.11.3</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="187.5" Top="182.47998" Width="17.26416">2.11.5</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="196.5" Top="191.47998" Width="17.26416">2.11.6</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="205.5" Top="200.47998" Width="17.26416">2.12.1</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00004">
+    <Rows>
+      <Cell Left="73.944" Bottom="214.5" Top="209.47998" Width="8.6252365">2.6</Cell>
+      <Cell Left="100.82" Bottom="214.5" Top="209.47998" Width="59.65847">Mass Table (Model Y)</Cell>
+      <Cell Left="358.15" Bottom="214.5" Top="209.47998" Width="61.98407">HOMY-Masses-001-05</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00005">
+    <Rows>
+      <Cell Left="71.424" Bottom="223.5" Top="218.47998" Width="13.782593">2.6.1</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="71.424" Bottom="232.5" Top="227.47998" Width="13.782593">2.6.2</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="73.944" Bottom="241.5" Top="236.47998" Width="8.6252365">2.8</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="71.424" Bottom="250.5" Top="245.47998" Width="13.782593">2.8.1</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="73.944" Bottom="259.5" Top="254.47998" Width="8.6252365">2.9</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="268.5" Top="263.47998" Width="17.26416">2.11.1</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="277.5" Top="272.47998" Width="17.26416">2.11.3</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="286.5" Top="281.47998" Width="17.26416">2.11.5</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="295.5" Top="290.47998" Width="17.26416">2.11.6</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="304.5" Top="299.47998" Width="17.26416">2.12.1</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00006">
+    <Rows>
+      <Cell Left="66.144" Bottom="313.5" Top="308.47998" Width="24.097305">6.6.1.1.1</Cell>
+      <Cell Left="100.82" Bottom="313.5" Top="308.47998" Width="88.441246">Tire Information (Model 3 base)</Cell>
+      <Cell Left="358.15" Bottom="313.5" Top="308.47998" Width="61.635223">HOM3-Chassis-010-04</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00007">
+    <Rows>
+      <Cell Left="66.144" Bottom="322.5" Top="317.5" Width="24.097305">6.6.1.1.2</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00008">
+    <Rows>
+      <Cell Left="66.144" Bottom="331.5" Top="326.5" Width="24.097305">6.6.1.1.1</Cell>
+      <Cell Left="100.82" Bottom="331.5" Top="326.5" Width="111.478386">Tire Information (Model 3 Performance)</Cell>
+      <Cell Left="358.15" Bottom="331.5" Top="326.5" Width="61.635223">HOM3-Chassis-035-00</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00009">
+    <Rows>
+      <Cell Left="66.144" Bottom="340.5" Top="335.5" Width="24.097305">6.6.1.1.2</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00010">
+    <Rows>
+      <Cell Left="66.144" Bottom="349.5" Top="344.5" Width="24.097305">6.6.1.1.1</Cell>
+      <Cell Left="100.82" Bottom="349.5" Top="344.5" Width="88.3113">Tire Information (Model Y base)</Cell>
+      <Cell Left="358.15" Bottom="349.5" Top="344.5" Width="61.50528">HOMY-Chassis-001-01</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00011">
+    <Rows>
+      <Cell Left="66.144" Bottom="358.5" Top="353.5" Width="24.097305">6.6.1.1.2</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00012">
+    <Rows>
+      <Cell Left="66.144" Bottom="367.5" Top="362.5" Width="24.097305">6.6.1.1.1</Cell>
+      <Cell Left="100.82" Bottom="367.5" Top="362.5" Width="111.35525">Tire Information (Model Y Performance)</Cell>
+      <Cell Left="358.15" Bottom="367.5" Top="362.5" Width="61.50528">HOMY-Chassis-030-01</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00013">
+    <Rows>
+      <Cell Left="66.144" Bottom="376.5" Top="371.5" Width="24.097305">6.6.1.1.2</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00014">
+    <Rows>
+      <Cell Left="69.624" Bottom="385.5" Top="380.5" Width="17.26416">9.12.2</Cell>
+      <Cell Left="100.82" Bottom="385.5" Top="380.5" Width="114.597404">Supplementary restraints table (Model 3)</Cell>
+      <Cell Left="358.15" Bottom="385.5" Top="380.5" Width="58.878723">HOM3-Safety-017-01</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="394.5" Top="389.5" Width="17.26416">9.12.2</Cell>
+      <Cell Left="100.82" Bottom="394.5" Top="389.5" Width="144.72076">Supplementary restraints table - incl FSAB (Model Y)</Cell>
+      <Cell Left="358.15" Bottom="394.5" Top="389.5" Width="58.74878">HOMY-Safety-014-01</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="403.5" Top="398.5" Width="17.26416">9.17.1</Cell>
+      <Cell Left="100.82" Bottom="403.5" Top="398.5" Width="101.50564">Statutory Plate &amp; Location (Model 3)</Cell>
+      <Cell Left="358.15" Bottom="403.5" Top="398.5" Width="51.669342">HOM3-VIN-002-03</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00015">
+    <Rows>
+      <Cell Left="69.624" Bottom="412.5" Top="407.5" Width="17.26416">9.17.2</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00016">
+    <Rows>
+      <Cell Left="69.624" Bottom="421.5" Top="416.5" Width="17.26416">9.17.1</Cell>
+      <Cell Left="100.82" Bottom="421.5" Top="416.5" Width="101.389366">Statutory Plate &amp; Location (Model Y)</Cell>
+      <Cell Left="358.15" Bottom="421.5" Top="416.5" Width="51.5394">HOMY-VIN-002-01</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00017">
+    <Rows>
+      <Cell Left="69.624" Bottom="430.5" Top="425.5" Width="17.26416">9.17.2</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00018">
+    <Rows>
+      <Cell Left="69.624" Bottom="439.5" Top="434.5" Width="17.26416">9.17.3</Cell>
+      <Cell Left="100.82" Bottom="439.5" Top="434.5" Width="63.830894">VIN Location (Model 3)</Cell>
+      <Cell Left="358.15" Bottom="439.5" Top="434.5" Width="51.669342">HOM3-VIN-003-03</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="448.5" Top="443.5" Width="17.26416">9.17.3</Cell>
+      <Cell Left="100.82" Bottom="448.5" Top="443.5" Width="63.714622">VIN Location (Model Y)</Cell>
+      <Cell Left="358.15" Bottom="448.5" Top="443.5" Width="51.5394">HOMY-VIN-003-02</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="66.984" Bottom="457.5" Top="452.5" Width="22.421516">9.17.4.1</Cell>
+      <Cell Left="100.82" Bottom="457.5" Top="452.5" Width="71.744774">VIN Breakdown (Model 3)</Cell>
+      <Cell Left="358.15" Bottom="457.5" Top="452.5" Width="51.669342">HOM3-VIN-004-07</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00019">
+    <Rows>
+      <Cell Left="66.984" Bottom="466.5" Top="461.5" Width="22.421516">9.17.4.2</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="475.5" Top="470.5" Width="17.26416">9.17.5</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00020">
+    <Rows>
+      <Cell Left="66.984" Bottom="484.5" Top="479.5" Width="22.421516">9.17.4.1</Cell>
+      <Cell Left="100.82" Bottom="484.5" Top="479.5" Width="71.6285">VIN Breakdown (Model Y)</Cell>
+      <Cell Left="358.15" Bottom="484.5" Top="479.5" Width="51.5394">HOMY-VIN-004-02</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00021">
+    <Rows>
+      <Cell Left="66.984" Bottom="493.5" Top="488.53" Width="22.421516">9.17.4.2</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="502.5" Top="497.53" Width="17.26416">9.17.5</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00022">
+    <Rows>
+      <Cell Left="69.624" Bottom="511.5" Top="506.53" Width="17.26416">9.23.1</Cell>
+      <Cell Left="100.82" Bottom="511.5" Top="506.53" Width="110.03513">Pedestrian protection system (Model 3)</Cell>
+      <Cell Left="358.15" Bottom="511.5" Top="506.53" Width="58.878723">HOM3-Safety-012-00</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="520.5" Top="515.53" Width="17.26416">9.23.1</Cell>
+      <Cell Left="100.82" Bottom="520.5" Top="515.53" Width="109.91886">Pedestrian protection system (Model Y)</Cell>
+      <Cell Left="358.15" Bottom="520.5" Top="515.53" Width="58.74878">HOMY-Safety-009-00</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="529.5" Top="524.53" Width="17.26416">9.23.1</Cell>
+      <Cell Left="100.82" Bottom="529.5" Top="524.53" Width="78.714714">Head impact zone (Model 3)</Cell>
+      <Cell Left="358.15" Bottom="529.5" Top="524.53" Width="58.878723">HOM3-Safety-013-03</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="538.5" Top="533.53" Width="17.26416">9.23.1</Cell>
+      <Cell Left="100.82" Bottom="538.5" Top="533.53" Width="78.59844">Head impact zone (Model Y)</Cell>
+      <Cell Left="358.15" Bottom="538.5" Top="533.53" Width="58.74878">HOMY-Safety-020-00</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="547.5" Top="542.53" Width="17.26416">9.23.1</Cell>
+      <Cell Left="100.82" Bottom="547.5" Top="542.53" Width="70.43832">Lower leg zone (Model 3)</Cell>
+      <Cell Left="358.15" Bottom="547.5" Top="542.53" Width="58.878723">HOM3-Safety-021-00</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="556.5" Top="551.53" Width="17.26416">9.23.1</Cell>
+      <Cell Left="100.82" Bottom="556.5" Top="551.53" Width="70.322044">Lower leg zone (Model Y)</Cell>
+      <Cell Left="358.15" Bottom="556.5" Top="551.53" Width="58.74878">HOMY-Safety-021-00</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="72.144" Bottom="565.5" Top="560.53" Width="12.106804">11.3</Cell>
+      <Cell Left="100.82" Bottom="565.5" Top="560.53" Width="111.095314">Fitting of rear coupling device (Model 3)</Cell>
+      <Cell Left="358.15" Bottom="565.5" Top="560.53" Width="63.666718">HOM3-Exterior-034-00</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="72.144" Bottom="574.5" Top="569.53" Width="12.106804">11.3</Cell>
+      <Cell Left="100.82" Bottom="574.5" Top="569.53" Width="110.97904">Fitting of rear coupling device (Model Y)</Cell>
+      <Cell Left="358.15" Bottom="574.5" Top="569.53" Width="63.536774">HOMY-Exterior-034-00</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="72.264" Bottom="583.5" Top="578.53" Width="12.106804">11.4</Cell>
+      <Cell Left="100.82" Bottom="583.5" Top="578.53" Width="87.353645">Rear Coupling Device (Model 3)</Cell>
+      <Cell Left="358.15" Bottom="583.5" Top="578.53" Width="63.666718">HOM3-Exterior-033-00</Cell>
+    </Rows>
+  </Table>
+  <Table Id="030-00023">
+    <Rows>
+      <Cell Left="72.264" Bottom="592.5" Top="587.53" Width="12.106804">11.5</Cell>
+    </Rows>
+    <Rows>
+      <Cell Left="69.624" Bottom="601.5" Top="596.53" Width="17.26416">12.3.3</Cell>
+    </Rows>
+  </Table>
+</Tables>

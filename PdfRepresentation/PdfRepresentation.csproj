@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net45;netstandard2.0;net5.0;</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\PdfRepresentation.snk</AssemblyOriginatorKeyFile>
+    <LangVersion>latest</LangVersion>
+    <AllowNullable>true</AllowNullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CoreLibrary.Base.PieroViano" Version="2.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="unofficialitext7" Version="7.2.5" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='net45'">
+    <PackageReference Include="AsyncBridge" Version="0.3.1" />
+    <PackageReference Include="ValueTuple.Net35" Version="1.0.0" />
+
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='net40' or '$(TargetFramework)'=='net45'">
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Exec Command="copy /y $(ProjectDir)bin\$(Configuration)\*.nupkg $(SolutionDir)Packages" />
+  </Target>
+</Project>
