@@ -51,10 +51,10 @@ namespace PdfRepresantation.Server
                 var logRepo = LogManager.GetRepository(Assembly.GetEntryAssembly());
                 XmlConfigurator.Configure(logRepo, log4NetconfigFile);
                 var log4NetLogger = LogManager.GetLogger(typeof(Startup));
-                Log.logger = new Log4NetLogger(log4NetLogger);
+                Log.Log.logger = new Log4NetLogger(log4NetLogger);
             }
             else if (aspLogger != null)
-                Log.logger = new WebLogger(aspLogger);
+                Log.Log.logger = new WebLogger(aspLogger);
         }
     }
 }

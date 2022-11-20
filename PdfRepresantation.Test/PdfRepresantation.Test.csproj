@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <IsPackable>false</IsPackable>
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
@@ -11,5 +12,8 @@
   <ItemGroup>
     <ProjectReference Include="..\PdfRepresantation.Client\PdfRepresantation.Client.csproj" />
     <ProjectReference Include="..\PdfRepresantation\PdfRepresantation.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Results\" />
   </ItemGroup>
 </Project>
