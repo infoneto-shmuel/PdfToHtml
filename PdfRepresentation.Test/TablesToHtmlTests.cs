@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using PdfRepresentation.Extensions;
+using PdfRepresentation.Extensions.Pdf;
 using PdfRepresentation.Test.Extensions;
 using Xunit;
 

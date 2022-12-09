@@ -11,7 +11,8 @@ namespace PdfRepresentation.Internals.Helpers
             List<Cell> secondRowCells, int secondRowCellIndex, Func<Cell, Cell, double> getHorizontalTolerance)
         {
             var distance = secondRowCells[secondRowCellIndex].GetLeft() - firstRowCells[firstRowCellIndex].GetLeft();
-            var tolerance = HorizontalToleranceHelper.EnsureGetHorizontalTolerance(getHorizontalTolerance).Invoke(firstRowCells[firstRowCellIndex], secondRowCells[secondRowCellIndex]);
+            var tolerance = HorizontalToleranceHelper.EnsureGetHorizontalTolerance(getHorizontalTolerance).
+                Invoke(firstRowCells[firstRowCellIndex], secondRowCells[secondRowCellIndex]);
             return distance > 0 && distance > tolerance;
         }
 
@@ -19,7 +20,8 @@ namespace PdfRepresentation.Internals.Helpers
             List<Cell> secondRowCells, int secondRowCellIndex, Func<Cell, Cell, double> getHorizontalTolerance)
         {
             var distance = firstRowCells[firstRowCellIndex].GetLeft() - secondRowCells[secondRowCellIndex].GetLeft();
-            var tolerance = HorizontalToleranceHelper.EnsureGetHorizontalTolerance(getHorizontalTolerance).Invoke(firstRowCells[firstRowCellIndex], secondRowCells[secondRowCellIndex]);
+            var tolerance = HorizontalToleranceHelper.EnsureGetHorizontalTolerance(getHorizontalTolerance).
+                Invoke(firstRowCells[firstRowCellIndex], secondRowCells[secondRowCellIndex]);
             return distance > 0 && distance > tolerance;
         }
     }

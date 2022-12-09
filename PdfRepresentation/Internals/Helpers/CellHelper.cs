@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using PdfRepresentation.Extensions;
 using PdfRepresentation.Model.Xml;
 
 namespace PdfRepresentation.Internals.Helpers
 {
-
     internal static class CellHelper
     {
-        public static Cell CreateCell(List<Cell> firstRowCells, int firstRowCellIndex, List<Cell> secondRowCells,
+        public static Cell CreateCell(IList<Cell> firstRowCells, int firstRowCellIndex, IList<Cell> secondRowCells,
             int secondRowCellIndex)
         {
             return new Cell
@@ -23,8 +21,8 @@ namespace PdfRepresentation.Internals.Helpers
         }
 
         public static (int firstRowCellIndex, int secondRowCellIndex) GetIndexesForCellsAtSameLeftPoint(
-            List<Cell> firstRowCells,
-            List<Cell> secondRowCells, Func<Cell, Cell, double> getHorizontalTolerance = null, int startIndex = 0)
+            IList<Cell> firstRowCells, IList<Cell> secondRowCells, Func<Cell, Cell, double> getHorizontalTolerance = null, 
+            int startIndex = 0)
         {
             int firstRowCellIndex;
             var secondRowCellIndex = -1;
@@ -56,7 +54,7 @@ namespace PdfRepresentation.Internals.Helpers
         }
 
         public static (int firstRowCellIndex, int secondRowCellIndex) GetIndexesForCellsAtSameLeftPointRightToLeft(
-            List<Cell> firstRowCells, List<Cell> secondRowCells, Func<Cell, Cell, double> getHorizontalTolerance = null,
+            IList<Cell> firstRowCells, IList<Cell> secondRowCells, Func<Cell, Cell, double> getHorizontalTolerance = null, 
             int startIndex = 0)
         {
             int firstRowCellIndex;
@@ -88,10 +86,8 @@ namespace PdfRepresentation.Internals.Helpers
             return (firstRowCellIndex, secondRowCellIndex);
         }
 
-        public static bool IsDistanceLessThanTolerance(List<Cell> firstRowCells, int firstRowCellIndex,
-            List<Cell> secondRowCells,
-            int secondRowCellIndex,
-            Func<Cell, Cell, double> getHorizontalTolerance)
+        public static bool IsDistanceLessThanTolerance(IList<Cell> firstRowCells, int firstRowCellIndex,
+            IList<Cell> secondRowCells, int secondRowCellIndex, Func<Cell, Cell, double> getHorizontalTolerance)
         {
             var firstRowCell = firstRowCells[firstRowCellIndex];
             var secondRowCell = secondRowCells[secondRowCellIndex];
@@ -100,20 +96,18 @@ namespace PdfRepresentation.Internals.Helpers
                        .Invoke(firstRowCell, secondRowCell);
         }
 
-        public static (string newLeft, string oldLeft) SetSecondRowCellLeft(List<Cell> firstRowCells,
-            int firstRowCellIndex,
-            List<Cell> secondRowCells, int secondRowCellIndex)
+        public static (string newLeft, string oldLeft) SetSecondRowCellLeft(IList<Cell> firstRowCells,
+            int firstRowCellIndex, IList<Cell> secondRowCells, int secondRowCellIndex)
         {
             var oldLeft = secondRowCells[secondRowCellIndex].Left;
             secondRowCells[secondRowCellIndex].Left = firstRowCells[firstRowCellIndex].Left;
             return (firstRowCells[firstRowCellIndex].Left, oldLeft);
         }
 
-        public static void TrimSecondRowCellText(List<Cell> secondRowCells, int firstRowCellIndex,
-            int secondRowCellIndex)
+        public static void TrimRowCellText(IList<Cell> rowCells, int index)
         {
-            secondRowCells[secondRowCellIndex].Text =
-                secondRowCells[secondRowCellIndex]?.Text?.TrimStart();
+            rowCells[index].Text =
+                rowCells[index]?.Text?.TrimStart();
         }
     }
 }

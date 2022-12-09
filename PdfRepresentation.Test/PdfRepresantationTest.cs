@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using PdfRepresantation;
-using PdfRepresentation.Extensions;
+using PdfRepresentation.Extensions.Pdf;
 using PdfRepresentation.Logging;
 using PdfRepresentation.Test.Extensions;
 using Xunit;
@@ -14,7 +14,7 @@ namespace PdfRepresentation.Test
     //and the result will be written in the "results" directory
     public class PdfRepresantationTest
     {
-        private readonly PdfRepresantationClient client = new PdfRepresantationClient();
+        private readonly PdfRepresantationClient _client = new PdfRepresantationClient();
 
         public PdfRepresantationTest()
         {
@@ -94,7 +94,7 @@ namespace PdfRepresentation.Test
             {
                 var name = Path.GetFileNameWithoutExtension(file.Name);
                 var buffer = File.ReadAllBytes(file.FullName);
-                var htmlResult = await client.ConvertToHtmlAsync(buffer);
+                var htmlResult = await _client.ConvertToHtmlAsync(buffer);
                 File.WriteAllText(Path.Combine(TestsConstants.TargetDir, name + ".html"), htmlResult);
             }
         }
@@ -107,7 +107,7 @@ namespace PdfRepresentation.Test
             {
                 var name = Path.GetFileNameWithoutExtension(file.Name);
                 var buffer = await File.ReadAllBytesAsync(file.FullName);
-                var textResult = await client.ConvertToTextAsync(buffer);
+                var textResult = await _client.ConvertToTextAsync(buffer);
                 await File.WriteAllTextAsync(Path.Combine(TestsConstants.TargetDir, name + ".txt"), textResult);
             }
         }

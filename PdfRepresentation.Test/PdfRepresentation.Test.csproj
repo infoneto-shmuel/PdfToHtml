@@ -10,7 +10,21 @@
     <None Remove="Results\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Resources\001.json" />
+    <None Remove="Resources\002.xml" />
+    <None Remove="Resources\003.xml" />
+    <None Remove="Resources\004.xml" />
+    <None Remove="Resources\005.xml" />
+    <None Remove="Resources\Normal.xml" />
     <None Remove="Resources\yq2kuu10.3tu~" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\001.json" />
+    <EmbeddedResource Include="Resources\002.xml" />
+    <EmbeddedResource Include="Resources\003.xml" />
+    <EmbeddedResource Include="Resources\004.xml" />
+    <EmbeddedResource Include="Resources\005.xml" />
+    <EmbeddedResource Include="Resources\Normal.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ConfigurationLibrary.PieroViano" Version="1.3.0" />

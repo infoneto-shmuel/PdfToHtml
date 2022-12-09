@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using PdfRepresentation.Extensions;
+using PdfRepresentation.Extensions.Xml;
 using PdfRepresentation.Model.Xml;
 
 namespace PdfRepresentation.Internals.Helpers

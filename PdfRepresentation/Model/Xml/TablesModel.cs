@@ -4,6 +4,7 @@ using CoreLibrary.Model.Configuration.Hosting;
 using CoreLibrary.Utility.Serialization;
 using Newtonsoft.Json;
 using PdfRepresentation.Extensions;
+using PdfRepresentation.Extensions.Xml;
 using PdfRepresentation.Internals.Helpers;
 using PdfRepresentation.Internals.Serialization;
 

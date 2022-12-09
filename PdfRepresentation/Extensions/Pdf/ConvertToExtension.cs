@@ -6,15 +6,13 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using PdfRepresentation.Html;
 using PdfRepresentation.Json;
-using PdfRepresentation.Logic;
 using PdfRepresentation.Model.Config;
-using PdfRepresentation.Model.Pdf;
 using PdfRepresentation.Model.Xml;
 using PdfRepresentation.Xml;
 
-namespace PdfRepresentation.Extensions
+namespace PdfRepresentation.Extensions.Pdf
 {
-    public static class PdfWriterExtension
+    public static class ConvertToExtension
     {
         private const string Html = ".html";
         private const string Json = ".json";
@@ -57,7 +55,7 @@ namespace PdfRepresentation.Extensions
 
         public static List<string> ConvertToHtml(this FileInfo file, string targetDirectory, ref List<string> paths)
         {
-            var details = GetPdfDetails(file, Html, targetDirectory, ref paths, out var target);
+            var details = file.GetPdfDetails(Html, targetDirectory, ref paths, out var target);
             var writer = new PdfHtmlWriter(new HtmlWriterConfig { UseCanvas = false });
             writer.SaveAs(details, target, false);
             return paths;
@@ -194,30 +192,6 @@ namespace PdfRepresentation.Extensions
             var writer = new PdfXmlWriter();
             writer.SaveAsXmlTables(details, target);
             return paths;
-        }
-
-        public static PdfDetails GetPdfDetails(this FileInfo file, string extension,
-            string targetDirectory, ref List<string> paths, out string target)
-        {
-            if (!string.IsNullOrEmpty(targetDirectory))
-            {
-                Directory.CreateDirectory(targetDirectory);
-            }
-
-            paths ??= new List<string>();
-            var name = Path.GetFileNameWithoutExtension(file.Name);
-            var details = PdfDetailsFactory.Create(file.FullName);
-            if (!string.IsNullOrEmpty(targetDirectory))
-            {
-                target = Path.Combine(targetDirectory, name + extension);
-                paths.Add(target);
-            }
-            else
-            {
-                target = null;
-            }
-
-            return details;
         }
     }
 }

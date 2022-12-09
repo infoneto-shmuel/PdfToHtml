@@ -4,13 +4,14 @@ using System.Linq;
 using PdfRepresentation.Internals.Helpers;
 using PdfRepresentation.Model.Xml;
 
-namespace PdfRepresentation.Extensions
+namespace PdfRepresentation.Extensions.Xml
 {
     public static class RowEnumerableExtension
     {
         public static IEnumerable<Row> CompactCompatibleRows(this IEnumerable<Row> sourceRows, Func<Cell, Cell, double> getHorizontalTolerance)
         {
-            foreach (var sourceRow in sourceRows)
+            var compactCompatibleRows = sourceRows as IList<Row> ?? sourceRows.ToList();
+            foreach (var sourceRow in compactCompatibleRows)
             {
                 bool isModified = false;
                 var sourceRowCells = sourceRow.Cells.ToList();
@@ -31,7 +32,7 @@ namespace PdfRepresentation.Extensions
                 }
             }
 
-            return sourceRows;
+            return compactCompatibleRows;
         }
 
         public static List<Row> CompactCompatibleColumns(this IEnumerable<Row> rows, Func<Cell, Cell, double> getHorizontalTolerance)

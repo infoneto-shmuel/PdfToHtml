@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Text.RegularExpressions;
 using ConfigurationLibrary.Arguments;
 using CoreLibrary.Model.Configuration.Hosting;
 using CoreLibrary.Model.Serialization;
 using CoreLibrary.Utility.Serialization;
 using Newtonsoft.Json;
-using PdfRepresentation.Extensions;
+using PdfRepresentation.Extensions.Xml;
 using PdfRepresentation.Model.Xml;
 using PdfRepresentation.Test.Properties;
 using Xunit;
 
 namespace PdfRepresentation.Test
 {
-    public class TablesToDataTablesTests
+    public class CompactTests
     {
-        public TablesToDataTablesTests()
+        public CompactTests()
         {
             ArgumentGetterHost.Instance.ArgumentGetter = ArgumentGetter.Instance;
         }
@@ -99,69 +96,6 @@ namespace PdfRepresentation.Test
             var compacted = ObjectSerializer.Instance.Serialize(compactedTableModels, SerializationType.Xml);
 
             Assert.True(compacted.Length < normal.Length);
-        }
-
-        [Fact]
-        public void WhenConvertingToDataTables_ThenDataTablesAreProduced()
-        {
-            var directoryInfo = new DirectoryInfo(TestsConstants.PdfDir);
-            if (directoryInfo.Exists)
-            {
-                foreach (var file in directoryInfo.EnumerateFiles().Where(d => d.Name.ToLower() != "001.pdf"))
-                {
-                    var tableModels = file.ConvertToTableModels();
-                    var normal = ObjectSerializer.Instance.Serialize(tableModels, SerializationType.Xml);
-                    tableModels.StartRegex = "Whole Vehicle Type Approval";
-                    tableModels.StopRegex = "Table [0-9]+[:]";
-                    var compactedTableModels = tableModels.CompactTableRows(new Regex("[-][0]+1"), "[0-9]+ of [0-9]+");
-                    var compacted = ObjectSerializer.Instance.Serialize(compactedTableModels, SerializationType.Xml);
-                    Assert.True(compacted.Length < normal.Length);
-                    DoWork(compactedTableModels);
-                }
-            }
-        }
-
-        private static void DoWork(TablesModel tablesModel)
-        {
-            var tableIndex = 0;
-            var rowIndex = 0;
-            while (tableIndex >= 0 && rowIndex >= 0)
-            {
-                var wholeVehicleTypeApproval = tablesModel.FindByText("Whole Vehicle Type Approval",
-                    ref tableIndex, out rowIndex, out _);
-
-                var vehicle = wholeVehicleTypeApproval.GetCellTextAtOffsets("VEHICLE", rowIndex, 1, 0);
-                var approval = wholeVehicleTypeApproval.GetCellTextAtOffsets("APPROVAL", rowIndex, 1, 0);
-
-                var changesToApproval =
-                    tablesModel.FindByText("CHANGES TO APPROVAL", ref tableIndex, out rowIndex, out _);
-                var maxValue = int.MaxValue;
-                var valueTuples = new List<(int tableIndex, int rowIndex)>();
-                for (var index = rowIndex + 1; index < Math.Min(changesToApproval.Rows.Length, maxValue); index++)
-                {
-                    var row = changesToApproval.Rows[index];
-                    var text = row.Cells.Last().Text;
-                    var r = index + 1;
-                    changesToApproval.FindByText(text, false, ref r, out _);
-                    if (r >= 0)
-                    {
-                        valueTuples.Add((tableIndex, r));
-                        maxValue = Math.Min(maxValue, r);
-                    }
-                    else
-                    {
-                        var annexIndex = tableIndex + 1;
-                        tablesModel.FindByText(text, false, ref annexIndex, out r, out _);
-                        if (r >= 0)
-                        {
-                            valueTuples.Add((annexIndex, r));
-                        }
-                    }
-                }
-
-                tableIndex++;
-                changesToApproval = tablesModel.Tables[tableIndex];
-            }
         }
     }
 }

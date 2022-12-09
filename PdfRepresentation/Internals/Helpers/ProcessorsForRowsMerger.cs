@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using PdfRepresentation.Extensions;
+using PdfRepresentation.Extensions.Xml;
 using PdfRepresentation.Model.Xml;
 
 namespace PdfRepresentation.Internals.Helpers
@@ -9,7 +9,7 @@ namespace PdfRepresentation.Internals.Helpers
     internal static class ProcessorsForRowsMerger
     {
         public static bool ProcessRowsLeftToRight(Row firstRow, Row secondRow,
-            Func<Cell, Cell, double>? getHorizontalTolerance = null)
+            Func<Cell, Cell, double> getHorizontalTolerance = null)
         {
             var isModified = RowProcessingHelper.InitializeProcessing(firstRow, secondRow, getHorizontalTolerance,
                 out var firstRowCells, out var secondRowCells, out var firstRowCellIndex, out var secondRowCellIndex);
@@ -22,9 +22,9 @@ namespace PdfRepresentation.Internals.Helpers
                             secondRowCellIndex, getHorizontalTolerance);
                     if (CellPositionHelper.IsSecondRowCellAfterFirstRowCellWithTolerance(firstRowCells, index,
                             secondRowCells, secondRowCellIndex, getHorizontalTolerance) &&
-                        !secondRowCells.ExistsCompatibleCell(firstRowCells[firstRowCellIndex], getHorizontalTolerance))
+                        !secondRowCells.CompatibleCellExists(firstRowCells[firstRowCellIndex], getHorizontalTolerance))
                     {
-                        CellHelper.TrimSecondRowCellText(secondRowCells, index, secondRowCellIndex);
+                        CellHelper.TrimRowCellText(secondRowCells, secondRowCellIndex);
                         var cell = CellHelper.CreateCell(firstRowCells, index, secondRowCells, secondRowCellIndex);
                         if (secondRowCells.All(c =>
                                 Math.Abs(c.GetLeft() - cell.GetLeft()) >
@@ -47,7 +47,7 @@ namespace PdfRepresentation.Internals.Helpers
         }
 
         public static bool ProcessRowsRightToLeft(Row firstRow, Row secondRow,
-            Func<Cell, Cell, double>? getHorizontalTolerance = null)
+            Func<Cell, Cell, double> getHorizontalTolerance = null)
         {
             var isModified = RowProcessingHelper.InitializeProcessing(firstRow, secondRow, getHorizontalTolerance,
                 out var firstRowCells, out var secondRowCells, out var firstRowCellIndex, out var secondRowCellIndex);
@@ -63,7 +63,7 @@ namespace PdfRepresentation.Internals.Helpers
                     if (CellPositionHelper.IsFirstRowCellAfterSecondRowCellWithTolerance(firstRowCells, index,
                             secondRowCells, secondRowCellIndex, getHorizontalTolerance))
                     {
-                        CellHelper.TrimSecondRowCellText(secondRowCells, index, secondRowCellIndex);
+                        CellHelper.TrimRowCellText(secondRowCells, secondRowCellIndex);
                         var cell = CellHelper.CreateCell(firstRowCells, index, secondRowCells, secondRowCellIndex);
                         if (secondRowCells.All(c =>
                                 Math.Abs(c.GetLeft() - cell.GetLeft()) >

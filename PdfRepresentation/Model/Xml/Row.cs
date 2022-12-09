@@ -26,10 +26,13 @@ namespace PdfRepresentation.Model.Xml
             get
             {
                 int page = -1;
-                var indexOf = TableId.IndexOf("-", StringComparison.InvariantCultureIgnoreCase);
-                if (indexOf >= 0)
+                if (TableId != null)
                 {
-                    int.TryParse(TableId.Substring(0, indexOf), out page);
+                    var indexOf = TableId.IndexOf("-", StringComparison.InvariantCultureIgnoreCase);
+                    if (indexOf >= 0)
+                    {
+                        int.TryParse(TableId.Substring(0, indexOf), out page);
+                    }
                 }
 
                 return page;
@@ -46,10 +49,13 @@ namespace PdfRepresentation.Model.Xml
             get
             {
                 int page = -1;
-                var indexOf = TableId.IndexOf("-", StringComparison.InvariantCultureIgnoreCase);
-                if (indexOf >= 0)
+                if (TableId != null)
                 {
-                    int.TryParse(TableId.Substring(indexOf + 1), out page);
+                    var indexOf = TableId.IndexOf("-", StringComparison.InvariantCultureIgnoreCase);
+                    if (indexOf >= 0)
+                    {
+                        int.TryParse(TableId.Substring(indexOf + 1), out page);
+                    }
                 }
 
                 return page;

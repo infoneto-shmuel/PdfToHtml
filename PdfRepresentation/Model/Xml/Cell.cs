@@ -5,7 +5,7 @@ using PdfRepresentation.Internals.Serialization;
 namespace PdfRepresentation.Model.Xml
 {
     [XmlRoot(ElementName = "Cell")]
-    public class Cell : ToXmlJson
+    public partial class Cell : ToXmlJson
     {
         [XmlAttribute(AttributeName = "Left")] 
         public string Left { get; set; }
@@ -40,6 +40,5 @@ namespace PdfRepresentation.Model.Xml
         {
             return ObjectSerializer.Instance.Serialize(this);
         }
-
     }
 }
