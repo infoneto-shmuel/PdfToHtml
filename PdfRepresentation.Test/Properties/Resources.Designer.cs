@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace PdfRepresentation.Test.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -16,7 +19,7 @@ namespace PdfRepresentation.Test.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -36,7 +39,7 @@ namespace PdfRepresentation.Test.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PdfRepresantation.Test.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PdfRepresentation.Test.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -58,31 +61,12 @@ namespace PdfRepresentation.Test.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {
-        ///  &quot;Tables&quot;: [
-        ///    {
-        ///      &quot;Rows&quot;: [
-        ///        {
-        ///          &quot;Cells&quot;: [
-        ///            {
-        ///              &quot;Left&quot;: &quot;70.92&quot;,
-        ///              &quot;Right&quot;: &quot;440.0661&quot;,
-        ///              &quot;Bottom&quot;: &quot;279.5&quot;,
-        ///              &quot;Top&quot;: &quot;269.8968&quot;,
-        ///              &quot;Width&quot;: &quot;84.33392&quot;,
-        ///              &quot;Height&quot;: &quot;289.1032&quot;,
-        ///              &quot;Text&quot;: &quot;- EC type-approval&quot;
-        ///            },
-        ///            {
-        ///              &quot;Left&quot;: &quot;294.34&quot;,
-        ///              &quot;Right&quot;: &quot;219.7533&quot;,
-        ///              &quot;Bottom&quot;: &quot;279.5&quot;,
-        ///              &quot;Top&quot;: &quot;269.8968&quot;,
-        ///  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static string _001_json {
+        internal static byte[] _001 {
             get {
-                return ResourceManager.GetString("001.json", resourceCulture);
+                object obj = ResourceManager.GetObject("_001", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -99,9 +83,9 @@ namespace PdfRepresentation.Test.Properties {
         ///    &lt;Rows&gt;
         ///      &lt;Cell Left=&quot;58.344&quot; Bottom=&quot;240.5&quot; Top=&quot;235.52002&quot; Width=&quot;22.996086&quot;&gt; [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string _002_xml {
+        internal static string _002 {
             get {
-                return ResourceManager.GetString("002.xml", resourceCulture);
+                return ResourceManager.GetString("_002", resourceCulture);
             }
         }
         
@@ -118,9 +102,9 @@ namespace PdfRepresentation.Test.Properties {
         ///    &lt;Rows&gt;
         ///      &lt;Cell Left=&quot;242.8&quot; Bottom=&quot;118&quot; Top=&quot;108.236755&quot; Width=&quot;112 [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string _003_xml {
+        internal static string _003 {
             get {
-                return ResourceManager.GetString("003.xml", resourceCulture);
+                return ResourceManager.GetString("_003", resourceCulture);
             }
         }
         
@@ -136,9 +120,9 @@ namespace PdfRepresentation.Test.Properties {
         ///    &lt;Rows&gt;
         ///      &lt;Cell Left=&quot;73.944&quot;  [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string _004_xml {
+        internal static string _004 {
             get {
-                return ResourceManager.GetString("004.xml", resourceCulture);
+                return ResourceManager.GetString("_004", resourceCulture);
             }
         }
         
@@ -157,9 +141,9 @@ namespace PdfRepresentation.Test.Properties {
         ///		&lt;Rows&gt;
         ///			&lt;Cell Left=&quot;71.784&quot; Bottom=&quot;88.5&quot; Top=&quot;83.45001&quot; Width=&quot;12.79 [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string _005_xml {
+        internal static string _005 {
             get {
-                return ResourceManager.GetString("005.xml", resourceCulture);
+                return ResourceManager.GetString("_005", resourceCulture);
             }
         }
         
@@ -176,9 +160,9 @@ namespace PdfRepresentation.Test.Properties {
         ///    &lt;Rows&gt;
         ///      &lt;Cell Left=&quot;242.8&quot; Bottom=&quot;118&quot; Top=&quot;108.236755&quot; Width=&quot;112 [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Normal_xml {
+        internal static string Normal {
             get {
-                return ResourceManager.GetString("Normal.xml", resourceCulture);
+                return ResourceManager.GetString("Normal", resourceCulture);
             }
         }
     }
