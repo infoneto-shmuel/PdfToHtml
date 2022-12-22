@@ -1,13 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard2.0;net5.0;</TargetFrameworks>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <TargetFrameworks>net40;net45;netstandard2.0;net5.0;</TargetFrameworks>
     <IncludeSymbols>True</IncludeSymbols>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\PdfRepresentation.snk</AssemblyOriginatorKeyFile>
     <LangVersion>latest</LangVersion>
     <AllowNullable>true</AllowNullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  
+    <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CoreLibrary.Base.PieroViano" Version="2.0.0" />
@@ -15,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="unofficialitext7" Version="7.2.5" />
+    <PackageReference Include="Net4x.itext7" Version="7.2.6" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
@@ -24,6 +26,14 @@
 
   <ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='net40'">
+    <PackageReference Include="Net4x.ValueTuple" Version="1.0.0" />
+    <PackageReference Include="AsyncBridge" Version="0.3.1" PrivateAssets="all" />
+
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net45'">
@@ -37,7 +47,20 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageId>$(MSBuildProjectName).PieroViano</PackageId>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IsPublishable>False</IsPublishable>
+    <PackageOutputPath>$(SolutionDir)Packages\</PackageOutputPath>
+  </PropertyGroup>
+
   <Target Name="CopyPackage" AfterTargets="Pack">
-    <Exec Command="copy /y $(ProjectDir)bin\$(Configuration)\*.nupkg $(SolutionDir)Packages" />
+    <Exec Command="if exist %userprofile%\.nuget\Packages\$(MSBuildProjectName).PieroViano rmdir /s /q %userprofile%\.nuget\Packages\$(MSBuildProjectName).PieroViano" />
   </Target>
+
 </Project>
