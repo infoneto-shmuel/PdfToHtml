@@ -59,7 +59,7 @@
     <PackageOutputPath>$(SolutionDir)Packages\</PackageOutputPath>
   </PropertyGroup>
 
-  <Target Name="CopyPackage" AfterTargets="Pack">
+  <Target Name="DeleteOldPackage" AfterTargets="Pack" Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">
     <Exec Command="if exist %userprofile%\.nuget\Packages\$(MSBuildProjectName).PieroViano rmdir /s /q %userprofile%\.nuget\Packages\$(MSBuildProjectName).PieroViano" />
   </Target>
 
