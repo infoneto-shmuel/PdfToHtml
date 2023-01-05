@@ -13,11 +13,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CoreLibrary.Base.PieroViano" Version="2.0.0" />
+    <PackageReference Include="Net4x.iText.Kernel" Version="1.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Net4x.itext7" Version="7.2.6" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
@@ -48,19 +45,13 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageId>$(MSBuildProjectName).PieroViano</PackageId>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <IsPublishable>False</IsPublishable>
     <PackageOutputPath>$(SolutionDir)Packages\</PackageOutputPath>
   </PropertyGroup>
 
-  <Target Name="DeleteOldPackage" AfterTargets="Pack" Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">
-    <Exec Command="if exist %userprofile%\.nuget\Packages\$(MSBuildProjectName).PieroViano rmdir /s /q %userprofile%\.nuget\Packages\$(MSBuildProjectName).PieroViano" />
-  </Target>
+  <Import Project="$(USERPROFILE)\.nuget\packages\ObfuscatorUtility.PieroViano\1.0.0\build\ObfuscatorUtility.PieroViano.props" Condition="Exists('$(USERPROFILE)\.nuget\packages\ObfuscatorUtility.PieroViano\1.0.0\build\ObfuscatorUtility.PieroViano.props')" />
+  <ItemGroup>
+    <PackageReference Include="ObfuscatorUtility.PieroViano" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
 
 </Project>
