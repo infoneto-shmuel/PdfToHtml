@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net40;net45;netstandard2.0;net5.0;</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols Condition="'$(Configuration)'=='Debug'">true</IncludeSymbols>
+    <SymbolPackageFormat Condition="'$(Configuration)'=='Debug'">snupkg</SymbolPackageFormat>
+    <IncludeSymbols Condition="'$(Configuration)'!='Debug'">false</IncludeSymbols>
     <IncludeSymbols>True</IncludeSymbols>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\PdfRepresentation.snk</AssemblyOriginatorKeyFile>
@@ -27,7 +31,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)'=='net40'">
     <PackageReference Include="Net4x.ValueTuple" Version="1.0.0" />
-    <PackageReference Include="AsyncBridge" Version="0.3.1" PrivateAssets="all" />
+    <PackageReference Include="Net4x.AsyncBridge" Version="1.0.0" PrivateAssets="all" />
 
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -49,7 +53,7 @@
     <PackageOutputPath>$(SolutionDir)Packages\</PackageOutputPath>
   </PropertyGroup>
 
-  <Import Project="$(USERPROFILE)\.nuget\packages\ObfuscatorUtility.PieroViano\1.0.0\build\ObfuscatorUtility.PieroViano.props" Condition="Exists('$(USERPROFILE)\.nuget\packages\ObfuscatorUtility.PieroViano\1.0.0\build\ObfuscatorUtility.PieroViano.props')" />
+  
   <ItemGroup>
     <PackageReference Include="ObfuscatorUtility.PieroViano" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>

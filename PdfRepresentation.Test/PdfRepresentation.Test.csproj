@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net5.0-windows</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols Condition="'$(Configuration)'=='Debug'">true</IncludeSymbols>
+    <SymbolPackageFormat Condition="'$(Configuration)'=='Debug'">snupkg</SymbolPackageFormat>
+    <IncludeSymbols Condition="'$(Configuration)'!='Debug'">false</IncludeSymbols>
     <IsPackable>false</IsPackable>
     <LangVersion>8</LangVersion>
   </PropertyGroup>
