@@ -1,4 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project = "$(UserProfile)\.nuget\packages\obfuscatorutility\1.0.0\build\ObfuscatorUtility.targets" Condition="Exists('$(UserProfile)\.nuget\packages\obfuscatorutility\1.0.0\build\ObfuscatorUtility.targets')" />
+  <Import Project = "$(UserProfile)\.nuget\packages\obfuscatorutility\1.0.0\build\ObfuscatorUtility.props" Condition="Exists('$(UserProfile)\.nuget\packages\obfuscatorutility\1.0.0\build\ObfuscatorUtility.props')" />
   <PropertyGroup>
     <TargetFrameworks>net40;net45;netstandard2.0;net5.0;</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -31,7 +33,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)'=='net40'">
     <PackageReference Include="Net4x.ValueTuple" Version="1.0.0" />
-    <PackageReference Include="Net4x.AsyncBridge" Version="1.0.0" PrivateAssets="all" />
+    <PackageReference Include="Net4x.AsyncBridge" Version="1.0.0" />
 
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -55,7 +57,7 @@
 
   
   <ItemGroup>
-    <PackageReference Include="ObfuscatorUtility.PieroViano" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="ObfuscatorUtility" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
