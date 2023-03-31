@@ -13,7 +13,7 @@
     <LangVersion>latest</LangVersion>
     <AllowNullable>true</AllowNullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  
+    <Version>1.0.0$(Suffix)</Version>
     <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
     <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
   </PropertyGroup>
