@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project = "$(UserProfile)\.nuget\packages\obfuscatorutility\1.0.0\build\Obfuscator.Utility.targets" Condition="Exists('$(UserProfile)\.nuget\packages\obfuscatorutility\1.0.0\build\Obfuscator.Utility.targets')" />
-  <Import Project = "$(UserProfile)\.nuget\packages\obfuscatorutility\1.0.0\build\Obfuscator.Utility.props" Condition="Exists('$(UserProfile)\.nuget\packages\obfuscatorutility\1.0.0\build\Obfuscator.Utility.props')" />
+  <Import Project = "$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.targets" Condition="Exists('$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.targets')" />
+  <Import Project = "$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.props" Condition="Exists('$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.props')" />
   <PropertyGroup>
     <PackageOutputPath>$(SolutionDir)Packages\</PackageOutputPath>
   </PropertyGroup>
@@ -36,8 +36,8 @@
     <EmbeddedResource Include="Resources\Normal.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ConfigurationLibrary.PieroViano" Version="1.3.0" />
-    <PackageReference Include="CoreLibrary.Base.PieroViano" Version="2.0.0" />
+    <PackageReference Include="ConfigurationLibrary.PieroViano" Version="$(ConfigurationLibraryVersion).$(VersionBuildSuffix)" />
+    <PackageReference Include="CoreLibrary.Base.PieroViano" Version="$(CoreLibraryVersion).$(VersionBuildSuffix)" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">

@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project = "$(UserProfile)\.nuget\packages\obfuscatorutility\1.0.0\build\Obfuscator.Utility.targets" Condition="Exists('$(UserProfile)\.nuget\packages\obfuscatorutility\1.0.0\build\Obfuscator.Utility.targets')" />
-  <Import Project = "$(UserProfile)\.nuget\packages\obfuscatorutility\1.0.0\build\Obfuscator.Utility.props" Condition="Exists('$(UserProfile)\.nuget\packages\obfuscatorutility\1.0.0\build\Obfuscator.Utility.props')" />
+  <Import Project = "$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.targets" Condition="Exists('$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.targets')" />
+  <Import Project = "$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.props" Condition="Exists('$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.props')" />
   <PropertyGroup>
     <TargetFrameworks>net40;net45;netstandard2.0;net5.0;</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -18,9 +18,9 @@
     <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CoreLibrary.Base.PieroViano" Version="2.0.0" />
+    <PackageReference Include="CoreLibrary.Base.PieroViano" Version="$(CoreLibraryVersion).$(VersionBuildSuffix)" />
     <PackageReference Include="Net4x.iText.Kernel" Version="1.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
@@ -32,8 +32,8 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net40'">
-    <PackageReference Include="Net4x.ValueTuple" Version="1.0.0" />
-    <PackageReference Include="Net4x.AsyncBridge" Version="1.0.0" />
+    <PackageReference Include="Net4x.ValueTuple" Version="$(Net4xValueTupleVersion).$(VersionBuildSuffix)" />
+    <PackageReference Include="Net4x.AsyncBridge" Version="$(Net4xAsyncBridgeVersion).$(VersionBuildSuffix)" />
 
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -57,7 +57,7 @@
 
   
   <ItemGroup>
-    <PackageReference Include="ObfuscatorUtility" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="NuGetUtility" Version="$(NuGetUtilityVersion).$(VersionBuildSuffix)" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
