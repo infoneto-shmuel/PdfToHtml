@@ -13,7 +13,8 @@
     <LangVersion>latest</LangVersion>
     <AllowNullable>true</AllowNullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Version>1.0.0$(Suffix)</Version>
+    <PdfRepresentationVersion Condition="'$(PdfRepresentationVersion)' == ''">1.0.1</PdfRepresentationVersion>
+    <Version>$(PdfRepresentationVersion)$(Suffix)</Version>
     <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
     <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
   </PropertyGroup>
