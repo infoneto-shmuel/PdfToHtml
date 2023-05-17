@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project = "$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.targets" Condition="Exists('$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.targets')" />
-  <Import Project = "$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.props" Condition="Exists('$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.targets" Condition="Exists('$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.targets')" />
+  <Import Project="$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.props" Condition="Exists('$(UserProfile)\.nuget\packages\nugetutility\$(NuGetUtilityVersion)\build\NuGet.Utility.props')" />
   <PropertyGroup>
     <TargetFrameworks>net40;net45;netstandard2.0;net5.0;</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -13,14 +13,15 @@
     <LangVersion>latest</LangVersion>
     <AllowNullable>true</AllowNullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PdfRepresentationVersion Condition="'$(PdfRepresentationVersion)' == ''">1.0.1</PdfRepresentationVersion>
-    <Version>$(PdfRepresentationVersion)$(Suffix)</Version>
+    <Version>$(VersionPrefix).$(VersionSuffix)</Version>
     <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
     <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CoreLibrary.Base.PieroViano" Version="$(CoreLibraryVersion).$(VersionBuildSuffix)" />
+    <PackageReference Include="Net4x.CoreLibrary.Base" Version="$(CoreLibraryVersion).$(VersionBuildSuffix)" />
+    <PackageReference Include="Net4x.iText.Commons" Version="$(Net4xiTextVersion).$(VersionBuildSuffix)" />
     <PackageReference Include="Net4x.iText.Kernel" Version="$(Net4xiTextVersion).$(VersionBuildSuffix)" />
+    <PackageReference Include="Net4x.iText.IO" Version="$(Net4xiTextVersion).$(VersionBuildSuffix)" />
     <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
   </ItemGroup>
 
@@ -52,13 +53,13 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <PackageId>$(MSBuildProjectName).PieroViano</PackageId>
+    <PackageId>Net4x.$(MSBuildProjectName)</PackageId>
     <PackageOutputPath>$(SolutionDir)Packages\</PackageOutputPath>
   </PropertyGroup>
 
 
   <ItemGroup>
-    <PackageReference Include="NuGetUtility" Version="$(NuGetUtilityVersion).$(VersionBuildSuffix)" PrivateAssets="All" />
+    <PackageReference Include="NuGetUtility" Version="$(NuGetUtilityVersion)" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
