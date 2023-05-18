@@ -4,7 +4,6 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using iText.Commons.Utils;
 using PdfRepresentation.Html;
 using PdfRepresentation.Json;
 using PdfRepresentation.Logic;
