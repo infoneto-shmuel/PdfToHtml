@@ -4,9 +4,12 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using iText.Commons.Utils;
 using PdfRepresentation.Html;
 using PdfRepresentation.Json;
+using PdfRepresentation.Logic;
 using PdfRepresentation.Model.Config;
+using PdfRepresentation.Model.Pdf;
 using PdfRepresentation.Model.Xml;
 using PdfRepresentation.Xml;
 
@@ -33,7 +36,7 @@ namespace PdfRepresentation.Extensions.Pdf
         public static TablesModel ConvertToTableModels(this FileInfo file,
             ref List<string> paths, out string xml)
         {
-            xml = file.GetPdfDetails(Xml, null, ref paths, out _).GetTablesModelXml();
+            xml = GetPdfDetails(file, Xml, null, ref paths, out _).GetTablesModelXml();
 
             var ser = new XmlSerializer(typeof(TablesModel));
             TablesModel tablesModel;
@@ -55,7 +58,7 @@ namespace PdfRepresentation.Extensions.Pdf
 
         public static List<string> ConvertToHtml(this FileInfo file, string targetDirectory, ref List<string> paths)
         {
-            var details = file.GetPdfDetails(Html, targetDirectory, ref paths, out var target);
+            var details = GetPdfDetails(file, Html, targetDirectory, ref paths, out var target);
             var writer = new PdfHtmlWriter(new HtmlWriterConfig { UseCanvas = false });
             writer.SaveAs(details, target, false);
             return paths;
@@ -70,7 +73,7 @@ namespace PdfRepresentation.Extensions.Pdf
         public static List<string> ConvertToHtmlTables(this FileInfo file, string targetDirectory,
             ref List<string> paths)
         {
-            var details = file.GetPdfDetails(Html, targetDirectory, ref paths, out var target);
+            var details = GetPdfDetails(file, Html, targetDirectory, ref paths, out var target);
             var writer = new PdfXmlWriter();
             var tableModels = writer.ToTables(details);
 
@@ -113,7 +116,7 @@ namespace PdfRepresentation.Extensions.Pdf
         public static List<string> ConvertToDataTables(this FileInfo file,
             ref List<string> paths)
         {
-            var details = file.GetPdfDetails(Xml, null, ref paths, out _);
+            var details = GetPdfDetails(file, Xml, null, ref paths, out _);
             var writer = new PdfXmlWriter();
             paths.Add(writer.SaveAsXml(details));
             return paths;
@@ -127,7 +130,7 @@ namespace PdfRepresentation.Extensions.Pdf
 
         public static List<string> ConvertToJson(this FileInfo file, string targetDirectory, ref List<string> paths)
         {
-            var details = file.GetPdfDetails(Json, targetDirectory, ref paths, out var target);
+            var details = GetPdfDetails(file, Json, targetDirectory, ref paths, out var target);
             var writer = new PdfJsonWriter();
             writer.SaveAs(details, target, true);
             return paths;
@@ -142,7 +145,7 @@ namespace PdfRepresentation.Extensions.Pdf
         public static List<string> ConvertToJsonContents(this FileInfo file, string targetDirectory,
             ref List<string> paths)
         {
-            var details = file.GetPdfDetails(Xml, targetDirectory, ref paths, out _);
+            var details = GetPdfDetails(file, Xml, targetDirectory, ref paths, out _);
             var writer = new PdfJsonWriter();
 
             paths.Add(writer.SaveAsJson(details));
@@ -159,7 +162,7 @@ namespace PdfRepresentation.Extensions.Pdf
             ref List<string> paths)
         {
             var writer = new PdfJsonWriter();
-            var details = file.GetPdfDetails(Json, targetDirectory, ref paths, out var target);
+            var details =GetPdfDetails(file, Json, targetDirectory, ref paths, out var target);
             writer.SaveAsJsonTables(details, target);
             return paths;
         }
@@ -172,7 +175,7 @@ namespace PdfRepresentation.Extensions.Pdf
 
         public static List<string> ConvertToXml(this FileInfo file, string targetDirectory, ref List<string> paths)
         {
-            var details = file.GetPdfDetails(Xml, targetDirectory, ref paths, out var target);
+            var details = GetPdfDetails(file, Xml, targetDirectory, ref paths, out var target);
             var writer = new PdfXmlWriter();
             writer.SaveAs(details, target);
             return paths;
@@ -187,7 +190,7 @@ namespace PdfRepresentation.Extensions.Pdf
         public static List<string> ConvertToXmlContents(this FileInfo file, string targetDirectory,
             ref List<string> paths)
         {
-            var details = file.GetPdfDetails(Xml, targetDirectory, ref paths, out _);
+            var details = GetPdfDetails(file, Xml, targetDirectory, ref paths, out _);
             var writer = new PdfXmlWriter();
 
             paths.Add(writer.SaveAsXml(details));
@@ -203,41 +206,9 @@ namespace PdfRepresentation.Extensions.Pdf
         public static List<string> ConvertToXmlTables(this FileInfo file, string targetDirectory,
             ref List<string> paths)
         {
-            var details = file.GetPdfDetails(Xml, targetDirectory, ref paths, out var target);
+            var details = GetPdfDetails(file, Xml, targetDirectory, ref paths, out var target);
             var writer = new PdfXmlWriter();
             writer.SaveAsXmlTables(details, target);
-            return paths;
-        }
-
-        public static List<string> ConvertToXmlContents(this FileInfo file, string targetDirectory)
-        {
-            List<string> paths = null;
-            return ConvertToXmlContents(file, targetDirectory, ref paths);
-        }
-
-        public static List<string> ConvertToXmlContents(this FileInfo file, string targetDirectory,
-            ref List<string> paths)
-        {
-            var details = file.GetPdfDetails(Xml, targetDirectory, ref paths, out _);
-            var writer = new PdfXmlWriter();
-
-            paths.Add(writer.SaveAsXml(details));
-            return paths;
-        }
-
-        public static List<string> ConvertToJsonContents(this FileInfo file, string targetDirectory)
-        {
-            List<string> paths = null;
-            return ConvertToJsonContents(file, targetDirectory, ref paths);
-        }
-
-        public static List<string> ConvertToJsonContents(this FileInfo file, string targetDirectory,
-            ref List<string> paths)
-        {
-            var details = file.GetPdfDetails(Xml, targetDirectory, ref paths, out _);
-            var writer = new PdfJsonWriter();
-
-            paths.Add(writer.SaveAsJson(details));
             return paths;
         }
 
